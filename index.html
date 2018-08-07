@@ -9,25 +9,15 @@
 	<script type="text/javascript" src="bootstrap/js/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
-    <!-- <script type="text/javascript" src="maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
-    
+    <link href="https://fonts.googleapis.com/css?family=Athiti" rel="stylesheet">
     
     
     <style type="text/css">
-    	.jumbotron{
-    		background-image: url('images/header-logo.jpg');
-    		/*position: fixed;*/
-  			/*width: 100%;*/
-  			height: 300px;
-  			/*top:0;*/
-  			/*left:0;*/
-  			/*z-index: -1;*/
-  			background-size: cover;
-    	}
-
-    	.container .jumbotron {
-    		border-radius: 0 !important;
+    	body{
+    		padding-top: 5rem;
+			background-color: #DCDCDC;
+			font-family: 'Athiti', sans-serif;
+			font-size: 17px;
 		}
 
 		.container{
@@ -43,34 +33,53 @@
 		    margin-bottom:0;
 		}
 
-		body{
-			background-color: #DCDCDC;
+		.content{
+			padding: 50px;
 		}
+
+		.panel-heading{
+			font-size: 20px;
+			font-weight: bold;
+		}
+
+		.panel-body{
+			font-size: 15px;
+		}
+
+		.footer {
+		   /*position: fixed;*/
+		   padding: 30px;
+		   left: 0;
+		   bottom: 0;
+		   width: 100%;
+		   background-color: #23A4DB;
+		   color: white;
+		}
+
     </style>
 
 </head>
 <body>
-	<div class="container">
-		
-	  	<!-- Static navbar -->
-	    <nav class="navbar navbar-default">
+	<!-- Static navbar -->
+	    <nav class="navbar navbar-default navbar-fixed-top">
 	        <div class="container-fluid">
-	          	<!-- <div class="navbar-header">
+	          	<div class="navbar-header">
 		            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
 		              	<span class="sr-only">Toggle navigation</span>
 		              	<span class="icon-bar"></span>
 		              	<span class="icon-bar"></span>
 		              	<span class="icon-bar"></span>
 		            </button>
-	            	<a class="navbar-brand" href="#">Project name</a>
-	          	</div> -->
+	            	<a class="navbar-brand" href="#">IT LIBRARY</a>
+	          	</div>
 	          	<div id="navbar" class="navbar-collapse collapse">
 	            	<ul class="nav navbar-nav">
-	              		<li><a href="#">Project</a></li>
-	              		<!-- <li><a href="#">About</a></li> -->
+	              		<li><a href="#">หน้าหลัก</a></li>
+	              		<li><a href="#">โครงงาน</a></li>
+	              		<li><a href="#">ประกาศ</a></li>
 	              		<!-- <li><a href="#">Contact</a></li> -->
 	              		<li class="dropdown">
-	                		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+	                		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">ข่าว <span class="caret"></span></a>
 	                		<ul class="dropdown-menu">
 	                  			<li><a href="#">Action</a></li>
 	                  			<li><a href="#">Another action</a></li>
@@ -91,15 +100,85 @@
 	        </div><!--/.container-fluid -->
 	    </nav>
 
-	  	<!-- Main component for a primary marketing message or call to action -->
-	  	<div class="jumbotron">
-	    	
+
+	<!-- content -->
+	<div class="container">
+	  	<div class="row">
+	  		<div class="col-md-12">
+	  			<img src="images/header-logo.jpg" style="max-width: 100%; height: auto;">
+	  		</div>	
 	  	</div>
   		
+  		<div class="content">
+  			<div class="row">
+  				<div class="col-md-6">
+	  				<div class="panel panel-primary">
+	      				<div class="panel-heading">โครงงาน</div>
+	     				<div class="panel-body">
+	     					Panel Content <br>	
+	     					Panel Content <br>
+	     					Panel Content <br>
+	     					Panel Content <br>
+	     					Panel Content <br>
+	     					Panel Content <br>
+	     					Panel Content <br>
+	     					Panel Content 
+	     				</div>
+	    			</div>
+	  			</div>
+	  			<div class="col-md-6">
+	  				<div class="panel panel-danger">
+	      				<div class="panel-heading">ประกาศ</div>
+	     				<div class="panel-body">
+	     					Panel Content <br>	
+	     					Panel Content <br>
+	     					Panel Content <br>
+	     					Panel Content <br>
+	     					Panel Content <br>
+	     					Panel Content <br>
+	     					Panel Content <br>
+	     					Panel Content 
+	     				</div>
+	    			</div>
+	  			</div>
+  			</div>
+  			<div class="panel panel-info">
+      			<div class="panel-heading">ข่าว</div>
+     			<div class="panel-body">
+     				Panel Content <br>	
+	     			Panel Content <br>
+	     			Panel Content <br>
+	     			Panel Content <br>
+ 					Panel Content <br>
+ 					Panel Content <br>
+ 					Panel Content <br>
+ 					Panel Content 
+     			</div>
+    		</div>
+  		</div><!-- end content -->
 
 
-	</div>
-
+  		<!-- footer -->
+  		<div class="footer">
+  			<div class="row">
+  				<div class="col-md-6">
+  					<h3>Foot Text 1</h3>
+  					<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita sapiente sint, nulla, nihil repudiandae commodi voluptatibus corrupti animi sequi aliquid magnam debitis</p>
+  				</div>
+  				<div class="col-md-6">
+  					<h3>Follow Us:</h3>
+  					<a href="https://www.facebook.com/cten.cpc/" target="blank">
+  						<img src="images/icons/facebook.png">
+  					</a>
+  				</div>
+  			</div>
+  		</div>
+  		<div class="footer" style="text-align: center; padding: 15px; background-color: #1587B7;">
+  			<div>
+  				© 2018 Copyright: www.cpc.ac.th
+  			</div>
+  		</div><!-- footer -->
 	
+	</div>	
 </body>
 </html>

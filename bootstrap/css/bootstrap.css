@@ -4493,8 +4493,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
 }
 .navbar-default {
-  background-color: #23A4DB;
-  border-color: #e7e7e7;
+  background-color: #1587B7;
+  border-color: #1587B7;
 }
 .navbar-default .navbar-brand {
   color: #ffffff;
@@ -4535,7 +4535,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   background-color: #ddd;
 }
 .navbar-default .navbar-toggle .icon-bar {
-  background-color: #888;
+  background-color: #fff;
 }
 .navbar-default .navbar-collapse,
 .navbar-default .navbar-form {
