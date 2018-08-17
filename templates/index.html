@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+	{% block title %}
+	<title>Faculty of Computer Engineering Technology , CPC , RMUTTO</title>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<script type="text/javascript" src="{{ url_for('static',filename="bootstrap/js/jquery-3.3.1.min.js")}}"></script>
+	<script type="text/javascript" src="{{ url_for('static',filename="bootstrap/js/bootstrap.min.js")}}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename="bootstrap/css/bootstrap.css")}}">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename="bootstrap/css/hover.css")}}">
+	
+    <link href="https://fonts.googleapis.com/css?family=Athiti" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
+    <style type="text/css">
+    	body{
+    		padding-top: 5rem;
+			background-color: #DCDCDC;
+			font-family: 'Athiti', sans-serif;
+			font-size: 17px;
+		}
+
+		.container{
+			background-color: #ffffff;
+			padding: 0;	
+		}
+
+		.navbar {
+		    margin-bottom:0;
+		}
+
+		.content{
+			padding: 40px;
+		}
+
+		.panel-heading{
+			font-size: 20px;
+			font-weight: bold;
+		}
+
+		.panel-body{
+			font-size: 15px;
+		}
+
+		.footer {
+		   /*position: fixed;*/
+		   padding: 30px;
+		   left: 0;
+		   bottom: 0;
+		   width: 100%;
+		   background-color: #23A4DB;
+		   color: white;
+		}
+
+		p{
+			padding: 5px;
+		}
+
+    </style>
+    {% endblock %}
+</head>
+<body>
+	{% block body %}
+	<!-- content -->
+	<div class="container">
+  		<div class="content">
+  			<div class="row">
+  				<div class="col-md-6" style="padding-bottom: 2rem;">
+	  				<div class="panel panel-primary" style="margin-bottom: 0px;">
+	      				<div class="panel-heading">โครงงาน</div>
+	     				<div class="panel-body" style="text-align: center; padding-top: 35px; padding-bottom: 20px;">
+	     					<div class="row">
+	     						<div class="col-md-4 hvr-bob">
+	     							<i class="fas fa-music fa-3x"></i>
+	     							<p>โปรแกรมเพื่อความบันเทิง</p>
+	     						</div>
+	     						<div class="col-md-4 hvr-bob">
+	     							<i class="fas fa-book-reader fa-3x"></i> <br>
+	     							<p>โปรแกรมเพื่อส่งเสริมการเรียนรู้</p>
+	     						</div>
+	     						<div class="col-md-4 hvr-bob">
+	     							<i class="fab fa-accessible-icon fa-3x"></i> <br>
+	     							<p>โปรแกรมเพื่อช่วยคนพิการ/ผู้สูงอายุ/สัตว์เลี้ยง</p>
+	     						</div>
+	     					</div>
+	     					<div class="row">
+	     						<div class="col-md-4 hvr-bob">
+	     							<i class="fas fa-building fa-3x"></i> <br>
+	     							<p>โปรแกรมระบบสารสนเทศสำหรับองค์กร</p>
+	     						</div>
+	     						<div class="col-md-4 hvr-bob">
+	     							<i class="fas fa-shapes fa-3x"></i> <br>
+	     							<p>โปรแกรมด้าน Internet of Things</p>
+	     						</div>
+	     						<div class="col-md-4 hvr-bob">
+	     							<i class="fas fa-atom fa-3x"></i> <br>
+	     							<p>Computational Intelligence</p>
+	     						</div>
+	     					</div>
+	     					<div class="row">
+	     						<div class="col-md-4 hvr-bob">
+	     							<i class="fas fa-flask fa-3x"></i> <br>
+	     							<p>โปรแกรมเพื่องานการพัฒนาด้านวิทยาศาสตร์และเทคโนโลยี</p>
+	     						</div>
+	     						<div class="col-md-4 hvr-bob">
+	     							<i class="far fa-folder-open fa-3x"></i> <br>
+	     							<p>โปรแกรมทั้งหมด</p>
+	     						</div>
+	     					</div>
+	     				</div>
+	    			</div>
+	  			</div>
+	  			<div class="col-md-6">
+	  				<div class="panel panel-info">
+	      				<div class="panel-heading">ประกาศ</div>
+	     				<div class="panel-body">
+	     					<p style="padding: 0;">Panel Content</p> 	
+	     					<p style="padding: 0;">Panel Content</p> 
+	     					<p style="padding: 0;">Panel Content</p> 
+	     					<p style="padding: 0;">Panel Content</p> 
+	     					<p style="padding: 0;">Panel Content</p> 
+	     				</div>
+	    			</div>
+	  			</div>
+	  			<div class="col-md-6">
+	  				<div class="panel panel-info">
+		      			<div class="panel-heading">ข่าว</div>
+		     			<div class="panel-body">
+		     				<p style="padding: 0;">Panel Content</p>
+		     				<p style="padding: 0;">Panel Content</p>
+		     				<p style="padding: 0;">Panel Content</p>
+		 					<p style="padding: 0;">Panel Content</p>
+		 					<p style="padding: 0;">Panel Content</p>
+		     			</div>
+		    		</div>
+	  			</div>
+  			</div>	
+  		</div><!-- end content -->
+	</div>
+	{% endblock %}
+</body>
+</html>

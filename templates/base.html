@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	{% block title %}
+	<title></title>
+	{% endblock %}
+</head>
+<body>
+	<!-- Static navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+          	<div class="navbar-header">
+	            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+	              	<span class="sr-only">Toggle navigation</span>
+	              	<span class="icon-bar"></span>
+	              	<span class="icon-bar"></span>
+	              	<span class="icon-bar"></span>
+	            </button>
+            	<a class="navbar-brand" href="#">IT LIBRARY</a>
+          	</div>
+          	<div id="navbar" class="navbar-collapse collapse">
+            	<ul class="nav navbar-nav">
+              		<li><a href="#">หน้าหลัก</a></li>
+              		<li class="dropdown">
+              			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">โครงงาน <span class="caret"></span></a>
+              			<ul class="dropdown-menu">
+              				<li class="dropdown-header">ประเภทโครงงาน</li>
+                  			<li><a href="#">โปรแกรมเพื่อความบันเทิง</a></li>
+                  			<li><a href="#">โปรแกรมเพื่อส่งเสริมการเรียนรู้</a></li>
+                  			<li><a href="#">โปรแกรมเพื่อช่วยคนพิการ/ผู้สูงอายุ/สัตว์เลี้ยง</a></li>
+                  			<li><a href="#">โปรแกรมระบบสารสนเทศสำหรับองค์กร</a></li>
+                  			<li><a href="#">โปรแกรมด้าน Internet of Things</a></li>
+                  			<li><a href="#">Computational Intelligence</a></li>
+                  			<li><a href="#">โปรแกรมเพื่องานการพัฒนาด้านวิทยาศาสตร์และเทคโนโลยี</a></li>
+                  			<li role="separator" class="divider"></li>
+                  			<li><a href="#">โปรแกรมทั้งหมด</a></li>
+                		</ul>
+              		</li>
+              		<li><a href="#">ประกาศ</a></li>
+              		<!-- <li><a href="#">Contact</a></li> -->
+              		<li class="dropdown">
+                		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">ข่าว <span class="caret"></span></a>
+                		<ul class="dropdown-menu">
+                  			<li><a href="#">Action</a></li>
+                  			<li><a href="#">Another action</a></li>
+                  			<li><a href="#">Something else here</a></li>
+                  			<li role="separator" class="divider"></li>
+                  			<li class="dropdown-header">Nav header</li>
+                  			<li><a href="#">Separated link</a></li>
+                  			<li><a href="#">One more separated link</a></li>
+                		</ul>
+              		</li>
+           	 	</ul>
+            	<!-- <ul class="nav navbar-nav navbar-right">
+              		<li class="active"><a href="./">Default <span class="sr-only">(current)</span></a></li>
+              		<li><a href="../navbar-static-top/">Static top</a></li>
+              		<li><a href="../navbar-fixed-top/">Fixed top</a></li>
+            	</ul> -->
+          	</div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+    </nav>
+
+    <div class="container">
+	    <div class="row">
+			<div class="col-md-12">
+				<img src="{{ url_for('static',filename="images/header-logo.jpg")}}" style="max-width: 100%; height: auto;">
+			</div>	
+		</div>
+	</div>
+{% block body %}
+ 		
+{% endblock %}
+	<div class="container">
+	<!-- footer -->
+  		<div class="footer">
+  			<div class="row">
+  				<div class="col-md-6">
+  					<h3>About Website</h3>
+  					<p>This is a Web App for Faculty of Computer Technology Engineering to included the projects of
+  					student in Bachelor's Degree.</p>
+  				</div>
+  				<div class="col-md-6">
+  					<h3>Follow Us:</h3>
+  					<a href="https://www.facebook.com/cten.cpc/" target="blank">
+  						<img src="{{ url_for('static',filename="images/icons/facebook.png")}}">
+  					</a>
+  				</div>
+  			</div>
+  		</div>
+  		<div class="footer" style="text-align: center; padding: 15px; background-color: #1587B7;">
+  			<div>
+  				© 2018 Copyright: RMUTTO - CPC
+  			</div>
+  		</div><!-- footer -->
+  	</div>
+</body>
+</html>
