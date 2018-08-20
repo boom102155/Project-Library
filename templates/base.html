@@ -4,6 +4,119 @@
 	{% block title %}
 	<title></title>
 	{% endblock %}
+  <script type="text/javascript" src="{{ url_for('static',filename="bootstrap/js/jquery-3.3.1.min.js")}}"></script>
+  <script type="text/javascript" src="{{ url_for('static',filename="bootstrap/js/bootstrap.min.js")}}"></script>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename="bootstrap/css/bootstrap.css")}}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename="bootstrap/css/hover.css")}}">
+
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
+
+
+  <link href="https://fonts.googleapis.com/css?family=Athiti" rel="stylesheet">
+  <style type="text/css">
+      body{
+        padding-top: 5rem;
+      background-color: #DCDCDC;
+      font-family: 'Athiti', sans-serif;
+      font-size: 17px;
+    }
+
+    .container{
+      background-color: #ffffff;
+      padding: 0; 
+    }
+
+    .navbar {
+        margin-bottom:0;
+    }
+
+    .content{
+      padding: 40px;
+    }
+
+    .panel-heading{
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .panel-body{
+      font-size: 17px;
+    }
+
+    .footer {
+       /*position: fixed;*/
+       padding: 30px;
+       left: 0;
+       bottom: 0;
+       width: 100%;
+       background-color: #23A4DB;
+       color: white;
+    }
+
+    p{
+      padding: 5px;
+    }
+
+    .tags {
+      list-style: none;
+      margin: 0;
+      overflow: hidden; 
+      padding: 0;
+    }
+
+    .tags li {
+      float: left; 
+    }
+
+    .tag {
+      background: #eee;
+      border-radius: 3px 0 0 3px;
+      color: #999;
+      display: inline-block;
+      height: 26px;
+      line-height: 26px;
+      padding: 0 20px 0 23px;
+      position: relative;
+      margin: 0 10px 10px 0;
+      text-decoration: none;
+      -webkit-transition: color 0.2s;
+    }
+
+    .tag::before {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: inset 0 1px rgba(0, 0, 0, 0.25);
+      content: '';
+      height: 6px;
+      left: 10px;
+      position: absolute;
+      width: 6px;
+      top: 10px;
+    }
+
+    .tag::after {
+      background: #fff;
+      border-bottom: 13px solid transparent;
+      border-left: 10px solid #eee;
+      border-top: 13px solid transparent;
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+
+    .tag:hover {
+      background-color: #2A67B9;
+      color: white;
+    }
+
+    .tag:hover::after {
+       border-left-color: #2A67B9; 
+    }
+
+    </style>
 </head>
 <body>
 	<!-- Static navbar -->
@@ -16,11 +129,11 @@
 	              	<span class="icon-bar"></span>
 	              	<span class="icon-bar"></span>
 	            </button>
-            	<a class="navbar-brand" href="#">IT LIBRARY</a>
+            	<a class="navbar-brand" href="/index">IT LIBRARY</a>
           	</div>
           	<div id="navbar" class="navbar-collapse collapse">
             	<ul class="nav navbar-nav">
-              		<li><a href="#">หน้าหลัก</a></li>
+              		<li><a href="/index">หน้าหลัก</a></li>
               		<li class="dropdown">
               			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">โครงงาน <span class="caret"></span></a>
               			<ul class="dropdown-menu">
@@ -33,23 +146,12 @@
                   			<li><a href="#">Computational Intelligence</a></li>
                   			<li><a href="#">โปรแกรมเพื่องานการพัฒนาด้านวิทยาศาสตร์และเทคโนโลยี</a></li>
                   			<li role="separator" class="divider"></li>
-                  			<li><a href="#">โปรแกรมทั้งหมด</a></li>
+                  			<li><a href="/projlist">โครงงานทั้งหมดทั้งหมด</a></li>
                 		</ul>
               		</li>
               		<li><a href="#">ประกาศ</a></li>
-              		<!-- <li><a href="#">Contact</a></li> -->
-              		<li class="dropdown">
-                		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">ข่าว <span class="caret"></span></a>
-                		<ul class="dropdown-menu">
-                  			<li><a href="#">Action</a></li>
-                  			<li><a href="#">Another action</a></li>
-                  			<li><a href="#">Something else here</a></li>
-                  			<li role="separator" class="divider"></li>
-                  			<li class="dropdown-header">Nav header</li>
-                  			<li><a href="#">Separated link</a></li>
-                  			<li><a href="#">One more separated link</a></li>
-                		</ul>
-              		</li>
+              		<li><a href="#">About</a></li>
+              		
            	 	</ul>
             	<!-- <ul class="nav navbar-nav navbar-right">
               		<li class="active"><a href="./">Default <span class="sr-only">(current)</span></a></li>
@@ -75,8 +177,8 @@
   		<div class="footer">
   			<div class="row">
   				<div class="col-md-6">
-  					<h3>About Website</h3>
-  					<p>This is a Web App for Faculty of Computer Technology Engineering to included the projects of
+  					<h3>About</h3>
+  					<p>This is a Web for Faculty of Computer Technology Engineering to included the projects of
   					student in Bachelor's Degree.</p>
   				</div>
   				<div class="col-md-6">
@@ -89,7 +191,7 @@
   		</div>
   		<div class="footer" style="text-align: center; padding: 15px; background-color: #1587B7;">
   			<div>
-  				© 2018 Copyright: RMUTTO - CPC
+  				© 2018 Copyright: S.Thakdanai - Developer
   			</div>
   		</div><!-- footer -->
   	</div>

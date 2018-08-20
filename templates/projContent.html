@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+	{% block title %}
+	<title>รายละเอียดโครงงาน</title>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	{% endblock %}
+</head>
+<body>
+{% block body %}
+	<div class="container">
+  		<div class="content">
+  			<div class="panel panel-primary" style="margin-bottom: 0px;">
+	      		<div class="panel-heading">ชื่อโครงงาน</div>
+	     		<div class="panel-body" style="padding-left: 5rem;">
+	     			<p style="padding: 0;"><b>ปีการศึกษา:</b> 2560</p>
+	     			<p style="padding: 0;"><b>ประเภทโครงงาน:</b> โครงงาน.....</p>
+	     			<p style="padding: 0;"><b>ผู้จัดทำ:</b></p>
+	     			<div style="padding-left: 6rem;">
+	     				<p style="padding: 0;">ผู้จัดทำ 1</p>
+	     				<p style="padding: 0;">ผู้จัดทำ 2</p>
+	     			</div>
+	     			<p style="padding: 0;"><b>อาจารย์ที่ปรึกษา:</b></p>
+	     			<div style="padding-left: 6rem;">
+	     				<p style="padding: 0;">อาจารย์ที่ปรึกษา 1</p>
+	     				<p style="padding: 0;">อาจารย์ที่ปรึกษา 2</p>
+	     			</div>
+	     			<p style="padding: 0;"><b>Keyword:</b> 
+	     				<ul class="tags">
+						  	<li><a href="#" class="tag">KW1</a></li>
+						  	<li><a href="#" class="tag">KW2</a></li>
+						  	<li><a href="#" class="tag">KW3</a></li>
+						</ul>
+					</p>
+	     			<p style="padding: 0;"><b>บทคัดย่อ:</b> (Download File)</p>
+	     		</div>
+	     	</div>
+  			
+  		</div>
+  	</div>
+{% endblock %}
+</body>
+</html>

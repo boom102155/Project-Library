@@ -14,5 +14,15 @@ APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 def index():
     return render_template("index.html")
 
+@app.route('/projlist' , methods = ['GET','POST'])
+def projlist():
+    return render_template("projList.html")
+
+@app.route('/projcontent' , methods = ['GET','POST'])
+def projcontent():
+    return render_template("projContent.html")
+
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0',debug=True)
