@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Upload โครงงาน</title>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<script type="text/javascript" src="{{ url_for('static',filename="bootstrap/js/jquery-3.3.1.min.js")}}"></script>
+  	<script type="text/javascript" src="{{ url_for('static',filename="bootstrap/js/bootstrap.min.js")}}"></script>
+ 	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename="bootstrap/css/bootstrap.css")}}">
+  	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename="bootstrap/css/hover.css")}}">
+	<link href="https://fonts.googleapis.com/css?family=Athiti" rel="stylesheet">
+
+	<style type="text/css">
+		 body{
+	        /*padding-top: 5rem;*/
+	        background-color: #DCDCDC;
+	        font-family: 'Athiti', sans-serif;
+	        font-size: 17px;
+	    }
+
+	    .container{
+	        background-color: #ffffff;
+	        padding: 0; 
+	    }
+
+	    .content{
+	        padding: 40px;
+	    }
+
+	    .footer {
+	        /*position: fixed;*/
+	       	padding: 30px;
+	        left: 0;
+	        bottom: 0;
+	        width: 100%;
+	        background-color: #23A4DB;
+	        color: white;
+	     }
+	</style>
+</head>
+<body>
+	<div class="container">
+		 <div class="row">
+			<div class="col-md-12">
+				<img src="{{ url_for('static',filename="images/header-logo.jpg")}}" style="max-width: 100%; height: auto;">
+			</div>	
+		</div>
+		<div class="content">
+			<h3><b>อัพโหลดโครงงาน</b></h3>
+
+			<form class="form-horizontal" style="padding-top: 3rem;">
+			  	<div class="form-group">
+			    	<label class="control-label col-sm-2" for="pName">ชื่อโครงงาน:</label>
+			    	<div class="col-sm-5">
+			     		<input type="text" class="form-control" id="pName" placeholder="โครงงาน...">
+			    	</div>
+			  	</div>
+			  	<div class="form-group">
+			    	<label class="control-label col-sm-2" for="pYear">ปีการศึกษา:</label>
+			    	<div class="col-sm-5"> 
+			      		<select class="form-control" id="pYear">
+			      			<option>2560</option>
+			      			<option>2559</option>
+			      		</select>
+			    	</div>
+			  	</div>
+
+			  	<div class="form-group">
+			    	<label class="control-label col-sm-2" for="pType">ประเภทโครงงาน:</label>
+			    	<div class="col-sm-5"> 
+			      		<select class="form-control" id="pType">
+			      			<option>โปรแกรมเพื่อความบันเทิง</option>
+			      			<option>โปรแกรมเพื่อส่งเสริมการเรียนรู้</option>
+			      			<option>โปรแกรมเพื่อช่วยคนพิการ/ผู้สูงอายุ/สัตว์เลี้ยง</option>
+			      			<option>โปรแกรมระบบสารสนเทศสำหรับองค์กร</option>
+			      			<option>โปรแกรมด้าน Internet of Things</option>
+			      			<option>Computational Intelligence</option>
+			      			<option>โปรแกรมเพื่องานการพัฒนาด้านวิทยาศาสตร์และเทคโนโลยี</option>
+			      		</select>
+			    	</div>
+			  	</div>
+			  	<hr>
+	  			<div class="form-group">
+			    	<label class="control-label col-sm-2" for="sNameF">ชื่อผู้จัดทำคนที่ 1:</label>
+			    	<div class="col-sm-3">
+			     		<input type="text" class="form-control" id="sNameF" placeholder="ชื่อ-นามสกุล">
+			    	</div>
+			    	<label class="control-label col-sm-2" for="sIdF">รหัสนักศึกษา:</label>
+			    	<div class="col-sm-3">
+			     		<input type="text" class="form-control" id="sIdF" placeholder="ตัวอย่าง 0256304910000">
+			    	</div>
+			  	</div>
+			  	<div class="form-group">
+			    	<label class="control-label col-sm-2" for="sNameS">ชื่อผู้จัดทำคนที่ 2:</label>
+			    	<div class="col-sm-3">
+			     		<input type="text" class="form-control" id="sNameS" placeholder="ชื่อ-นามสกุล">
+			    	</div>
+			    	<label class="control-label col-sm-2" for="sIdS">รหัสนักศึกษา:</label>
+			    	<div class="col-sm-3">
+			     		<input type="text" class="form-control" id="sIdS" placeholder="ตัวอย่าง 0256304910000">
+			    	</div>
+			  	</div>
+			  	<br>
+			  	<div class="form-group">
+			    	<label class="control-label col-sm-2" for="proNameF">อาจารย์ที่ปรึกษา 1:</label>
+			    	<div class="col-sm-3">
+			     		<input type="text" class="form-control" id="proNameF" placeholder="ชื่อ-นามสกุล">
+			    	</div>
+			  	</div>
+			  	<div class="form-group">
+			    	<label class="control-label col-sm-2" for="proNameS">อาจารย์ที่ปรึกษา 2:</label>
+			    	<div class="col-sm-3">
+			     		<input type="text" class="form-control" id="proNameS" placeholder="ชื่อ-นามสกุล">
+			    	</div>
+			  	</div>
+		  		<hr>
+			  	<div class="form-group">
+			    	<label class="control-label col-sm-2" for="keyword">Keyword:</label>
+			    	<div class="col-sm-3">
+			     		<input type="text" class="form-control" id="keyword" placeholder="keyword...">
+			    	</div>
+			  	</div>
+			  	
+			  	<div class="form-group">
+			    	<label class="control-label col-sm-2" for="keyword">บทคัดย่อ:</label>
+			    	<div class="col-sm-3">
+			     		<input type="file" name="file" accept="application/pdf">
+			    	</div>
+			  	</div>
+			  	
+			  	<div class="form-group"> 
+			    	<div class="col-sm-offset-2 col-sm-10">
+			      		<button type="submit" class="btn btn-primary">อัพโหลด</button>
+			    	</div>
+			  	</div>
+			</form>
+		</div>
+		<!-- footer -->
+  		<div class="footer">
+  			<div class="row">
+  				<div class="col-md-6">
+  					<h3>About</h3>
+  					<p>This is a Web for Faculty of Computer Technology Engineering to included the projects of
+  					student in Bachelor's Degree.</p>
+  				</div>
+  				<div class="col-md-6">
+  					<h3>Follow Us:</h3>
+  					<a href="https://www.facebook.com/cten.cpc/" target="blank">
+  						<img src="{{ url_for('static',filename="images/icons/facebook.png")}}">
+  					</a>
+  				</div>
+  			</div>
+  		</div>
+  		<div class="footer" style="text-align: center; padding: 15px; background-color: #1587B7;">
+  			<div>
+  				© 2018 Copyright: S.Thakdanai - Developer
+  			</div>
+  		</div><!-- footer -->
+	</div>
+</body>
+</html>

@@ -22,7 +22,13 @@ def projlist():
 def projcontent():
     return render_template("projContent.html")
 
+@app.route('/projupload' , methods = ['GET' , 'POST'])
+def projupload():
+    return  render_template("projUpload.html")
 
+@app.route('/newsupdate' , methods = ['GET' , 'POST'])
+def newsupdate():
+    return  render_template("newsUpdate.html")
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',debug=True)

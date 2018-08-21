@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Upload ประกาศ</title>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<script type="text/javascript" src="{{ url_for('static',filename="bootstrap/js/jquery-3.3.1.min.js")}}"></script>
+  	<script type="text/javascript" src="{{ url_for('static',filename="bootstrap/js/bootstrap.min.js")}}"></script>
+ 	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename="bootstrap/css/bootstrap.css")}}">
+  	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename="bootstrap/css/hover.css")}}">
+
+  	<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  	<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+  	<script type="text/javascript" src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
+  	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
+  	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.2.7/css/select.bootstrap.min.css">
+
+	<link href="https://fonts.googleapis.com/css?family=Athiti" rel="stylesheet">
+
+	<style type="text/css">
+		 body{
+	        /*padding-top: 5rem;*/
+	        background-color: #DCDCDC;
+	        font-family: 'Athiti', sans-serif;
+	        font-size: 17px;
+	    }
+
+	    .container{
+	        background-color: #ffffff;
+	        padding: 0; 
+	    }
+
+	    .content{
+	        padding: 40px;
+	    }
+
+	    .footer {
+	        /*position: fixed;*/
+	       	padding: 30px;
+	        left: 0;
+	        bottom: 0;
+	        width: 100%;
+	        background-color: #23A4DB;
+	        color: white;
+	     }
+	</style>
+</head>
+<body>
+	<div class="container">
+		 <div class="row">
+			<div class="col-md-12">
+				<img src="{{ url_for('static',filename="images/header-logo.jpg")}}" style="max-width: 100%; height: auto;">
+			</div>	
+		</div>
+		<div class="content">
+			<h3><b>อัพโหลดประกาศ</b></h3>
+
+			<form class="form-horizontal" style="padding-top: 3rem;">
+				<div class="form-group">
+			    	<label class="control-label col-sm-2" for="newsUpdate">ประกาศใหม่:</label>
+			    	<div class="col-sm-6">
+			     		<textarea class="form-control" id="newsUpdate" placeholder="ประกาศ..."></textarea>
+			    	</div>
+			  	</div>
+			  	<div class="form-group"> 
+			    	<div class="col-sm-offset-2 col-sm-10">
+			      		<button type="submit" class="btn btn-primary">อัพโหลด</button>
+			    	</div>
+			  	</div>
+			</form>
+
+			<script type="text/javascript">
+				$(document).ready(function() {
+			    	$('#example').DataTable({
+			    		select: true
+			    	});
+				});
+			</script>
+
+			<table id="example" class="table table-striped table-bordered" style="width:100%">
+		        <thead>
+		            <tr>
+		            	<th>รหัส</th>
+		                <th>หัวข้อประกาศ</th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		            <tr>
+		            	<td>1</td>
+		                <td>ประกาศ 1</td>
+		            </tr>
+		             <tr>
+		            	<td>1</td>
+		                <td>ประกาศ 2</td>
+		            </tr>
+		             <tr>
+		            	<td>1</td>
+		                <td>ประกาศ 3</td>
+		            </tr>
+		             <tr>
+		            	<td>1</td>
+		                <td>ประกาศ 4</td>
+		            </tr>
+		             <tr>
+		            	<td>1</td>
+		                <td>ประกาศ 5</td>
+		            </tr>
+		        </tbody>
+		    </table>
+
+		    <button type="submit" class="btn btn-danger">ปักหมุดประกาศ</button>
+
+		</div>
+		<!-- footer -->
+  		<div class="footer">
+  			<div class="row">
+  				<div class="col-md-6">
+  					<h3>About</h3>
+  					<p>This is a Web for Faculty of Computer Technology Engineering to included the projects of
+  					student in Bachelor's Degree.</p>
+  				</div>
+  				<div class="col-md-6">
+  					<h3>Follow Us:</h3>
+  					<a href="https://www.facebook.com/cten.cpc/" target="blank">
+  						<img src="{{ url_for('static',filename="images/icons/facebook.png")}}">
+  					</a>
+  				</div>
+  			</div>
+  		</div>
+  		<div class="footer" style="text-align: center; padding: 15px; background-color: #1587B7;">
+  			<div>
+  				© 2018 Copyright: S.Thakdanai - Developer
+  			</div>
+  		</div><!-- footer -->
+	</div>
+</body>
+</html>
