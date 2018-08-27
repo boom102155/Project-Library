@@ -24,7 +24,17 @@ def projcontent():
 
 @app.route('/projupload' , methods = ['GET' , 'POST'])
 def projupload():
-    return  render_template("projUpload.html")
+    conn = db_connect.connect()
+    query = conn.execute("SELECT PERSON_ID, (NAME || ' ' || SURNAME) as perfessorname "
+                          "FROM PERSON "
+                          "WHERE PERSON_ID BETWEEN 1001 and 1999")
+
+    query2 = conn.execute("SELECT PJTYPE_ID "
+                          "FROM PROJECT_TYPE")
+
+    rows = query.fetchall()
+    rows2 = query2.fetchall()
+    return  render_template("projUpload.html" , rows=rows , rows2=rows2)
 
 @app.route('/newsupdate' , methods = ['GET' , 'POST'])
 def newsupdate():

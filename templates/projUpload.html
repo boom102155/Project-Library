@@ -59,10 +59,14 @@
 			  	<div class="form-group">
 			    	<label class="control-label col-sm-2" for="pYear">ปีการศึกษา:</label>
 			    	<div class="col-sm-5"> 
-			      		<select class="form-control" id="pYear">
-			      			<option>2560</option>
-			      			<option>2559</option>
-			      		</select>
+			      		<select class="form-control" id="pYear"></select>
+			      		<script type="text/javascript">
+			      			var getyear = new Date().getFullYear();
+			      			var convyear = getyear + 543;
+			      			for (i = convyear; i > 2500; i--){
+								$('#pYear').append($('<option />').val(i).html(i));
+							}
+			      		</script>
 			    	</div>
 			  	</div>
 
@@ -70,19 +74,15 @@
 			    	<label class="control-label col-sm-2" for="pType">ประเภทโครงงาน:</label>
 			    	<div class="col-sm-5"> 
 			      		<select class="form-control" id="pType">
-			      			<option>โปรแกรมเพื่อความบันเทิง</option>
-			      			<option>โปรแกรมเพื่อส่งเสริมการเรียนรู้</option>
-			      			<option>โปรแกรมเพื่อช่วยคนพิการ/ผู้สูงอายุ/สัตว์เลี้ยง</option>
-			      			<option>โปรแกรมระบบสารสนเทศสำหรับองค์กร</option>
-			      			<option>โปรแกรมด้าน Internet of Things</option>
-			      			<option>Computational Intelligence</option>
-			      			<option>โปรแกรมเพื่องานการพัฒนาด้านวิทยาศาสตร์และเทคโนโลยี</option>
+			      			{% for row in rows2 %}
+	        					<option value="{{ row[0] }}">{{ row[0] }}</option>
+	        				{% endfor %}
 			      		</select>
 			    	</div>
 			  	</div>
 			  	<hr>
 	  			<div class="form-group">
-			    	<label class="control-label col-sm-2" for="sNameF">ชื่อผู้จัดทำคนที่ 1:</label>
+			    	<label class="control-label col-sm-2" for="sNameF">ชื่อผู้จัดทำคนที่หนึ่ง:</label>
 			    	<div class="col-sm-3">
 			     		<input type="text" class="form-control" id="sNameF" placeholder="ชื่อ-นามสกุล">
 			    	</div>
@@ -92,7 +92,7 @@
 			    	</div>
 			  	</div>
 			  	<div class="form-group">
-			    	<label class="control-label col-sm-2" for="sNameS">ชื่อผู้จัดทำคนที่ 2:</label>
+			    	<label class="control-label col-sm-2" for="sNameS">ชื่อผู้จัดทำคนที่สอง:</label>
 			    	<div class="col-sm-3">
 			     		<input type="text" class="form-control" id="sNameS" placeholder="ชื่อ-นามสกุล">
 			    	</div>
@@ -103,15 +103,25 @@
 			  	</div>
 			  	<br>
 			  	<div class="form-group">
-			    	<label class="control-label col-sm-2" for="proNameF">อาจารย์ที่ปรึกษา 1:</label>
+			    	<label class="control-label col-sm-2" for="proNameF">อาจารย์ที่ปรึกษาหลัก:</label>
 			    	<div class="col-sm-3">
-			     		<input type="text" class="form-control" id="proNameF" placeholder="ชื่อ-นามสกุล">
+			     		<select class="form-control" id="profPrimary">
+			     				<option value="0">---อาจารย์ที่ปรึกษาหลัก---</option>
+			     			{% for row in rows %}
+	        					<option value="{{ row[0] }}">{{ row[1] }}</option>
+	        				{% endfor %}
+			     		</select>
 			    	</div>
 			  	</div>
 			  	<div class="form-group">
-			    	<label class="control-label col-sm-2" for="proNameS">อาจารย์ที่ปรึกษา 2:</label>
+			    	<label class="control-label col-sm-2" for="proNameS">อาจารย์ที่ปรึกษารอง:</label>
 			    	<div class="col-sm-3">
-			     		<input type="text" class="form-control" id="proNameS" placeholder="ชื่อ-นามสกุล">
+			     		<select class="form-control" id="profPrimary">
+			     				<option value="0">---อาจารย์ที่ปรึกษารอง---</option>
+			     			{% for row in rows %}
+	        					<option value="{{ row[0] }}">{{ row[1] }}</option>
+	        				{% endfor %}
+			     		</select>
 			    	</div>
 			  	</div>
 		  		<hr>
