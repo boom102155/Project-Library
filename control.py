@@ -8,15 +8,17 @@ db_connect = create_engine('oracle://ADBOOM:boom125478@127.0.0.1:1521/xe')
 app = Flask(__name__)
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 
-
-
 @app.route('/index' , methods = ['GET','POST'])
 def index():
     return render_template("index.html")
 
 @app.route('/projlist' , methods = ['GET','POST'])
 def projlist():
-    return render_template("projList.html")
+    conn = db_connect.connect()
+    query = conn.execute("SELECT PJ_ID , PJ_NAME , PJ_YEAR , KEYWORD "
+                         "FROM PROJECT")
+    rows = query.fetchall()
+    return render_template("projList.html", rows=rows)
 
 @app.route('/projcontent' , methods = ['GET','POST'])
 def projcontent():
