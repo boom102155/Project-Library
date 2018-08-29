@@ -16,9 +16,7 @@
 	
 	<script type="text/javascript">
 		$(document).ready(function() {
-	    	$('#example').DataTable({
-	    		select: true
-	    	});
+	    	$('#example').DataTable();
 		});
 	</script>
 	<div class="container">
@@ -38,7 +36,7 @@
 		            <tr>
 		            	<td>{{ row[0] }}</td>
 		                <td>
-		                	<a href="#">{{ row[1] }}</a>
+		                	<a href="/projcontent">{{ row[1] }}</a>
 		            	</td>
 		                <td>{{ row[2] }}</td>
 		                <td>{{ row[3] }}</td>
