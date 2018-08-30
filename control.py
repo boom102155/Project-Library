@@ -20,9 +20,40 @@ def projlist():
     rows = query.fetchall()
     return render_template("projList.html", rows=rows)
 
-@app.route('/projcontent' , methods = ['GET','POST'])
-def projcontent():
-    return render_template("projContent.html")
+# @app.route('/getsessionprojid' , methods = ['GET' , 'POST'])
+# def getsessionprojid():
+#     data = request.get_json()
+#     conn = db_connect.connect()
+#     query = conn.execute("SELECT PROJ_ID FROM PROJECT WHERE PROJ_ID = '" + (data["projid"]) + "'")
+#     rows = query.fetchall()
+#     for row in rows:
+#         list1 = ["PROJ_ID"]
+#         list2 = [row["proj_id"]]
+#         data = zip(list1, list2)
+#         d = dict(data)
+#         session['projectid'] = ''.join(list2)
+#     return jsonify()
+
+@app.route('/projcontent/<projid>' , methods = ['GET','POST'])
+def projcontent(projid):
+    conn = db_connect.connect()
+    query = conn.execute("SELECT "
+                         "pr.PJ_NAME, "
+                         "pr.PJ_YEAR , "
+                         "pr.PJTYPE_ID , "
+                         "pr.S_NAME1 , "
+                         "pr.S_ID1 , "
+                         "pr.S_NAME2 , "
+                         "pr.S_ID2 , "
+                         "(pe.NAME || ' ' || pe.SURNAME) AS PERSON1 , "
+                         "(pe2.NAME || ' ' || pe2.SURNAME) AS PERSON2 , "
+                         "pr.KEYWORD "
+                         "FROM PROJECT pr , PERSON pe , PERSON pe2 "
+                         "WHERE pr.PJ_ID = " + projid +
+                         " AND pr.PERSON_ID1 = pe.PERSON_ID AND pr.PERSON_ID2 = pe2.PERSON_ID")
+    rows = query.fetchall()
+
+    return render_template("projContent.html" , rows=rows)
 
 @app.route('/projupload' , methods = ['GET' , 'POST'])
 def projupload():

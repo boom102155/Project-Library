@@ -13,43 +13,45 @@
 {% block body %}
 	<div class="container">
   		<div class="content">
+  			{% for row in rows %}
   			<div class="panel panel-primary" style="margin-bottom: 0px;">
-	      		<div class="panel-heading">ชื่อโครงงาน</div>
+	      		<div class="panel-heading">{{ row[0] }}</div>
 	     		<div class="panel-body" style="padding-left: 5rem;">
 	     			<div class="form-horizontal">
-		     			<p style="padding: 0;"><b>ปีการศึกษา:</b> 2560</p>
-		     			<p style="padding: 0;"><b>ประเภทโครงงาน:</b> โครงงาน.....</p>
+		     			<p style="padding: 0;"><b>ปีการศึกษา:</b> {{ row[1] }}</p>
+		     			<p style="padding: 0;"><b>ประเภทโครงงาน:</b> {{ row[2] }}</p>
 		     			<p style="padding: 0;"><b>ผู้จัดทำ:</b></p>
 		     			<div style="padding-left: 6rem;">
 		     				<div class="form-group">
 						    	<div class="col-sm-3">
-						     		<div class="control-label" style="text-align: left;">นายทักษ์ดนัย สามัญ</div>
+						     		<div class="control-label" style="text-align: left;">{{ row[3] }}</div>
 						    	</div>
 						    	<label class="control-label col-sm-2" for="sIdF">รหัสนักศึกษา:</label>
 						    	<div class="col-sm-3">
-						     		<div class="control-label" style="text-align: left;">0256304910092</div>
+						     		<div class="control-label" style="text-align: left;">{{ row[4] }}</div>
 						    	</div>
 		     				</div>
 		     			</div>
 		     			<div style="padding-left: 6rem;">
 		     				<div class="form-group">
 						    	<div class="col-sm-3">
-						     		<div class="control-label" style="text-align: left;">นายวราวัจน์ จรัญจงดีพงษ์</div>
+						     		<div class="control-label" style="text-align: left;">{{ row[5] }}</div>
 						    	</div>
 						    	<label class="control-label col-sm-2" for="sIdF">รหัสนักศึกษา:</label>
 						    	<div class="col-sm-3">
-						     		<div class="control-label" style="text-align: left;">0256304910142</div>
+						     		<div class="control-label" style="text-align: left;">{{ row[6] }}</div>
 						    	</div>
 		     				</div>
 		     			</div>
 		     			<p style="padding: 0;"><b>อาจารย์ที่ปรึกษา:</b></p>
 		     			<div style="padding-left: 6rem;">
-		     				<div class="control-label" style="text-align: left;">อาจารย์คนที่ 1</div>
-		     				<div class="control-label" style="text-align: left;">อาจารย์คนที่ 2</div>
+		     				<div class="control-label" style="text-align: left;">{{ row[7] }}</div>
+		     				<div class="control-label" style="text-align: left;">{{ row[8] }}</div>
 		     			</div>
+		     			<br>
 		     			<p style="padding: 0;"><b>Keyword:</b> 
 		     				<ul class="tags">
-							  	<li><a href="#" class="tag">KW1</a></li>
+							  	<li><a href="#" class="tag">{{ row[9] }}</a></li>
 							  	<!-- <li><a href="#" class="tag">KW2</a></li>
 							  	<li><a href="#" class="tag">KW3</a></li> -->
 							</ul>
@@ -58,7 +60,7 @@
 	     			</div>
 	     		</div>
 	     	</div>
-  			
+  			{% endfor %}
   		</div>
   	</div>
 {% endblock %}
