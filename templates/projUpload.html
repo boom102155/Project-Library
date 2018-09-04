@@ -103,7 +103,7 @@
 			  	</div>
 			  	<br>
 			  	<div class="form-group">
-			    	<label class="control-label col-sm-2" for="proNameF">อาจารย์ที่ปรึกษาหลัก:</label>
+			    	<label class="control-label col-sm-2" for="profPrimary">อาจารย์ที่ปรึกษาหลัก:</label>
 			    	<div class="col-sm-3">
 			     		<select class="form-control" id="profPrimary">
 			     				<option value="0">---อาจารย์ที่ปรึกษาหลัก---</option>
@@ -114,9 +114,9 @@
 			    	</div>
 			  	</div>
 			  	<div class="form-group">
-			    	<label class="control-label col-sm-2" for="proNameS">อาจารย์ที่ปรึกษารอง:</label>
+			    	<label class="control-label col-sm-2" for="proSub">อาจารย์ที่ปรึกษารอง:</label>
 			    	<div class="col-sm-3">
-			     		<select class="form-control" id="profPrimary">
+			     		<select class="form-control" id="profSub">
 			     				<option value="0">---อาจารย์ที่ปรึกษารอง---</option>
 			     			{% for row in rows %}
 	        					<option value="{{ row[0] }}">{{ row[1] }}</option>
@@ -141,11 +141,12 @@
 			  	
 			  	<div class="form-group"> 
 			    	<div class="col-sm-offset-2 col-sm-10">
-			      		<button type="submit" class="btn btn-primary">อัพโหลด</button>
+			      		<button type="submit" value="submit" id="btnSave" class="btn btn-primary">อัพโหลด</button>
 			    	</div>
 			  	</div>
 			</form>
 		</div>
+
 		<!-- footer -->
   		<div class="footer">
   			<div class="row">
@@ -168,5 +169,54 @@
   			</div>
   		</div><!-- footer -->
 	</div>
+	<script type="text/javascript">
+		$('#btnSave').click(function(){	
+	  		var pName = document.getElementById("pName").value;
+			var pYear = document.getElementById("pYear").value;
+			var pType = document.getElementById("pType").value;
+			var sNameF = document.getElementById("sNameF").value;
+			var sIdF = document.getElementById("sIdF").value;
+			var sNameS = document.getElementById("sNameS").value;
+			var sIdS = document.getElementById("sIdS").value;
+			var profPrimary = document.getElementById("profPrimary").value;
+			var profSub = document.getElementById("profSub").value;
+			var keyword = document.getElementById("keyword").value;
+
+			// var file = document.getElementById("file").value;
+
+			if (pName == "" || sNameF == "" || sIdF == "" || sNameS == "" || sIdS == "" || keyword == "") {
+				alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+				return false;
+			}
+			else{
+				alert("บันทึกข้อมูลเรียบร้อย");
+				$.ajax({
+					url: '/addproj',
+					data: JSON.stringify({
+						"pName" : pName , 
+						"pYear" : pYear , 
+						"pType" : pType , 
+						"sNameF" : sNameF,
+						"sIdF" : sIdF,
+						"sNameS" : sNameS,
+						"sIdS" : sIdS,
+						"profPrimary" : profPrimary,
+						"profSub" : profSub,
+						"keyword" : keyword
+					}),
+					type: 'POST',
+					processData: false,
+					contentType: 'application/json; charset=utf-8',
+					success: function(response){
+						console.log(response);
+					},
+					error: function(error){
+						console.log(error);
+					}
+				});
+				location.reload();
+			}				
+		});
+	</script>
 </body>
 </html>

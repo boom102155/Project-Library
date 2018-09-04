@@ -69,6 +69,33 @@ def projupload():
     rows2 = query2.fetchall()
     return  render_template("projUpload.html" , rows=rows , rows2=rows2)
 
+@app.route('/addproj' , methods = ['GET' , 'POST'])
+def addproj():
+    try:
+        data = request.get_json()
+        conn = db_connect.connect()
+        conn.execute("INSERT INTO PROJECT "
+                     "(PJ_ID, "
+                     "PJ_NAME, "
+                     "PJ_YEAR, "
+                     "PJTYPE_ID, "
+                     "S_NAME1, "
+                     "S_ID1, "
+                     "S_NAME2,"
+                     "S_ID2,"
+                     "PERSON_ID1,"
+                     "PERSON_ID2,"
+                     "KEYWORD) "
+                     "VALUES (PROJECT_SEQ.NEXTVAL, :2, :3, :4, :5, :6, :7, :8, :9, :10, :11)",
+                     (data["pName"], data["pYear"], data["pType"], data["sNameF"], data["sIdF"], data["sNameS"], data["sIdS"], data["profPrimary"], data["profSub"], data["keyword"]))
+        conn.commit()
+    except:
+        conn.rollback()
+    finally:
+        return json.dumps(data)
+        conn.close()
+
+
 @app.route('/newsupdate' , methods = ['GET' , 'POST'])
 def newsupdate():
     return  render_template("newsUpdate.html")
