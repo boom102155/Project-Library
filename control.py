@@ -1,3 +1,4 @@
+from time import strftime, gmtime
 from flask import Flask, jsonify, render_template, request, json, redirect, url_for, session
 from sqlalchemy import create_engine
 import os
@@ -68,6 +69,35 @@ def projupload():
     rows = query.fetchall()
     rows2 = query2.fetchall()
     return  render_template("projUpload.html" , rows=rows , rows2=rows2)
+
+@app.route('/uploader', methods = ['GET', 'POST'])
+def upload():
+   if request.method == 'POST':
+      # f = request.files['file']
+      # f.save(secure_filename(f.filename))
+      # return 'file uploaded successfully'
+      target = os.path.join(APP_ROOT, 'static/UPLOAD')
+      print(target)
+      file = request.files['file']
+      if file.filename == '':
+          return 'no file selected'
+
+      if not os.path.isdir(target):
+          os.mkdir(target)
+
+      st = strftime("%d%m%Y", gmtime())
+      t1 = strftime("%H", gmtime())
+      t2 = strftime("%M", gmtime())
+      t3 = strftime("%S", gmtime())
+
+      for file in request.files.getlist("file"):
+          print(file)
+          filename = file.filename
+          destination = "/".join([target, st + '_' + t1 + t2 + t3 + '.'+ filename.split('.')[1]])
+          print("Accept incoming file:", filename.split('.')[1])
+          print(destination)
+          file.save(destination)
+      return redirect("/addproj")
 
 @app.route('/addproj' , methods = ['GET' , 'POST'])
 def addproj():
