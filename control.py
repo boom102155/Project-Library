@@ -103,6 +103,13 @@ def upload():
 def addproj():
     try:
         data = request.get_json()
+        st = strftime("%d%m%Y", gmtime())
+        t1 = strftime("%H", gmtime())
+        t2 = strftime("%M", gmtime())
+        t3 = strftime("%S", gmtime())
+
+        constrname = st + '_' + t1 + t2 + t3 + '.' + (data['pathpic'])
+
         conn = db_connect.connect()
         conn.execute("INSERT INTO PROJECT "
                      "(PJ_ID, "
@@ -118,12 +125,20 @@ def addproj():
                      "KEYWORD) "
                      "VALUES (PROJECT_SEQ.NEXTVAL, :2, :3, :4, :5, :6, :7, :8, :9, :10, :11)",
                      (data["pName"], data["pYear"], data["pType"], data["sNameF"], data["sIdF"], data["sNameS"], data["sIdS"], data["profPrimary"], data["profSub"], data["keyword"]))
-        conn.commit()
+
+        conn.execute("INSERT INTO PROJECT_FILE "
+                     "(PATH, "
+                     "NAME, "
+                     "PJ_ID) "
+                     "(SELECT "+ constrname +", "+ constrname +", MAX(PJ_ID) FROM PROJECT)")
+
     except:
         conn.rollback()
     finally:
-        return json.dumps(data)
+        conn.commit()
         conn.close()
+        return json.dumps(data)
+
 
 
 @app.route('/newsupdate' , methods = ['GET' , 'POST'])

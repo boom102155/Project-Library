@@ -148,6 +148,20 @@
 		            		}
 		               	})
 		            </script>
+		            <input type="text" id="getfilename" style="display: none;">
+		            <script type="text/javascript">
+						$(function() {
+					     	$("input:file").change(function (){
+					       		// var fileName = $(this).val();
+					       		// var gtn = document.getElementById("gettimename").value;
+					       		var fileName = $('input[type=file]').val().split('\\').pop();
+					       		// $(".getfilename").html(fileName);
+					       		var filetype = fileName.split(".")[1];	
+					       		// var conStr = gtn + filetype;
+					       		document.getElementById("getfilename").value = filetype;
+					     	});
+					  	});
+					</script>
 			  	</div>
 			  	
 			  	<div class="form-group"> 
@@ -193,9 +207,11 @@
 			var profSub = document.getElementById("profSub").value;
 			var keyword = document.getElementById("keyword").value;
 
-			// var file = document.getElementById("file").value;
+			var pathpic = document.getElementById("getfilename").value;
 
-			if (pName == "" || sNameF == "" || sIdF == "" || sNameS == "" || sIdS == "" || keyword == "") {
+			if (pName == "" || sNameF == "" || sIdF == "" || 
+				sNameS == "" || sIdS == "" || keyword == "" || 
+				document.getElementById("myfile").files.length == 0) {
 				alert("กรุณากรอกข้อมูลให้ครบถ้วน");
 				return false;
 			}
@@ -213,7 +229,8 @@
 						"sIdS" : sIdS,
 						"profPrimary" : profPrimary,
 						"profSub" : profSub,
-						"keyword" : keyword
+						"keyword" : keyword,
+						"pathpic" : pathpic
 					}),
 					type: 'POST',
 					processData: false,
@@ -227,13 +244,6 @@
 				});
 				location.reload();
 			}				
-		});
-	</script>
-
-	<script type="text/javascript">
-		$('#btnSave').click(function(){
-			var file = document.getElementById("file").value;
-
 		});
 	</script>
 </body>
