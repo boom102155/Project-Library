@@ -21,37 +21,14 @@ def projlist():
     rows = query.fetchall()
     return render_template("projList.html", rows=rows)
 
-# @app.route('/getsessionprojid' , methods = ['GET' , 'POST'])
-# def getsessionprojid():
-#     data = request.get_json()
-#     conn = db_connect.connect()
-#     query = conn.execute("SELECT PROJ_ID FROM PROJECT WHERE PROJ_ID = '" + (data["projid"]) + "'")
-#     rows = query.fetchall()
-#     for row in rows:
-#         list1 = ["PROJ_ID"]
-#         list2 = [row["proj_id"]]
-#         data = zip(list1, list2)
-#         d = dict(data)
-#         session['projectid'] = ''.join(list2)
-#     return jsonify()
-
 @app.route('/projcontent/<projid>' , methods = ['GET','POST'])
 def projcontent(projid):
     conn = db_connect.connect()
-    query = conn.execute("SELECT "
-                         "pr.PJ_NAME, "
-                         "pr.PJ_YEAR , "
-                         "pr.PJTYPE_ID , "
-                         "pr.S_NAME1 , "
-                         "pr.S_ID1 , "
-                         "pr.S_NAME2 , "
-                         "pr.S_ID2 , "
-                         "(pe.NAME || ' ' || pe.SURNAME) AS PERSON1 , "
-                         "(pe2.NAME || ' ' || pe2.SURNAME) AS PERSON2 , "
-                         "pr.KEYWORD "
-                         "FROM PROJECT pr , PERSON pe , PERSON pe2 "
+    query = conn.execute("SELECT pr.PJ_NAME, pr.PJ_YEAR, pr.PJTYPE_ID, pr.S_NAME1, pr.S_ID1, pr.S_NAME2, pr.S_ID2, "
+                         "(pe.NAME || ' ' || pe.SURNAME) AS PERSON1, (pe2.NAME || ' ' || pe2.SURNAME) AS PERSON2, pr.KEYWORD, pf.NAME "
+                         "FROM PROJECT pr , PERSON pe , PERSON pe2, PROJECT_FILE pf "
                          "WHERE pr.PJ_ID = " + projid +
-                         " AND pr.PERSON_ID1 = pe.PERSON_ID AND pr.PERSON_ID2 = pe2.PERSON_ID")
+                         " AND pr.PERSON_ID1 = pe.PERSON_ID AND pr.PERSON_ID2 = pe2.PERSON_ID AND pr.PJ_ID = pf.PJ_ID")
     rows = query.fetchall()
 
     return render_template("projContent.html" , rows=rows)
@@ -97,20 +74,19 @@ def upload():
           print("Accept incoming file:", filename.split('.')[1])
           print(destination)
           file.save(destination)
-      return redirect("/addproj")
+      return redirect("/projupload")
 
 @app.route('/addproj' , methods = ['GET' , 'POST'])
 def addproj():
+    conn = db_connect.connect()
+    data = request.get_json()
+    st = strftime("%d%m%Y", gmtime())
+    t1 = strftime("%H", gmtime())
+    t2 = strftime("%M", gmtime())
+    t3 = strftime("%S", gmtime())
+
     try:
-        data = request.get_json()
-        st = strftime("%d%m%Y", gmtime())
-        t1 = strftime("%H", gmtime())
-        t2 = strftime("%M", gmtime())
-        t3 = strftime("%S", gmtime())
-
         constrname = st + '_' + t1 + t2 + t3 + '.' + (data['pathpic'])
-
-        conn = db_connect.connect()
         conn.execute("INSERT INTO PROJECT "
                      "(PJ_ID, "
                      "PJ_NAME, "
@@ -130,16 +106,13 @@ def addproj():
                      "(PATH, "
                      "NAME, "
                      "PJ_ID) "
-                     "(SELECT "+ constrname +", "+ constrname +", MAX(PJ_ID) FROM PROJECT)")
-
+                     "(SELECT '"+ constrname +"', '"+ constrname +"', MAX(PJ_ID) FROM PROJECT)")
+        conn.commit()
     except:
         conn.rollback()
     finally:
-        conn.commit()
         conn.close()
         return json.dumps(data)
-
-
 
 @app.route('/newsupdate' , methods = ['GET' , 'POST'])
 def newsupdate():
