@@ -13,12 +13,51 @@ APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 def index():
     return render_template("index.html")
 
-@app.route('/projlist' , methods = ['GET','POST'])
-def projlist():
+@app.route('/projlist/<projtypeid>' , methods = ['GET','POST'])
+def projlist(projtypeid):
     conn = db_connect.connect()
-    query = conn.execute("SELECT PJ_ID , PJ_NAME , PJ_YEAR , KEYWORD "
-                         "FROM PROJECT")
-    rows = query.fetchall()
+
+    if projtypeid == '1':
+        query = conn.execute("SELECT PJ_ID , PJ_NAME , PJ_YEAR , KEYWORD "
+                              "FROM PROJECT "
+                              "WHERE PJTYPE_ID = 'โปรแกรมเพื่อความบันเทิง'")
+        rows = query.fetchall
+    elif projtypeid == '2':
+        query = conn.execute("SELECT PJ_ID , PJ_NAME , PJ_YEAR , KEYWORD "
+                              "FROM PROJECT "
+                              "WHERE PJTYPE_ID = 'โปรแกรมเพื่อส่งเสริมการเรียนรู้'")
+        rows = query.fetchall
+    elif projtypeid == '3':
+        query = conn.execute("SELECT PJ_ID , PJ_NAME , PJ_YEAR , KEYWORD "
+                              "FROM PROJECT "
+                              "WHERE PJTYPE_ID = 'โปรแกรมเพื่อช่วยคนพิการ/ผู้สูงอายุ/สัตว์เลี้ยง'")
+        rows = query.fetchall
+    elif projtypeid == '4':
+        query = conn.execute("SELECT PJ_ID , PJ_NAME , PJ_YEAR , KEYWORD "
+                              "FROM PROJECT "
+                              "WHERE PJTYPE_ID = 'โปรแกรมระบบสารสนเทศสำหรับองค์กร'")
+        rows = query.fetchall
+    elif projtypeid == '5':
+        query = conn.execute("SELECT PJ_ID , PJ_NAME , PJ_YEAR , KEYWORD "
+                              "FROM PROJECT "
+                              "WHERE PJTYPE_ID = 'โปรแกรมด้าน Internet of Things'")
+        rows = query.fetchall
+    elif projtypeid == '6':
+        query = conn.execute("SELECT PJ_ID , PJ_NAME , PJ_YEAR , KEYWORD "
+                              "FROM PROJECT "
+                              "WHERE PJTYPE_ID = 'Computational Intelligence'")
+        rows = query.fetchall
+    elif projtypeid == 7:
+        query = conn.execute("SELECT PJ_ID , PJ_NAME , PJ_YEAR , KEYWORD "
+                              "FROM PROJECT "
+                              "WHERE PJTYPE_ID = 'โปรแกรมเพื่องานการพัฒนาด้านวิทยาศาสตร์และเทคโนโลยี'")
+        rows = query.fetchall
+    else:
+        query = conn.execute("SELECT PJ_ID , PJ_NAME , PJ_YEAR , KEYWORD "
+                             "FROM PROJECT")
+        rows = query.fetchall()
+
+
     return render_template("projList.html", rows=rows)
 
 @app.route('/projcontent/<projid>' , methods = ['GET','POST'])
