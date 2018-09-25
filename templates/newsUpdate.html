@@ -59,11 +59,43 @@
 
 			<form class="form-horizontal" style="padding-top: 3rem;">
 				<div class="form-group">
-			    	<label class="control-label col-sm-2" for="newsUpdate">ประกาศใหม่:</label>
-			    	<div class="col-sm-6">
-			     		<textarea class="form-control" id="newsUpdate" placeholder="ประกาศ..."></textarea>
+			    	<label class="control-label col-sm-2" for="txtTopic">หัวข้อประกาศ:</label>
+			    	<div class="col-sm-4">
+			     		<input class="form-control" type="text" id="txtTopic" placeholder="หัวข้อ" maxlength="50">
+			     		<p class="topiclenght"></p>
+			    	</div>
+			    	<script type="text/javascript">
+						 $('#txtTopic').on('keyup',function(){
+						    var input = $(this);
+						    input.next('.topiclenght').text(input.val().length + "/50 ตัวอักษร");
+						});
+			    	</script>
+			  	</div>
+				<div class="form-group">
+			    	<label class="control-label col-sm-2" for="newsUpdate">รายละเอียดประกาศ:</label>
+			    	<div class="col-sm-4">
+			     		<textarea class="form-control" id="newsUpdate" placeholder="รายละเอียด..." maxlength="200"></textarea>
+			     		<p class="desciptionlenght"></p>
+			    	</div>
+			    	<script type="text/javascript">
+						 $('#newsUpdate').on('keyup',function(){
+						    var input = $(this);
+						    input.next('.desciptionlenght').text(input.val().length + "/200 ตัวอักษร");
+						});
+			    	</script>
+			  	</div>
+			  	<div class="form-group">
+			    	<label class="control-label col-sm-2" for="pubStatus">สถานะประกาศ:</label>
+			    	<div class="col-sm-3">
+			     		<select class="form-control" id="pubStatus">
+			     			<option value="0">ประกาศทั่วไป</option>
+			     			<option value="1">ประกาศด่วน</option>
+			     		</select>
 			    	</div>
 			  	</div>
+
+
+
 			  	<div class="form-group"> 
 			    	<div class="col-sm-offset-2 col-sm-10">
 			      		<button type="submit" class="btn btn-primary">อัพโหลด</button>
@@ -84,35 +116,21 @@
 		            <tr>
 		            	<th>รหัส</th>
 		                <th>หัวข้อประกาศ</th>
+		                <th>ผู้ประกาศ</th>
 		                <th>วันที่ลงประกาศ</th>
 		            </tr>
 		        </thead>
 		        <tbody>
+		        	{% for row in rows %}
 		            <tr>
-		            	<td>1</td>
-		                <td>ประกาศ 1</td>
-		                <td>22-08-2561</td>
+		            	<td>{{ row[0] }}</td>
+		                <td>
+		                	<a href="#">{{ row[1] }}</a>
+		                </td>
+		                <td>{{ row[2] }}</td>
+		                <td>{{ row[3] }}</td>
 		            </tr>
-		             <tr>
-		            	<td>2</td>
-		                <td>ประกาศ 2</td>
-		                <td>22-08-2561</td>
-		            </tr>
-		             <tr>
-		            	<td>3</td>
-		                <td>ประกาศ 3</td>
-		                <td>22-08-2561</td>
-		            </tr>
-		             <tr>
-		            	<td>4</td>
-		                <td>ประกาศ 4</td>
-		                <td>22-08-2561</td>
-		            </tr>
-		             <tr>
-		            	<td>5</td>
-		                <td>ประกาศ 5</td>
-		                <td>22-08-2561</td>
-		            </tr>
+		            {% endfor %}
 		        </tbody>
 		    </table>
 

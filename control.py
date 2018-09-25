@@ -11,11 +11,16 @@ APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 @app.route('/index' , methods = ['GET','POST'])
 def index():
-    return render_template("index.html")
+    conn = db_connect.connect()
+    query = conn.execute("SELECT pb.TOPIC, p.NAME , TO_CHAR(pb.PUB_DATE,'dd-mm-yyyy') as pubdate "
+                         "FROM PUBLISH pb, PERSON p "
+                         "WHERE pb.PERSON_ID = p.PERSON_ID")
+    rows = query.fetchall()
+
+    return render_template("index.html", rows=rows)
 
 @app.route('/projlist/<projtypeid>' , methods = ['GET','POST'])
 def projlist(projtypeid):
-
     conn = db_connect.connect()
     print(projtypeid)
 
@@ -149,7 +154,14 @@ def addproj():
 
 @app.route('/newsupdate' , methods = ['GET' , 'POST'])
 def newsupdate():
-    return  render_template("newsUpdate.html")
+    conn = db_connect.connect()
+    query = conn.execute("SELECT pb.PUB_ID, pb.TOPIC, p.NAME , TO_CHAR(pb.PUB_DATE,'dd-mm-yyyy') as pubdate "
+                         "FROM PUBLISH pb, PERSON p "
+                         "WHERE pb.PERSON_ID = p.PERSON_ID")
+
+    rows = query.fetchall()
+
+    return  render_template("newsUpdate.html", rows=rows)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',debug=True)

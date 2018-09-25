@@ -28,6 +28,18 @@
     		color: black;
     	}
 
+    	p.newstopic{
+  			width: 240px;
+  			white-space: nowrap;
+		  	overflow: hidden;
+		  	text-overflow: ellipsis;
+		}
+		p.poster{
+			width: 100px;
+  			white-space: nowrap;
+		  	overflow: hidden;
+		  	text-overflow: ellipsis;
+		}
     </style>
 
     
@@ -98,20 +110,21 @@
 	  				<div class="panel panel-info">
 	      				<div class="panel-heading">ประกาศ</div>
 	     				<div class="panel-body" style="padding-top: 17px;">
-	     					<p style="padding: 0;">Panel Content</p> 	
-	     					<p style="padding: 0;">Panel Content</p> 
-	     					<p style="padding: 0;">Panel Content</p> 
-	     					<p style="padding: 0;">Panel Content</p> 
-	     					<p style="padding: 0;">Panel Content</p>
-	     					<p style="padding: 0;">Panel Content</p>
-	     					<p style="padding: 0;">Panel Content</p>
-	     					<p style="padding: 0;">Panel Content</p>
-	     					<p style="padding: 0;">Panel Content</p>
-	     					<p style="padding: 0;">Panel Content</p>
-	     					<p style="padding: 0;">Panel Content</p>
-	     					<p style="padding: 0;">Panel Content</p>
-	     					<p style="padding: 0;">Panel Content</p>
-							<p style="padding: 0;">Panel Content</p>
+	     					{% for row in rows %}
+	     					<div class="row">
+	     						<div class="col-md-6">
+	     							<p class="newstopic">
+	     								<a href="#">{{ row[0] }}</a>
+		                			</p> 
+	     						</div>
+	     						<div class="col-md-3" style="text-align: right;">
+	     							<p class="poster">{{ row[1] }}</p>
+	     						</div>
+	     						<div class="col-md-3" style="text-align: right;">
+	     							<p>{{ row[2] }}</p>
+	     						</div>
+	     					</div>					
+	     					{% endfor %}
 	     				</div>
 	    			</div>
 	  			</div>
