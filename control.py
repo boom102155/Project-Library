@@ -12,9 +12,10 @@ APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 @app.route('/index' , methods = ['GET','POST'])
 def index():
     conn = db_connect.connect()
-    query = conn.execute("SELECT pb.TOPIC, p.NAME , TO_CHAR(pb.PUB_DATE,'dd-mm-yyyy') as pubdate "
+    query = conn.execute("SELECT pb.TOPIC, p.NAME, TO_CHAR(pb.PUB_DATE,'dd-mm-yyyy') as pubdate, pb.PIN_STATUS, pb.PUB_ID "
                          "FROM PUBLISH pb, PERSON p "
-                         "WHERE pb.PERSON_ID = p.PERSON_ID")
+                         "WHERE pb.PERSON_ID = p.PERSON_ID AND ROWNUM <= 7 "
+                         "ORDER BY PIN_STATUS DESC")
     rows = query.fetchall()
 
     return render_template("index.html", rows=rows)
@@ -155,9 +156,11 @@ def addproj():
 @app.route('/newsupdate' , methods = ['GET' , 'POST'])
 def newsupdate():
     conn = db_connect.connect()
-    query = conn.execute("SELECT pb.PUB_ID, pb.TOPIC, p.NAME , TO_CHAR(pb.PUB_DATE,'dd-mm-yyyy') as pubdate "
+    query = conn.execute("SELECT pb.PUB_ID, pb.TOPIC, p.NAME , TO_CHAR(pb.PUB_DATE,'dd-mm-yyyy') as pubdate, pb.PIN_STATUS,"
+                         "(CASE pb.PIN_STATUS WHEN '1' THEN 'ประกาศสำคัญ' ELSE 'ประกาศทั่วไป' END) as pinstatus "
                          "FROM PUBLISH pb, PERSON p "
-                         "WHERE pb.PERSON_ID = p.PERSON_ID")
+                         "WHERE pb.PERSON_ID = p.PERSON_ID "
+                         "ORDER BY PIN_STATUS DESC")
 
     rows = query.fetchall()
 

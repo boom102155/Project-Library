@@ -45,6 +45,12 @@
 	        background-color: #23A4DB;
 	        color: white;
 	     }
+
+	     .imgresponsive {
+			width: 100%;
+			height: auto;
+			max-width: 15px;
+		}
 	</style>
 </head>
 <body>
@@ -118,6 +124,7 @@
 		                <th>หัวข้อประกาศ</th>
 		                <th>ผู้ประกาศ</th>
 		                <th>วันที่ลงประกาศ</th>
+		                <th>สถานะประกาศ</th>
 		            </tr>
 		        </thead>
 		        <tbody>
@@ -125,11 +132,28 @@
 		            <tr>
 		            	<td>{{ row[0] }}</td>
 		                <td>
-		                	<a href="#">{{ row[1] }}</a>
+		                	<p>
+		                		<a href="#">{{ row[1] }}</a> 
+		                		<img id="{{ row[0] }}" src="{{ url_for('static',filename="images/pin-gif.gif")}}" class="imgresponsive" alt="pinpost">
+		                	</p>
 		                </td>
 		                <td>{{ row[2] }}</td>
 		                <td>{{ row[3] }}</td>
+		                <td class="status">{{ row[5] }}</td>
 		            </tr>
+		            <script type="text/javascript">
+ 						$(document).ready(function() {
+     						if ({{ row[4] }} != 1) {
+     							$('#{{ row[0] }}').hide();
+     						}
+     						else{
+     							$('#{{ row[0] }}').show();
+     						}
+
+     						$('.status:contains("ประกาศสำคัญ")').css("color", "red");
+     						$('.status:contains("ประกาศทั่วไป")').css("color", "black");
+ 						});
+ 					</script>
 		            {% endfor %}
 		        </tbody>
 		    </table>

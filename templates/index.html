@@ -29,16 +29,21 @@
     	}
 
     	p.newstopic{
-  			width: 240px;
+  			width: 325px;
+  			padding: 0px;
   			white-space: nowrap;
 		  	overflow: hidden;
 		  	text-overflow: ellipsis;
 		}
-		p.poster{
-			width: 100px;
-  			white-space: nowrap;
-		  	overflow: hidden;
-		  	text-overflow: ellipsis;
+
+		hr.divider { 
+			margin: 0em;
+		}
+
+		.imgresponsive {
+			width: 100%;
+			height: auto;
+			max-width: 15px;
 		}
     </style>
 
@@ -109,37 +114,36 @@
 	  			<div class="col-md-6">
 	  				<div class="panel panel-info">
 	      				<div class="panel-heading">ประกาศ</div>
-	     				<div class="panel-body" style="padding-top: 17px;">
+	     				<div class="panel-body" style="padding-top: 17px; height: 510px;">
 	     					{% for row in rows %}
 	     					<div class="row">
-	     						<div class="col-md-6">
+	     						<div class="col-md-10">
 	     							<p class="newstopic">
 	     								<a href="#">{{ row[0] }}</a>
-		                			</p> 
+	     								<img id="{{ row[4] }}" src="{{ url_for('static',filename="images/pin-gif.gif")}}" class="imgresponsive" alt="pinpost">
+	     							</p>
+	     							<h5>ประกาศโดย: {{ row[1] }} &nbsp;&nbsp;&nbsp;&nbsp;วันที่: {{ row[2] }}</h5>
 	     						</div>
-	     						<div class="col-md-3" style="text-align: right;">
-	     							<p class="poster">{{ row[1] }}</p>
-	     						</div>
-	     						<div class="col-md-3" style="text-align: right;">
-	     							<p>{{ row[2] }}</p>
-	     						</div>
-	     					</div>					
+	     					</div>
+	     					<script type="text/javascript">
+	     						$(document).ready(function() {
+		     						// var pinstatus = '{{ row[3] }}';
+		     						if ({{ row[3] }} != 1) {
+		     							$('#{{ row[4] }}').hide();
+		     						}
+		     						else{
+		     							$('#{{ row[4] }}').show();
+		     						}
+	     						});
+	     					</script>
+
+	     					<hr class="divider">				
 	     					{% endfor %}
+	     					<br>
+	     					<a href="/newsupdate"><h5 style="text-align: right;">อ่านทั้งหมด</h5></a>
 	     				</div>
 	    			</div>
 	  			</div>
-	  			<!-- <div class="col-md-6">
-	  				<div class="panel panel-info">
-		      			<div class="panel-heading">ข่าว</div>
-		     			<div class="panel-body">
-		     				<p style="padding: 0;">Panel Content</p>
-		     				<p style="padding: 0;">Panel Content</p>
-		     				<p style="padding: 0;">Panel Content</p>
-		 					<p style="padding: 0;">Panel Content</p>
-		 					<p style="padding: 0;">Panel Content</p>
-		     			</div>
-		    		</div>
-	  			</div> -->
   			</div>	
   		</div><!-- end content -->
 	</div>
