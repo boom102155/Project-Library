@@ -12,10 +12,12 @@ APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 @app.route('/index' , methods = ['GET','POST'])
 def index():
     conn = db_connect.connect()
-    query = conn.execute("SELECT pb.TOPIC, p.NAME, TO_CHAR(pb.PUB_DATE,'dd-mm-yyyy') as pubdate, pb.PIN_STATUS, pb.PUB_ID "
-                         "FROM PUBLISH pb, PERSON p "
-                         "WHERE pb.PERSON_ID = p.PERSON_ID AND ROWNUM <= 7 "
-                         "ORDER BY PIN_STATUS DESC")
+    query = conn.execute("SELECT * "
+                         "FROM (SELECT pb.TOPIC, p.NAME, TO_CHAR(pb.PUB_DATE,'dd-mm-yyyy') as pubdate, pb.PIN_STATUS, pb.PUB_ID "
+                                "FROM PUBLISH pb, PERSON p "
+                                "WHERE pb.PERSON_ID = p.PERSON_ID "
+                                "ORDER BY pb.PIN_STATUS DESC, pb.PUB_ID DESC) supplier2 "
+                         "WHERE ROWNUM <= 7")
     rows = query.fetchall()
 
     return render_template("index.html", rows=rows)
@@ -164,7 +166,23 @@ def newsupdate():
 
     rows = query.fetchall()
 
-    return  render_template("newsUpdate.html", rows=rows)
+    return render_template("newsUpdate.html", rows=rows)
+
+@app.route('/addnews' , methods = ['GET' , 'POST'])
+def addnews():
+    data = request.get_json()
+    conn = db_connect.connect()
+    conn.execute("INSERT INTO PUBLISH "
+                 "(TOPIC, "
+                 "DESCRIPTION, "
+                 "PIN_STATUS, "
+                 "PUB_DATE, "
+                 "PERSON_ID) "
+                 "VALUES (:1, :2, :3, TO_DATE(:4, 'yyyy-mm-dd'), :5)",
+                 (data["vtopic"], data["vnewsupdate"], data["vpubstatus"], data["vdate"], data["vperson"]))
+
+    return json.dumps(data)
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',debug=True)
