@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Project-Library.iml" filepath="$PROJECT_DIR$/.idea/Project-Library.iml" />
       <module fileurl="file://D:/python work/.idea/python work.iml" filepath="D:/python work/.idea/python work.iml" />
+      <module fileurl="file://D:/vue beginer/.idea/vue beginer.iml" filepath="D:/vue beginer/.idea/vue beginer.iml" />
     </modules>
   </component>
 </project>

@@ -53,8 +53,20 @@
 			  	<div class="form-group">
 			    	<label class="control-label col-sm-2" for="pName">ชื่อโครงงาน:</label>
 			    	<div class="col-sm-5">
-			     		<input type="text" class="form-control" id="pName" placeholder="โครงงาน..." autocomplete="off">
-			    	</div>
+						<input type="text" class="form-control" id="pName" placeholder="โครงงาน..." autocomplete="off">
+						
+						<div id="error1" style="display: none; color: red;">กรุณากรอกข้อมูล</div>
+						<script type="text/javascript">
+							$("#pName").blur(function(){
+								if (this.value == '') {
+									$("#error1").fadeIn("show");
+								}
+								if (this.value != '') {
+									$("#error1").fadeOut();
+								}
+							})
+						</script>
+					</div>
 			  	</div>
 			  	<div class="form-group">
 			    	<label class="control-label col-sm-2" for="pYear">ปีการศึกษา:</label>
@@ -67,7 +79,7 @@
 								$('#pYear').append($('<option />').val(i).html(i));
 							}
 			      		</script>
-			    	</div>
+					</div>
 			  	</div>
 
 			  	<div class="form-group">
@@ -84,12 +96,34 @@
 	  			<div class="form-group">
 			    	<label class="control-label col-sm-2" for="sNameF">ชื่อผู้จัดทำคนที่หนึ่ง:</label>
 			    	<div class="col-sm-3">
-			     		<input type="text" class="form-control" id="sNameF" placeholder="ชื่อ-นามสกุล" autocomplete="off">
-			    	</div>
+						<input type="text" class="form-control" id="sNameF" placeholder="ชื่อ-นามสกุล" autocomplete="off">
+						<div id="error2" style="display: none; color: red;">กรุณากรอกข้อมูล</div>
+						<script type="text/javascript">
+							$("#sNameF").blur(function(){
+								if (this.value == '') {
+									$("#error2").fadeIn("show");
+								}
+								if (this.value != '') {
+									$("#error2").fadeOut();
+								}
+							})
+						</script>
+					</div>
 			    	<label class="control-label col-sm-2" for="sIdF">รหัสนักศึกษา:</label>
 			    	<div class="col-sm-3">
-			     		<input type="text" class="form-control" id="sIdF" placeholder="ตัวอย่าง 0256304910000" autocomplete="off"> 
-			    	</div>
+						<input type="text" class="form-control" id="sIdF" placeholder="ตัวอย่าง 0256304910000" autocomplete="off">
+						<div id="error3" style="display: none; color: red;">กรุณากรอกข้อมูล</div>
+						<script type="text/javascript">
+							$("#sIdF").blur(function(){
+								if (this.value == '') {
+									$("#error3").fadeIn("show");
+								}
+								if (this.value != '') {
+									$("#error3").fadeOut();
+								}
+							})
+						</script> 
+					</div>
 			  	</div>
 			  	<div class="form-group">
 			    	<label class="control-label col-sm-2" for="sNameS">ชื่อผู้จัดทำคนที่สอง:</label>
@@ -101,7 +135,7 @@
 			     		<input type="text" class="form-control" id="sIdS" placeholder="ตัวอย่าง 0256304910000" autocomplete="off">
 			    	</div>
 			  	</div>
-			  	<br>
+				<p style="color: red"><b>**หากเป็นนักศึกษาคนเดียว</b> ให้กรอก ชื่อ-นามสกุล และรหัสนักศึกษา ในช่อง <b>"ชื่อผู้จัดทำคนที่หนึ่ง"</b></p>
 			  	<div class="form-group">
 			    	<label class="control-label col-sm-2" for="profPrimary">อาจารย์ที่ปรึกษาหลัก:</label>
 			    	<div class="col-sm-3">
@@ -110,7 +144,18 @@
 			     			{% for row in rows %}
 	        					<option value="{{ row[0] }}">{{ row[1] }}</option>
 	        				{% endfor %}
-			     		</select>
+						</select>
+						<div id="error4" style="display: none; color: red;">กรุณาระบุอาจารย์ที่ปรึกษา</div>
+						<script type="text/javascript">
+							$("#profPrimary").blur(function(){
+								if (this.value == "0") {
+									$("#error4").fadeIn("show");
+								}
+								if (this.value != "0") {
+									$("#error4").fadeOut();
+								}
+							})
+						</script>
 			    	</div>
 			  	</div>
 			  	<div class="form-group">
@@ -121,9 +166,10 @@
 			     			{% for row in rows %}
 	        					<option value="{{ row[0] }}">{{ row[1] }}</option>
 	        				{% endfor %}
-			     		</select>
+						</select>
 			    	</div>
-			  	</div>
+				</div>
+				<p style="color: red"><b>**หากอาจารย์ที่ปรึกษาคนเดียว</b> ให้ระบุชื่ออาจารย์ในช่อง <b>"อาจารที่ปรึกษาหลัก"</b></p>
 		  		<hr>
 			  	<div class="form-group">
 			    	<label class="control-label col-sm-2" for="keyword">Keyword:</label>
@@ -209,8 +255,7 @@
 
 			var pathpic = document.getElementById("getfilename").value;
 
-			if (pName == "" || sNameF == "" || sIdF == "" || 
-				sNameS == "" || sIdS == "" || keyword == "" || 
+			if (pName == "" || sNameF == "" || sIdF == "" || keyword == "" || 
 				document.getElementById("myfile").files.length == 0) {
 				alert("กรุณากรอกข้อมูลให้ครบถ้วน");
 				return false;

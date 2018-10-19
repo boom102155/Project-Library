@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>รายละเอียดประกาศ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="{{ url_for('static',filename="bootstrap/js/jquery-3.3.1.min.js")}}"></script>
+  	<script type="text/javascript" src="{{ url_for('static',filename="bootstrap/js/bootstrap.min.js")}}"></script>
+ 	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename="bootstrap/css/bootstrap.css")}}">
+  	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename="bootstrap/css/hover.css")}}">
+    <link href="https://fonts.googleapis.com/css?family=Athiti" rel="stylesheet">
+    
+    <style type="text/css">
+        body{
+           /*padding-top: 5rem;*/
+           background-color: #DCDCDC;
+           font-family: 'Athiti', sans-serif;
+           font-size: 17px;
+        }
+
+       .container{
+           background-color: #ffffff;
+           padding: 0; 
+        }
+
+       .content{
+           padding: 40px;
+        }
+
+       .panel-heading{
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+       .footer {
+           /*position: fixed;*/
+            padding: 30px;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: #23A4DB;
+            color: white;
+        }
+   </style>
+
+
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <img src="{{ url_for('static',filename="images/header-logo.jpg")}}" style="max-width: 100%; height: auto;">
+            </div>	
+        </div>
+        <div class="content">
+            {% for row in rows %}
+            <div class="panel panel-primary" style="margin-bottom: 0px;">
+                <div class="panel-heading">{{ row[0] }}</div>
+               <div class="panel-body" style="padding-left: 5rem;">
+                   <p>{{ row[1] }}</p>
+                    <br><br>
+                   <h5 style="text-align: right;">ประกาศโดย: {{ row[3] }} &nbsp;&nbsp;&nbsp;&nbsp;วันที่: {{ row[2] }}</h5>
+               </div>
+           </div>
+           {% endfor %}
+           <br>
+           <a href="/newsupdate">ย้อนกลับ</a>
+        </div>
+
+
+        <!-- footer -->
+  		<div class="footer">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>About</h3>
+                    <p>This is a Web for Faculty of Computer Technology Engineering to included the projects of
+                    student in Bachelor's Degree.</p>
+                </div>
+                <div class="col-md-6">
+                    <h3>Follow Us:</h3>
+                    <a href="https://www.facebook.com/cten.cpc/" target="blank">
+                        <img src="{{ url_for('static',filename="images/icons/facebook.png")}}">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer" style="text-align: center; padding: 15px; background-color: #1587B7;">
+            <div>
+                © 2018 Copyright: S.Thakdanai - Developer
+            </div>
+        </div><!-- footer -->
+
+    </div>
+</body>
+</html>
