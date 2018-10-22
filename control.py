@@ -126,33 +126,33 @@ def addproj():
     t2 = strftime("%M", gmtime())
     t3 = strftime("%S", gmtime())
 
-    # try:
-    constrname = st + '_' + t1 + t2 + t3 + '.' + (data['pathpic'])
-    conn.execute("INSERT INTO PROJECT "
-                 "(PJ_ID, "
-                 "PJ_NAME, "
-                 "PJ_YEAR, "
-                 "PJTYPE_ID, "
-                 "S_NAME1, "
-                 "S_ID1, "
-                 "S_NAME2, "
-                 "S_ID2, "
-                 "PERSON_ID1, "
-                 "PERSON_ID2, "
-                 "KEYWORD) "
-                 "VALUES (PROJECT_SEQ.NEXTVAL, :2, :3, :4, :5, :6, NVL(:7, 'ไม่มี'), NVL(:8, 'ไม่มี'), :9, NVL(:10, 0), :11)",
-                 (data["pName"], data["pYear"], data["pType"], data["sNameF"], data["sIdF"], data["sNameS"], data["sIdS"], data["profPrimary"], data["profSub"], data["keyword"]))
+    try:
+        constrname = st + '_' + t1 + t2 + t3 + '.' + (data['pathpic'])
+        conn.execute("INSERT INTO PROJECT "
+                     "(PJ_ID, "
+                     "PJ_NAME, "
+                     "PJ_YEAR, "
+                     "PJTYPE_ID, "
+                     "S_NAME1, "
+                     "S_ID1, "
+                     "S_NAME2, "
+                     "S_ID2, "
+                     "PERSON_ID1, "
+                     "PERSON_ID2, "
+                     "KEYWORD) "
+                     "VALUES (PROJECT_SEQ.NEXTVAL, :2, :3, :4, :5, :6, NVL(:7, 'ไม่มี'), NVL(:8, 'ไม่มี'), :9, NVL(:10, 0), :11)",
+                     (data["pName"], data["pYear"], data["pType"], data["sNameF"], data["sIdF"], data["sNameS"], data["sIdS"], data["profPrimary"], data["profSub"], data["keyword"]))
 
-    conn.execute("INSERT INTO PROJECT_FILE "
-                 "(PATH, "
-                 "NAME, "
-                 "PJ_ID) "
-                 "(SELECT '"+ constrname +"', '"+ constrname +"', MAX(PJ_ID) FROM PROJECT)")
-    conn.commit()
-    # except:
-    #     conn.rollback()
-    # finally:
-    #     conn.close()
+        conn.execute("INSERT INTO PROJECT_FILE "
+                     "(PATH, "
+                     "NAME, "
+                     "PJ_ID) "
+                     "(SELECT '"+ constrname +"', '"+ constrname +"', MAX(PJ_ID) FROM PROJECT)")
+        conn.commit()
+    except:
+        conn.rollback()
+    finally:
+        conn.close()
     return json.dumps(data)
 
 @app.route('/newsupdate' , methods = ['GET' , 'POST'])
