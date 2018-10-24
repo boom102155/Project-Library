@@ -92,7 +92,24 @@
 			      		</select>
 			    	</div>
 			  	</div>
-			  	<hr>
+				<hr>
+				<label class="radio-inline"><input type="radio" id="radiostu1" name="sturadio" checked>ผู้จัดทำ 1 คน</label>
+				<label class="radio-inline"><input type="radio" id="radiostu2" name="sturadio">ผู้จัดทำ 2 คน</label>
+				<script type="text/javascript">
+					$(document).ready(function() {
+						$("#sNameS").prop('disabled', true);
+						$("#sIdS").prop('disabled', true);
+						$("#radiostu1").on( "click", function() {
+							$("#sNameS").prop('disabled', true);
+							$("#sIdS").prop('disabled', true);
+						});
+						$("#radiostu2").on( "click", function() {
+							$("#sNameS").prop('disabled', false);
+							$("#sIdS").prop('disabled', false);
+						});
+					});
+				</script>
+				<br><br>
 	  			<div class="form-group">
 			    	<label class="control-label col-sm-2" for="sNameF">ชื่อผู้จัดทำคนที่หนึ่ง:</label>
 			    	<div class="col-sm-3">
@@ -135,8 +152,22 @@
 			     		<input type="text" class="form-control" id="sIdS" placeholder="ตัวอย่าง 0256304910000" autocomplete="off">
 			    	</div>
 			  	</div>
-				<p style="color: red"><b>**หากเป็นนักศึกษาคนเดียว</b> ให้กรอก ชื่อ-นามสกุล และรหัสนักศึกษา ในช่อง <b>"ชื่อผู้จัดทำคนที่หนึ่ง"</b></p>
-			  	<div class="form-group">
+				<!-- <p style="color: red"><b>**หากเป็นนักศึกษาคนเดียว</b> ให้กรอก ชื่อ-นามสกุล และรหัสนักศึกษา ในช่อง <b>"ชื่อผู้จัดทำคนที่หนึ่ง"</b></p> -->
+				<label class="radio-inline"><input type="radio" id="radioprof1" name="profradio" checked>อาจารย์ที่ปรึกษา 1 คน</label>
+				<label class="radio-inline"><input type="radio" id="radioprof2" name="profradio">อาจารย์ที่ปรึกษา 2 คน</label>
+				<script type="text/javascript">
+					$(document).ready(function() {
+						$("#profSub").prop('disabled', true);
+						$("#radioprof1").on( "click", function() {
+							$("#profSub").prop('disabled', true);
+						});
+						$("#radioprof2").on( "click", function() {
+							$("#profSub").prop('disabled', false);
+						});
+					});
+				</script>
+				<br><br>
+				<div class="form-group">
 			    	<label class="control-label col-sm-2" for="profPrimary">อาจารย์ที่ปรึกษาหลัก:</label>
 			    	<div class="col-sm-3">
 			     		<select class="form-control" id="profPrimary">
@@ -169,7 +200,7 @@
 						</select>
 			    	</div>
 				</div>
-				<p style="color: red"><b>**หากอาจารย์ที่ปรึกษาคนเดียว</b> ให้ระบุชื่ออาจารย์ในช่อง <b>"อาจารที่ปรึกษาหลัก"</b></p>
+				<!-- <p style="color: red"><b>**หากอาจารย์ที่ปรึกษาคนเดียว</b> ให้ระบุชื่ออาจารย์ในช่อง <b>"อาจารที่ปรึกษาหลัก"</b></p> -->
 		  		<hr>
 			  	<div class="form-group">
 			    	<label class="control-label col-sm-2" for="keyword">Keyword:</label>
