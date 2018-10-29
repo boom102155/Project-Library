@@ -171,7 +171,7 @@
 			    	<label class="control-label col-sm-2" for="profPrimary">อาจารย์ที่ปรึกษาหลัก:</label>
 			    	<div class="col-sm-3">
 			     		<select class="form-control" id="profPrimary">
-			     				<option value="0">---อาจารย์ที่ปรึกษาหลัก---</option>
+			     				<option value="">---อาจารย์ที่ปรึกษาหลัก---</option>
 			     			{% for row in rows %}
 	        					<option value="{{ row[0] }}">{{ row[1] }}</option>
 	        				{% endfor %}
@@ -179,10 +179,10 @@
 						<div id="error4" style="display: none; color: red;">กรุณาระบุอาจารย์ที่ปรึกษา</div>
 						<script type="text/javascript">
 							$("#profPrimary").blur(function(){
-								if (this.value == "0") {
+								if (this.value == '') {
 									$("#error4").fadeIn("show");
 								}
-								if (this.value != "0") {
+								if (this.value != '') {
 									$("#error4").fadeOut();
 								}
 							})
@@ -193,7 +193,7 @@
 			    	<label class="control-label col-sm-2" for="proSub">อาจารย์ที่ปรึกษารอง:</label>
 			    	<div class="col-sm-3">
 			     		<select class="form-control" id="profSub">
-			     				<option value="0">---อาจารย์ที่ปรึกษารอง---</option>
+			     				<option value="">---อาจารย์ที่ปรึกษารอง---</option>
 			     			{% for row in rows %}
 	        					<option value="{{ row[0] }}">{{ row[1] }}</option>
 	        				{% endfor %}
@@ -205,7 +205,18 @@
 			  	<div class="form-group">
 			    	<label class="control-label col-sm-2" for="keyword">Keyword:</label>
 			    	<div class="col-sm-3">
-			     		<input type="text" class="form-control" id="keyword" placeholder="keyword..." autocomplete="off">
+						<input type="text" class="form-control" id="keyword" placeholder="keyword..." autocomplete="off">
+						<div id="error5" style="display: none; color: red;">กรุณาระบุ Keyword</div>
+						<script type="text/javascript">
+							$("#keyword").blur(function(){
+								if (this.value == '') {
+									$("#error5").fadeIn("show");
+								}
+								if (this.value != '') {
+									$("#error5").fadeOut();
+								}
+							})
+						</script>
 			    	</div>
 			  	</div>
 			  	
@@ -214,14 +225,14 @@
 			    	<div class="col-sm-3">
 			     		<input type="file" id="myfile" name="file" accept="application/pdf">
 			    	</div>
-			    	<div id="error1" style="display: none; color: red;">กรุณาเลือกไฟล์</div>
+			    	<div id="error6" style="display: none; color: red;">กรุณาเลือกไฟล์</div>
 		            <script type="text/javascript">
 		            	$("#myfile").blur(function(){
 		            		if (this.value == '') {
-		            			$("#error1").fadeIn("show");
+		            			$("#error6").fadeIn("show");
 		            		}
 		            		if (this.value != '') {
-		            			$("#error1").fadeOut();
+		            			$("#error6").fadeOut();
 		            		}
 		               	})
 		            </script>
@@ -267,7 +278,7 @@
   		</div>
   		<div class="footer" style="text-align: center; padding: 15px; background-color: #1587B7;">
   			<div>
-  				© 2018 Copyright: S.Thakdanai - Developer
+  				© 2018 Copyright: Thakdanai Saman - Rajamangala University of Technology Tawan-Ok : Chakrabongse Bhuvanarth Campus
   			</div>
   		</div><!-- footer -->
 	</div>
@@ -286,7 +297,7 @@
 
 			var pathpic = document.getElementById("getfilename").value;
 
-			if (pName == "" || sNameF == "" || sIdF == "" || keyword == "" || 
+			if (pName == "" || sNameF == "" || sIdF == "" || profPrimary == "" || keyword == "" || 
 				document.getElementById("myfile").files.length == 0) {
 				alert("กรุณากรอกข้อมูลให้ครบถ้วน");
 				return false;

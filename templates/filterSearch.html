@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block title %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ค้นหาโครงงาน</title>
+    {% endblock %}
+
+
+    <style>
+        .content {
+            padding: 40px;
+        }
+    </style>
+</head>
+
+
+<body>
+{% block body %}
+    <div class="container">
+        <div class="content">
+            <h3><b>ค้นหาโครงงาน</b></h3>
+            <form class="form-horizontal" style="padding-top: 3rem;">
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="pName">ชื่อโครงงาน:</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" id="pName" placeholder="โครงงาน..." autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="pYear">ปีการศึกษา:</label>
+                     <div class="col-sm-5"> 
+                        <select class="form-control" id="pYear"></select>
+                        <script type="text/javascript">
+                            var getyear = new Date().getFullYear();
+                            var convyear = getyear + 543;
+                            for (i = convyear; i > 2500; i--){
+                                $('#pYear').append($('<option />').val(i).html(i));
+                            }
+                        </script>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="pType">ประเภทโครงงาน:</label>
+                    <div class="col-sm-5"> 
+                        <select class="form-control" id="pType">
+                            {% for row in rows2 %}
+                                <option value="{{ row[0] }}">{{ row[0] }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <hr>
+                
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="sNameF">ชื่อผู้จัดทำคนที่หนึ่ง:</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="sNameF" placeholder="ชื่อ-นามสกุล" autocomplete="off">  
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="sNameS">ชื่อผู้จัดทำคนที่สอง:</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="sNameS" placeholder="ชื่อ-นามสกุล" autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="profPrimary">อาจารย์ที่ปรึกษาหลัก:</label>
+                    <div class="col-sm-3">
+                        <select class="form-control" id="profPrimary">
+                                <option value="0">---อาจารย์ที่ปรึกษาหลัก---</option>
+                                {% for row in rows1 %}
+                                <option value="{{ row[0] }}">{{ row[1] }}</option>
+                                {% endfor %}
+                        </select>
+                    </div>
+                    </div>
+
+                <!-- <div class="form-group">
+                  <label class="control-label col-sm-2" for="keyword">Keyword:</label>
+                  <div class="col-sm-3">
+                       <input type="text" class="form-control" id="keyword" placeholder="keyword..." autocomplete="off">
+                  </div>
+                </div> -->
+                <div class="form-group"> 
+                  <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary" id="btnSearch">ค้นหา</button>
+                  </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+		$('#btnSearch').click(function(){	
+	  		var pName = document.getElementById("pName").value;
+			var pYear = document.getElementById("pYear").value;
+			var pType = document.getElementById("pType").value;
+			var sNameF = document.getElementById("sNameF").value;
+            var sNameS = document.getElementById("sNameS").value;
+			var profPrimary = document.getElementById("profPrimary").value;
+			
+            $.ajax({
+                url: '/projlist/filtersearch',
+                data: JSON.stringify({
+                    "pName" : pName , 
+                    "pYear" : pYear , 
+                    "pType" : pType , 
+                    "sNameF" : sNameF,
+                    "sNameS" : sNameS,
+                    "profPrimary" : profPrimary	
+                }),
+                type: 'POST',
+                processData: false,
+                contentType: 'application/json; charset=utf-8',
+                success: function(response){
+                    console.log(response);
+                },
+                error: function(error){
+                    console.log(error);
+                }
+            });
+								
+		});
+	</script>
+{% endblock %}
+</body>
+</html>
