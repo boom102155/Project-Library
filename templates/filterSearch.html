@@ -34,7 +34,9 @@
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="pYear">ปีการศึกษา:</label>
                      <div class="col-sm-5"> 
-                        <select class="form-control" id="pYear"></select>
+                        <select class="form-control" id="pYear">
+                            <option value="">---ปีการศึกษา---</option>
+                        </select>
                         <script type="text/javascript">
                             var getyear = new Date().getFullYear();
                             var convyear = getyear + 543;
@@ -49,6 +51,7 @@
                     <label class="control-label col-sm-2" for="pType">ประเภทโครงงาน:</label>
                     <div class="col-sm-5"> 
                         <select class="form-control" id="pType">
+                            <option value="">---ประเภทโครงงาน---</option>
                             {% for row in rows2 %}
                                 <option value="{{ row[0] }}">{{ row[0] }}</option>
                             {% endfor %}
@@ -91,7 +94,8 @@
                 </div> -->
                 <div class="form-group"> 
                   <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-primary" id="btnSearch">ค้นหา</button>
+                        <!-- <a href="/projlistfiltersearch" class="btn btn-primary" onclick="searchProject()">ค้นหา</a> -->
+                        <button type="submit" class="btn btn-primary" id="btnSearch" onclick="searchProject()">ค้นหา</button>
                   </div>
                 </div>
             </form>
@@ -99,36 +103,37 @@
     </div>
 
     <script type="text/javascript">
-		$('#btnSearch').click(function(){	
-	  		var pName = document.getElementById("pName").value;
-			var pYear = document.getElementById("pYear").value;
-			var pType = document.getElementById("pType").value;
-			var sNameF = document.getElementById("sNameF").value;
-            var sNameS = document.getElementById("sNameS").value;
-			var profPrimary = document.getElementById("profPrimary").value;
-			
+        function searchProject(){
+            var dName = document.getElementById("pName").value;
+			var dYear = document.getElementById("pYear").value;
+			var dType = document.getElementById("pType").value;
+			var dNameF = document.getElementById("sNameF").value;
+            var dNameS = document.getElementById("sNameS").value;
+			var dProfPrimary = document.getElementById("profPrimary").value;
+             
             $.ajax({
-                url: '/projlist/filtersearch',
+                url: '/getdatafiltersearch',
                 data: JSON.stringify({
-                    "pName" : pName , 
-                    "pYear" : pYear , 
-                    "pType" : pType , 
-                    "sNameF" : sNameF,
-                    "sNameS" : sNameS,
-                    "profPrimary" : profPrimary	
+                    "dName" : dName , 
+                    "dYear" : dYear , 
+                    "dType" : dType , 
+                    "dNameF" : dNameF,
+                    "dNameS" : dNameS,
+                    "dProfPrimary" : dProfPrimary	
                 }),
                 type: 'POST',
                 processData: false,
                 contentType: 'application/json; charset=utf-8',
                 success: function(response){
                     console.log(response);
+                    window.location = "searchresult";
                 },
                 error: function(error){
                     console.log(error);
                 }
-            });
-								
-		});
+            });  
+        }
+		
 	</script>
 {% endblock %}
 </body>

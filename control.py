@@ -24,9 +24,8 @@ def index():
 
 @app.route('/projlist/<projtypeid>' , methods = ['GET','POST'])
 def projlist(projtypeid):
-    data = request.get_json()
     conn = db_connect.connect()
-    print(projtypeid)
+    data = request.get_json()
 
     if projtypeid == '1':
         query = conn.execute("SELECT PJ_ID , PJ_NAME , PJ_YEAR , PJTYPE_ID , KEYWORD "
@@ -56,16 +55,13 @@ def projlist(projtypeid):
         query = conn.execute("SELECT PJ_ID , PJ_NAME , PJ_YEAR , PJTYPE_ID , KEYWORD "
                               "FROM PROJECT "
                               "WHERE PJTYPE_ID = 'โปรแกรมเพื่องานการพัฒนาด้านวิทยาศาสตร์และเทคโนโลยี'")
-    elif projtypeid == 'filtersearch':
-
-
-        query = conn.execute("")
     else:
         query = conn.execute("SELECT PJ_ID , PJ_NAME , PJ_YEAR , PJTYPE_ID , KEYWORD "
                              "FROM PROJECT")
 
     rows = query.fetchall()
     return render_template("projList.html", rows=rows)
+
 
 @app.route('/projcontent/<projid>' , methods = ['GET','POST'])
 def projcontent(projid):
@@ -131,33 +127,33 @@ def addproj():
     t2 = strftime("%M", gmtime())
     t3 = strftime("%S", gmtime())
 
-    # try:
-    constrname = st + '_' + t1 + t2 + t3 + '.' + (data['pathpic'])
-    conn.execute("INSERT INTO PROJECT "
-                 "(PJ_ID, "
-                 "PJ_NAME, "
-                 "PJ_YEAR, "
-                 "PJTYPE_ID, "
-                 "S_NAME1, "
-                 "S_ID1, "
-                 "S_NAME2, "
-                 "S_ID2, "
-                 "PERSON_ID1, "
-                 "PERSON_ID2, "
-                 "KEYWORD) "
-                 "VALUES (PROJECT_SEQ.NEXTVAL, :2, :3, :4, :5, :6, NVL(:7, 'ไม่มี'), NVL(:8, 'ไม่มี'), :9, NVL(:10, 0), :11)",
-                 (data["pName"], data["pYear"], data["pType"], data["sNameF"], data["sIdF"], data["sNameS"], data["sIdS"], data["profPrimary"], data["profSub"], data["keyword"]))
+    try:
+        constrname = st + '_' + t1 + t2 + t3 + '.' + (data['pathpic'])
+        conn.execute("INSERT INTO PROJECT "
+                     "(PJ_ID, "
+                     "PJ_NAME, "
+                     "PJ_YEAR, "
+                     "PJTYPE_ID, "
+                     "S_NAME1, "
+                     "S_ID1, "
+                     "S_NAME2, "
+                     "S_ID2, "
+                     "PERSON_ID1, "
+                     "PERSON_ID2, "
+                     "KEYWORD) "
+                     "VALUES (PROJECT_SEQ.NEXTVAL, :2, :3, :4, :5, :6, NVL(:7, 'ไม่มี'), NVL(:8, 'ไม่มี'), :9, NVL(:10, 0), :11)",
+                     (data["pName"], data["pYear"], data["pType"], data["sNameF"], data["sIdF"], data["sNameS"], data["sIdS"], data["profPrimary"], data["profSub"], data["keyword"]))
 
-    conn.execute("INSERT INTO PROJECT_FILE "
-                 "(PATH, "
-                 "NAME, "
-                 "PJ_ID) "
-                 "(SELECT '"+ constrname +"', '"+ constrname +"', MAX(PJ_ID) FROM PROJECT)")
-    conn.commit()
-    # except:
-    #     conn.rollback()
-    # finally:
-    #     conn.close()
+        conn.execute("INSERT INTO PROJECT_FILE "
+                     "(PATH, "
+                     "NAME, "
+                     "PJ_ID) "
+                     "(SELECT '"+ constrname +"', '"+ constrname +"', MAX(PJ_ID) FROM PROJECT)")
+        conn.commit()
+    except:
+        conn.rollback()
+    finally:
+        conn.close()
     return json.dumps(data)
 
 @app.route('/newsupdate' , methods = ['GET' , 'POST'])
@@ -198,7 +194,7 @@ def newscontent(newsid):
     rows = query.fetchall()
     return render_template("newsContent.html", rows=rows)
 
-@app.route('/filtersearch', methods = ['GET', 'POST'])
+@app.route('/projsearch', methods = ['GET', 'POST'])
 def filtersearch():
     conn = db_connect.connect()
     query1 = conn.execute("SELECT PERSON_ID, (NAME || ' ' || SURNAME) as perfessorname "
@@ -211,6 +207,58 @@ def filtersearch():
     rows2 = query2.fetchall()
 
     return render_template("filterSearch.html", rows1=rows1, rows2=rows2)
+
+name = ""
+year = ""
+type = ""
+s1 = ""
+s2 = ""
+prof = ""
+
+@app.route('/getdatafiltersearch', methods = ['GET', 'POST'])
+def projlistfiltersearch():
+    data = request.get_json()
+
+    global name
+    global year
+    global type
+    global s1
+    global s2
+    global prof
+
+    name = data["dName"]
+    year = data["dYear"]
+    type = data["dType"]
+    s1 = data["dNameF"]
+    s2 = data["dNameS"]
+    prof = data["dProfPrimary"]
+
+    return json.dumps(data)
+
+
+@app.route('/searchresult', methods = ['GET', 'POST'])
+def showdataforsearch():
+    try:
+        conn = db_connect.connect()
+
+        query = conn.execute("SELECT pr.PJ_ID , pr.PJ_NAME , pr.PJ_YEAR , pr.PJTYPE_ID , pr.KEYWORD "
+                                "FROM PROJECT pr, PERSON pe "
+                                "WHERE pr.PERSON_ID1 = pe.PERSON_ID "
+                                "AND pr.PJ_NAME LIKE '%" + name + "%' "
+                                "AND pr.PJ_YEAR LIKE '%" + year + "%' "
+                                "AND pr.PJTYPE_ID LIKE '%" + type + "%' "
+                                "AND pr.S_NAME1 LIKE '%" + s1 + "%' "
+                                "AND pr.S_NAME2 LIKE '%" + s2 + "%' "
+                                "AND pr.PERSON_ID1 LIKE '%" + prof + "%'")
+
+
+        rows = query.fetchall()
+    except Exception as e:
+        return "เกิดความผิดพลาดในการค้นหา กรุณากรอกข้อมูลเพื่อค้นหาอีกครั้ง <a href = '/projsearch'></b>" + \
+           "คลิกที่นี่เพื่อกรอกข้อมูลใหม่อีกครั้ง</b></a>"
+
+    return render_template("projList.html", rows=rows)
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',debug=True)
