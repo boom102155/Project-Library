@@ -63,90 +63,7 @@
 		<div class="content">
 			<h3><b>ประกาศ</b></h3>
 			<br>
-			<!-- <form class="form-horizontal" style="padding-top: 3rem;">
-				<div class="form-group">
-			    	<label class="control-label col-sm-2" for="txtTopic">หัวข้อประกาศ:</label>
-			    	<div class="col-sm-4">
-			     		<input class="form-control" type="text" id="txtTopic" placeholder="หัวข้อ" maxlength="50">
-			     		<p class="topiclenght"></p>
-			    	</div>
-			    	<script type="text/javascript">
-						 $('#txtTopic').on('keyup',function(){
-						    var input = $(this);
-						    input.next('.topiclenght').text(input.val().length + "/50 ตัวอักษร");
-						});
-			    	</script>
-			  	</div>
-				<div class="form-group">
-			    	<label class="control-label col-sm-2" for="newsUpdate">รายละเอียดประกาศ:</label>
-			    	<div class="col-sm-4">
-			     		<textarea class="form-control" id="newsUpdate" placeholder="รายละเอียด..." maxlength="200"></textarea>
-			     		<p class="desciptionlenght"></p>
-			    	</div>
-			    	<script type="text/javascript">
-						 $('#newsUpdate').on('keyup',function(){
-						    var input = $(this);
-						    input.next('.desciptionlenght').text(input.val().length + "/200 ตัวอักษร");
-						});
-			    	</script>
-			  	</div>
-			  	<div class="form-group">
-			    	<label class="control-label col-sm-2" for="pubStatus">สถานะประกาศ:</label>
-			    	<div class="col-sm-3">
-			     		<select class="form-control" id="pubStatus">
-			     			<option value="0">ประกาศทั่วไป</option>
-			     			<option value="1">ประกาศด่วน</option>
-			     		</select>
-
-			     		<input type="date" class="form-control" id="update-date" style="display: none;">
-			            <script type="text/javascript">
-			            	document.getElementById('update-date').valueAsDate = new Date()
-			            </script>
-			    	</div>
-			  	</div>
-
-			  	<div class="form-group"> 
-			    	<div class="col-sm-offset-2 col-sm-10">
-			      		<button type="submit" class="btn btn-primary" id="btnNewsUpload">อัพโหลด</button>
-			    	</div>
-			    	<script type="text/javascript">
-			    		$("#btnNewsUpload").click(function (){
-			    			var vtopic = document.getElementById("txtTopic").value;
-			    			var vnewsupdate = document.getElementById("newsUpdate").value;
-			    			var vpubstatus = document.getElementById("pubStatus").value;
-			    			var vdate = document.getElementById("update-date").value;
-			    			var vperson = "1007";
-
-			    			if (vtopic == "" || vnewsupdate == "") {
-			    				alert("กรุณากรอกข้อมูลให้ครบถ้วน");
-			    				return false;
-			    			}else{
-							    alert("บันทึกข้อมูลเรียบร้อย");
-								$.ajax({
-									url: '/addnews',
-									data: JSON.stringify({
-										"vtopic" : vtopic,
-										"vnewsupdate" : vnewsupdate,
-										"vpubstatus" : vpubstatus,
-										"vdate" : vdate,
-										"vperson" : vperson
-									}),
-									type: 'POST',
-									processData: false,
-									contentType: 'application/json; charset=utf-8',
-									success: function(response){
-										console.log(response);
-									},
-									error: function(error){
-										console.log(error);
-			    					}
-			    				});
-			    			}
-			    		});
-			    	</script>
-			  	</div>
-			</form> -->
-
+			
 			<script type="text/javascript">
 				$(document).ready(function() {
 			    	$('#example').DataTable({
@@ -196,8 +113,6 @@
 		        </tbody>
 		    </table>
 
-			
-		    <button type="submit" class="btn btn-danger" style="display: none;">ปักหมุดประกาศ</button>
 			
 		</div>
 		<!-- footer -->

@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>จัดการ / เพิ่มประกาศใหม่</title>
+
+    <script type="text/javascript" src="{{ url_for('static',filename="bootstrap/js/jquery-3.3.1.min.js")}}"></script>
+  	<script type="text/javascript" src="{{ url_for('static',filename="bootstrap/js/bootstrap.min.js")}}"></script>
+ 	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename="bootstrap/css/bootstrap.css")}}">
+  	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename="bootstrap/css/hover.css")}}">
+
+  	<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  	<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+  	<script type="text/javascript" src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
+  	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
+  	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.2.7/css/select.bootstrap.min.css">
+
+	<link href="https://fonts.googleapis.com/css?family=Athiti" rel="stylesheet">
+
+	<style type="text/css">
+		 body{
+	        /*padding-top: 5rem;*/
+	        background-color: #DCDCDC;
+	        font-family: 'Athiti', sans-serif;
+	        font-size: 17px;
+	    }
+
+	    .container{
+	        background-color: #ffffff;
+	        padding: 0; 
+	    }
+
+	    .content{
+	        padding: 40px;
+	    }
+
+	    .footer {
+	        /*position: fixed;*/
+	       	padding: 30px;
+	        left: 0;
+	        bottom: 0;
+	        width: 100%;
+	        background-color: #23A4DB;
+	        color: white;
+	     }
+
+	     .imgresponsive {
+			width: 100%;
+			height: auto;
+			max-width: 15px;
+		}
+
+        .loginpanel{
+            display: none;
+        }
+
+    </style>
+
+    <script type="text/javascript">
+        var user = "{{ username }}";
+        $(document).ready(function(){
+            if (user == ""){
+                $(".loginpanel").show();
+                $(".newsupload").hide();
+            }else{
+                $(".loginpanel").hide();
+                $(".newsupload").show();
+            }
+
+           
+            var table = $('#example').DataTable({
+                select: true
+            });
+
+            $('#example tbody').on( 'click', 'tr', function () {
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                }
+                else {
+                    table.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                }
+            });
+
+            $("#btnPin").click( function () {
+                // table.row('.selected').remove().draw(false);
+                var rowid = $.map(table.rows('.selected').data(), function (item) {
+                    return item[0]
+                });
+                console.log(rowid);
+                var pid = rowid.join();
+                // alert(rowid);
+                if (pid == "") {
+                    alert("กรุณาเลือกข้อมูลที่ต้องการลบ");
+                }else{
+                    if (confirm("ดำเนินการต่อหรือไม่")) {
+                        $.ajax({
+                            url: '/updatenewspin',
+                            data: JSON.stringify({"pid" : pid}),
+                            type: 'POST',
+                            processData: false,
+                            contentType: 'application/json; charset=utf-8',
+                            success: function(response){
+                                console.log(response);
+                            },
+                            error: function(error){
+                                console.log(error);
+                            }
+                        });
+                        location.reload();
+                    }
+                    return false;        
+                }    
+            });
+           
+        });
+
+    
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <img src="{{ url_for('static',filename="images/header-logo.jpg")}}" style="max-width: 100%; height: auto;">
+            </div>	
+        </div>
+        
+
+        <div class="content">
+            <h3><b>ประกาศ</b></h3>
+            
+
+            <div class="loginpanel">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">อัพโหลดประกาศ</button>
+                <!-- Modal -->
+                <div class="modal fade" id="myModal" role="dialog">
+                        <div class="modal-dialog">
+                        
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">ลงชื่อเข้าใช้งาน</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form class="form-horizontal">
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2" for="username">Username:</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" autocomplete="off" id="username" placeholder="Enter username">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2" for="password">Password:</label>
+                                        <div class="col-sm-10">          
+                                            <input type="password" class="form-control" autocomplete="off" id="password" placeholder="Enter password">
+                                        </div>
+                                    </div>
+                                    <div class="form-group"> 
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <button class="btn btn-primary" id="btnLogin">ลงชื่อเข้าใช้</button>
+                                            <script type="text/javascript">
+                                                $("#btnLogin").click(function (){
+                                                    var user = document.getElementById("username").value;
+                                                    var pass = document.getElementById("password").value;
+                                                    
+                                                    if (user == "" || pass == "") {
+                                                        alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+                                                        return false;
+                                                    }else{
+                                                        $.ajax({
+                                                            url: '/loginfornewsupload',
+                                                            data: JSON.stringify({
+                                                                "user" : user,
+                                                                "pass" : pass 
+                                                            }),
+                                                            type: 'POST',
+                                                            processData: false,
+                                                            contentType: 'application/json; charset=utf-8',
+                                                            success: function(response){
+                                                                console.log(response);
+                                                                window.location = "newsupload";
+                                                            },
+                                                            error: function(error){
+                                                                alert("Username หรือ Password ไม่ถูกต้อง")
+                                                                console.log(error);
+                                                            }
+                                                        });  
+                                                    } 
+                                                });
+                                            </script>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">ปิด</button>
+                            </div>
+                        </div>
+                        
+                        </div>
+                    </div>
+
+            </div>
+
+
+            <div class="newsupload">
+                <form class="form-horizontal" style="padding-top: 3rem;">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="txtTopic">หัวข้อประกาศ:</label>
+                        <div class="col-sm-4">
+                            <input class="form-control" type="text" id="txtTopic" placeholder="หัวข้อ" maxlength="50" autocomplete="off">
+                            <p class="topiclenght"></p>
+                        </div>
+                        <script type="text/javascript">
+                                $('#txtTopic').on('keyup',function(){
+                                var input = $(this);
+                                input.next('.topiclenght').text(input.val().length + "/50 ตัวอักษร");
+                            });
+                        </script>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="newsUpdate">รายละเอียดประกาศ:</label>
+                        <div class="col-sm-4">
+                            <textarea class="form-control" id="newsUpdate" placeholder="รายละเอียด..." maxlength="200"></textarea>
+                            <p class="desciptionlenght"></p>
+                        </div>
+                        <script type="text/javascript">
+                                $('#newsUpdate').on('keyup',function(){
+                                var input = $(this);
+                                input.next('.desciptionlenght').text(input.val().length + "/200 ตัวอักษร");
+                            });
+                        </script>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="pubStatus">สถานะประกาศ:</label>
+                        <div class="col-sm-3">
+                            <select class="form-control" id="pubStatus">
+                                <option value="0">ประกาศทั่วไป</option>
+                                <option value="1">ประกาศด่วน</option>
+                            </select>
+            
+                            <input type="date" class="form-control" id="update-date" style="display: none;">
+                            <script type="text/javascript">
+                                document.getElementById('update-date').valueAsDate = new Date()
+                            </script>
+                        </div>
+                    </div>
+            
+                    <div class="form-group"> 
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-primary" id="btnNewsUpload">อัพโหลด</button>
+                            <button type="button" class="btn btn-danger" id="btnPin">ปักหมุด/ลบหมุดประกาศ</button>
+                            <button type="submit" class="btn btn-default" id="btnLogout">ลงชื่ออก</button>
+                        </div>
+                        <script type="text/javascript">
+                            $("#btnNewsUpload").click(function (){
+                                var vtopic = document.getElementById("txtTopic").value;
+                                var vnewsupdate = document.getElementById("newsUpdate").value;
+                                var vpubstatus = document.getElementById("pubStatus").value;
+                                var vdate = document.getElementById("update-date").value;
+                                var vperson = "{{ username }}";
+            
+                                if (vtopic == "" || vnewsupdate == "") {
+                                    alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+                                    return false;
+                                }else{
+                                    alert("บันทึกข้อมูลเรียบร้อย");
+                                    $.ajax({
+                                        url: '/addnews',
+                                        data: JSON.stringify({
+                                            "vtopic" : vtopic,
+                                            "vnewsupdate" : vnewsupdate,
+                                            "vpubstatus" : vpubstatus,
+                                            "vdate" : vdate,
+                                            "vperson" : vperson
+                                        }),
+                                        type: 'POST',
+                                        processData: false,
+                                        contentType: 'application/json; charset=utf-8',
+                                        success: function(response){
+                                            console.log(response);
+                                        },
+                                        error: function(error){
+                                            console.log(error);
+                                        }
+                                    });
+                                }
+                            });
+
+                            $('#btnLogout').click(function(){
+	                    		$.ajax({
+									url: '/logout',
+									contentType: 'application/json; charset=utf-8',
+									success: function(response){
+										console.log(response);
+                                        window.location = "newsupload";
+									},
+									error: function(error){
+										console.log(error);
+									}
+								});
+                                location.reload();
+	                    	});
+
+                        </script>
+                    </div>
+                </form>
+            </div>
+            
+            <br>
+            
+
+            <table id="example" class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>รหัส</th>
+                        <th>หัวข้อประกาศ</th>
+                        <th>ผู้ประกาศ</th>
+                        <th>วันที่ลงประกาศ</th>
+                        <th>สถานะประกาศ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in rows %}
+                    <tr>
+                        <td>{{ row[0] }}</td>
+                        <td>
+                            <p>
+                                <a href="/newscontent/{{ row[0] }}">{{ row[1] }}</a> 
+                                <img id="{{ row[0] }}" src="{{ url_for('static',filename="images/pin-gif.gif")}}" class="imgresponsive" alt="pinpost">
+                            </p>
+                        </td>
+                        <td>{{ row[2] }}</td>
+                        <td>{{ row[3] }}</td>
+                        <td class="status">{{ row[5] }}</td>
+                    </tr>
+                    <script type="text/javascript">
+                        $(document).ready(function() {
+                            if ({{ row[4] }} != 1) {
+                                $('#{{ row[0] }}').hide();
+                            }
+                            else{
+                                $('#{{ row[0] }}').show();
+                            }
+
+                            $('.status:contains("ประกาศสำคัญ")').css("color", "red");
+                            $('.status:contains("ประกาศทั่วไป")').css("color", "black");
+                        });
+                    </script>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            
+        </div>
+        <!-- footer -->
+            <div class="footer">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3>About</h3>
+                        <p>This is a Web for Faculty of Computer Technology Engineering to included the projects of
+                        student in Bachelor's Degree.</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h3>Follow Us:</h3>
+                        <a href="https://www.facebook.com/cten.cpc/" target="blank">
+                            <img src="{{ url_for('static',filename="images/icons/facebook.png")}}">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer" style="text-align: center; padding: 15px; background-color: #1587B7;">
+                <div>
+                    © 2018 Copyright: Thakdanai Saman - Rajamangala University of Technology Tawan-Ok : Chakrabongse Bhuvanarth Campus
+                </div>
+            </div><!-- footer -->
+    </div>
+</body>
+</html>

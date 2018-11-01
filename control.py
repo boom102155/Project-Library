@@ -8,6 +8,7 @@ db_connect = create_engine('oracle://ADBOOM:boom125478@127.0.0.1:1521/xe')
 
 app = Flask(__name__)
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+app.secret_key = os.urandom(24)
 
 @app.route('/index' , methods = ['GET','POST'])
 def index():
@@ -169,6 +170,71 @@ def newsupdate():
 
     return render_template("newsUpdate.html", rows=rows)
 
+@app.route('/loginfornewsupload', methods = ['GET', 'POST'])
+def loginfornewsupload():
+    data = request.get_json()
+    conn = db_connect.connect()
+    query = conn.execute("SELECT PERSON_ID FROM PERSON "
+                         "WHERE EMAIL = '" + (data["user"]) + "'" +
+                         " AND PASSWORD = '" + (data["pass"]) + "'")
+    rows = query.fetchall()
+    for row in rows:
+        list2 = [row["person_id"]]
+        session['user'] = ', '.join(str(x) for x in list2)
+
+    return jsonify(list2)
+
+@app.route('/logout')
+def logout():
+    session.pop('user', None)
+    return 'Dropped'
+
+@app.route('/newsupload' , methods = ['GET' , 'POST'])
+def newsload():
+    conn = db_connect.connect()
+    if 'user' in session:
+        username = session['user']
+
+        query = conn.execute(
+            "SELECT pb.PUB_ID, pb.TOPIC, p.NAME , TO_CHAR(pb.PUB_DATE,'dd-mm-yyyy') as pubdate, pb.PIN_STATUS,"
+            "(CASE pb.PIN_STATUS WHEN '1' THEN 'ประกาศสำคัญ' ELSE 'ประกาศทั่วไป' END) as pinstatus "
+            "FROM PUBLISH pb, PERSON p "
+            "WHERE pb.PERSON_ID = p.PERSON_ID "
+            "ORDER BY PIN_STATUS DESC")
+        rows = query.fetchall()
+
+        query2 = conn.execute("SELECT NAME FROM PERSON "
+                              "WHERE PERSON_ID = " + username)
+        rows2 = query2.fetchall()
+
+        for row in rows2:
+            uname = row["name"]
+            return render_template("newsUpload.html", rows=rows, uname=uname, username=username)
+    else:
+        query = conn.execute(
+            "SELECT pb.PUB_ID, pb.TOPIC, p.NAME , TO_CHAR(pb.PUB_DATE,'dd-mm-yyyy') as pubdate, pb.PIN_STATUS,"
+            "(CASE pb.PIN_STATUS WHEN '1' THEN 'ประกาศสำคัญ' ELSE 'ประกาศทั่วไป' END) as pinstatus "
+            "FROM PUBLISH pb, PERSON p "
+            "WHERE pb.PERSON_ID = p.PERSON_ID "
+            "ORDER BY PIN_STATUS DESC")
+        rows = query.fetchall()
+
+        return render_template("newsUpload.html", rows=rows)
+
+@app.route('/updatenewspin' , methods = ['GET', 'POST'])
+def updatenewspin():
+    data = request.get_json()
+    conn = db_connect.connect()
+
+    conn.execute("UPDATE PUBLISH "
+                         "SET PIN_STATUS = CASE "
+                         "WHEN PIN_STATUS='0' THEN '1' "
+                         "ELSE '0' "
+                         "END WHERE PUB_ID = " + data["pid"])
+    conn.commit()
+    return json.dumps(data)
+
+
 @app.route('/addnews' , methods = ['GET' , 'POST'])
 def addnews():
     data = request.get_json()
@@ -193,6 +259,7 @@ def newscontent(newsid):
                          " AND pb.PERSON_ID = p.PERSON_ID")
     rows = query.fetchall()
     return render_template("newsContent.html", rows=rows)
+
 
 @app.route('/projsearch', methods = ['GET', 'POST'])
 def filtersearch():
