@@ -46,7 +46,7 @@
 	        color: white;
 	     }
 
-	     .imgresponsive {
+	    .imgresponsive {
 			width: 100%;
 			height: auto;
 			max-width: 15px;
@@ -56,6 +56,8 @@
         	font-weight: bold;
         	color: red;
     	}
+
+		
 	</style>
 </head>
 <body>
@@ -71,13 +73,11 @@
 			
 			<script type="text/javascript">
 				$(document).ready(function() {
-			    	$('#example').DataTable({
-			    		
-						createdRow : function(row, data, dataIndex) {
-
-							if ( data[4] == "ประกาศสำคัญ" ) {
-								$('td', row).eq(4).addClass('highlight');
-							}
+			    	$('#example').DataTable({		    		
+						createdRow : function(row, data, dataIndex) {							
+							if (data[4] == "ประกาศสำคัญ") {
+								$('td', row).eq(4).addClass('highlight');							
+							}	
 						}
 			    	});
 				});
@@ -100,27 +100,23 @@
 		                <td>
 		                	<p>
 		                		<a href="/newscontent/{{ row[0] }}">{{ row[1] }}</a> 
-		                		<img id="{{ row[0] }}" src="{{ url_for('static',filename="images/pin-gif.gif")}}" class="imgresponsive" alt="pinpost">
+		                		<!-- <img id="{{ row[0] }}" src="{{ url_for('static',filename="images/pin-gif.gif")}}" class="imgresponsive" alt="pinpost"> -->
 		                	</p>
 		                </td>
 		                <td>{{ row[2] }}</td>
 		                <td>{{ row[3] }}</td>
-		                <td class="status">{{ row[5] }}</td>
+		                <td>{{ row[5] }}</td>
 		            </tr>
-		            <script type="text/javascript">
+		            <!-- <script type="text/javascript">
  						$(document).ready(function() {
      						if ({{ row[4] }} != 1) {
 								$('#{{ row[0] }}').hide();	
      						}
      						else{
      							$('#{{ row[0] }}').show();
-     						}
-
-     						// $('.status:contains("ประกาศสำคัญ")').css("color", "red");
-     						// $('.status:contains("ประกาศทั่วไป")').css("color", "black");
-							
+     						}						
  						});
- 					</script>
+ 					</script> -->
 		            {% endfor %}
 		        </tbody>
 		    </table>
