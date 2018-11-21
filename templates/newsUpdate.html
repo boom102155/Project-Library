@@ -51,6 +51,11 @@
 			height: auto;
 			max-width: 15px;
 		}
+
+		td.highlight {
+        	font-weight: bold;
+        	color: red;
+    	}
 	</style>
 </head>
 <body>
@@ -67,7 +72,13 @@
 			<script type="text/javascript">
 				$(document).ready(function() {
 			    	$('#example').DataTable({
-			    		select: true
+			    		
+						createdRow : function(row, data, dataIndex) {
+
+							if ( data[4] == "ประกาศสำคัญ" ) {
+								$('td', row).eq(4).addClass('highlight');
+							}
+						}
 			    	});
 				});
 			</script>
@@ -99,14 +110,15 @@
 		            <script type="text/javascript">
  						$(document).ready(function() {
      						if ({{ row[4] }} != 1) {
-     							$('#{{ row[0] }}').hide();
+								$('#{{ row[0] }}').hide();	
      						}
      						else{
      							$('#{{ row[0] }}').show();
      						}
 
-     						$('.status:contains("ประกาศสำคัญ")').css("color", "red");
-     						$('.status:contains("ประกาศทั่วไป")').css("color", "black");
+     						// $('.status:contains("ประกาศสำคัญ")').css("color", "red");
+     						// $('.status:contains("ประกาศทั่วไป")').css("color", "black");
+							
  						});
  					</script>
 		            {% endfor %}
