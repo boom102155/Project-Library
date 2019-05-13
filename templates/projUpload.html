@@ -128,7 +128,7 @@
 					</div>
 			    	<label class="control-label col-sm-2" for="sIdF">รหัสนักศึกษา:</label>
 			    	<div class="col-sm-3">
-						<input type="text" class="form-control" id="sIdF" placeholder="ตัวอย่าง 0256304910000" autocomplete="off">
+						<input type="text" class="form-control" id="sIdF" placeholder="ตัวอย่าง 0256304910000" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" autocomplete="off">
 						<div id="error3" style="display: none; color: red;">กรุณากรอกข้อมูล</div>
 						<script type="text/javascript">
 							$("#sIdF").blur(function(){
@@ -149,7 +149,7 @@
 			    	</div>
 			    	<label class="control-label col-sm-2" for="sIdS">รหัสนักศึกษา:</label>
 			    	<div class="col-sm-3">
-			     		<input type="text" class="form-control" id="sIdS" placeholder="ตัวอย่าง 0256304910000" autocomplete="off">
+			     		<input type="text" class="form-control" id="sIdS" placeholder="ตัวอย่าง 0256304910000" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" autocomplete="off">
 			    	</div>
 			  	</div>
 				<!-- <p style="color: red"><b>**หากเป็นนักศึกษาคนเดียว</b> ให้กรอก ชื่อ-นามสกุล และรหัสนักศึกษา ในช่อง <b>"ชื่อผู้จัดทำคนที่หนึ่ง"</b></p> -->
