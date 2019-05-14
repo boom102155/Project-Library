@@ -235,13 +235,13 @@
                     <div class="form-group">
                         <label class="control-label col-sm-2" for="newsUpdate">รายละเอียดประกาศ:</label>
                         <div class="col-sm-4">
-                            <textarea class="form-control" id="newsUpdate" placeholder="รายละเอียด..." maxlength="200"></textarea>
+                            <textarea class="form-control" id="newsUpdate" placeholder="รายละเอียด..." maxlength="500"></textarea>
                             <p class="desciptionlenght"></p>
                         </div>
                         <script type="text/javascript">
                                 $('#newsUpdate').on('keyup',function(){
                                 var input = $(this);
-                                input.next('.desciptionlenght').text(input.val().length + "/200 ตัวอักษร");
+                                input.next('.desciptionlenght').text(input.val().length + "/500 ตัวอักษร");
                             });
                         </script>
                     </div>

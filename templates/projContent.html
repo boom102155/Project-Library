@@ -23,30 +23,32 @@
 		     			<p style="padding: 0;"><b>ผู้จัดทำ:</b></p>
 		     			<div style="padding-left: 6rem;">
 		     				<div class="form-group">
-						    	<div class="col-sm-3">
-						     		<div class="control-label" style="text-align: left;">{{ row[3] }}</div>
-						    	</div>
-						    	<label class="control-label col-sm-2" for="sIdF">รหัสนักศึกษา:</label>
-						    	<div class="col-sm-3">
-						     		<div class="control-label" style="text-align: left;">{{ row[4] }}</div>
-						    	</div>
+								<div class="row">
+									<div class="col-sm-4">
+										<div class="control-label" style="text-align: left;">{{ row[3] }}</div>
+									</div>
+									<label class="control-label col-sm-2" for="sIdF">รหัสนักศึกษา:</label>
+									<div class="col-sm-3">
+										<div class="control-label" style="text-align: left;">{{ row[4] }}</div>
+									</div>
+								</div>
+								<div class="row" id="psecond">
+									<div class="col-sm-4">
+										<div class="control-label" style="text-align: left;">{{ row[5] }}</div>
+									</div>
+									<label class="control-label col-sm-2" for="sIdF">รหัสนักศึกษา:</label>
+									<div class="col-sm-3">
+										<div class="control-label" style="text-align: left;">{{ row[6] }}</div>
+									</div>
+								</div>	
 		     				</div>
-		     			</div>
-		     			<div style="padding-left: 6rem;">
-		     				<div class="form-group">
-						    	<div class="col-sm-3">
-						     		<div class="control-label" style="text-align: left;">{{ row[5] }}</div>
-						    	</div>
-						    	<label class="control-label col-sm-2" for="sIdF">รหัสนักศึกษา:</label>
-						    	<div class="col-sm-3">
-						     		<div class="control-label" style="text-align: left;">{{ row[6] }}</div>
-						    	</div>
-		     				</div>
-		     			</div>
+						 </div>
+						 
+		     			
 		     			<p style="padding: 0;"><b>อาจารย์ที่ปรึกษา:</b></p>
-		     			<div style="padding-left: 6rem;">
+		     			<div style="padding-left: 5rem;">
 		     				<div class="control-label" style="text-align: left;">{{ row[7] }}</div>
-		     				<div class="control-label" style="text-align: left;">{{ row[8] }}</div>
+		     				<div id="profsecond" class="control-label" style="text-align: left;">{{ row[8] }}</div>
 		     			</div>
 		     			<br>
 		     			<p style="padding: 0;"><b>Keyword:</b> 
@@ -63,10 +65,28 @@
 						</p>
 	     			</div>
 	     		</div>
-	     	</div>
+			 </div>
+			 <script>
+				$(document).ready(function(){
+					if('{{ row[8] }}' == 'ไม่มี ไม่มี'){
+						$("#profsecond").hide();
+					}
+					else{
+						$("#profsecond").show();
+					}
+
+					if('{{ row[5] }}' == 'ไม่มี'){
+						$("#psecond").hide();
+					}
+					else{
+						$("#psecond").show();
+					}
+				});
+			</script>
   			{% endfor %}
   		</div>
-  	</div>
+	  </div>
+	  
 {% endblock %}
 </body>
 </html>
