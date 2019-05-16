@@ -10,6 +10,9 @@
  	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename="bootstrap/css/bootstrap.css")}}">
   	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename="bootstrap/css/hover.css")}}">
 	<link href="https://fonts.googleapis.com/css?family=Athiti" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js"></script>
+
 
 	<style type="text/css">
 		 body{
@@ -254,7 +257,7 @@
 			  	
 			  	<div class="form-group"> 
 			    	<div class="col-sm-offset-2 col-sm-10">
-			      		<button type="submit" class="btn btn-primary" id="btnSave">อัพโหลด</button>
+			      		<button type="submit" class="btn btn-primary" id="btnSave">อัปโหลด</button>
 			    	</div>
 			  	</div>
 			</form>
@@ -299,11 +302,25 @@
 
 			if (pName == "" || sNameF == "" || sIdF == "" || profPrimary == "" || keyword == "" || 
 				document.getElementById("myfile").files.length == 0) {
-				alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+					swal({title: "",
+						text: "กรุณากรอกข้อมูลให้ครบถ้วน",
+						type: "warning"
+					});
 				return false;
 			}
 			else{
-				alert("บันทึกข้อมูลเรียบร้อย");
+				swal({
+					title: "",
+					text: "อัปโหลดเดี๋ยวนี้",
+					type: "info",
+					showCancelButton: true,
+					closeOnConfirm: false,
+					showLoaderOnConfirm: true
+					}, function () {
+					setTimeout(function () {
+						swal("", "บันทึกข้อมูลเรียบร้อย!", "success");
+					}, 2000);
+				});
 				$.ajax({
 					url: '/addproj',
 					data: JSON.stringify({
