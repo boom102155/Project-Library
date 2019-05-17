@@ -51,8 +51,8 @@
 		</div>
 		<div class="content">
 			<h3><b>อัพโหลดโครงงาน</b></h3>
-
-			<form class="form-horizontal" method="POST" action="http://127.0.0.1:5000/uploader" enctype="multipart/form-data" style="padding-top: 3rem;">
+			<!-- Form -->
+			<form id="projFrom" class="form-horizontal" method="POST" action="http://127.0.0.1:5000/uploader" enctype="multipart/form-data" style="padding-top: 3rem;">
 			  	<div class="form-group">
 			    	<label class="control-label col-sm-2" for="pName">ชื่อโครงงาน:</label>
 			    	<div class="col-sm-5">
@@ -155,7 +155,7 @@
 			     		<input type="text" class="form-control" id="sIdS" placeholder="ตัวอย่าง 0256304910000" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" autocomplete="off">
 			    	</div>
 			  	</div>
-				<!-- <p style="color: red"><b>**หากเป็นนักศึกษาคนเดียว</b> ให้กรอก ชื่อ-นามสกุล และรหัสนักศึกษา ในช่อง <b>"ชื่อผู้จัดทำคนที่หนึ่ง"</b></p> -->
+				
 				<label class="radio-inline"><input type="radio" id="radioprof1" name="profradio" checked>อาจารย์ที่ปรึกษา 1 คน</label>
 				<label class="radio-inline"><input type="radio" id="radioprof2" name="profradio">อาจารย์ที่ปรึกษา 2 คน</label>
 				<script type="text/javascript">
@@ -203,7 +203,7 @@
 						</select>
 			    	</div>
 				</div>
-				<!-- <p style="color: red"><b>**หากอาจารย์ที่ปรึกษาคนเดียว</b> ให้ระบุชื่ออาจารย์ในช่อง <b>"อาจารที่ปรึกษาหลัก"</b></p> -->
+				
 		  		<hr>
 			  	<div class="form-group">
 			    	<label class="control-label col-sm-2" for="keyword">Keyword:</label>
@@ -261,6 +261,7 @@
 			    	</div>
 			  	</div>
 			</form>
+			<!-- End Form -->
 		</div>
 
 		<!-- footer -->
@@ -286,6 +287,11 @@
   		</div><!-- footer -->
 	</div>
 	<script type="text/javascript">
+		var form = document.getElementById("projFrom");
+		var button = document.getElementById("btnSave");
+			projFrom.onsubmit = function() {
+				return false;
+			}
 		$('#btnSave').click(function(){	
 	  		var pName = document.getElementById("pName").value;
 			var pYear = document.getElementById("pYear").value;
@@ -308,19 +314,18 @@
 					});
 				return false;
 			}
-			else{
+			else{	
+				setTimeout(function() {
+					form.submit();
+				}, 2000);
+
 				swal({
 					title: "",
-					text: "อัปโหลดเดี๋ยวนี้",
-					type: "info",
-					showCancelButton: true,
-					closeOnConfirm: false,
-					showLoaderOnConfirm: true
-					}, function () {
-					setTimeout(function () {
-						swal("", "บันทึกข้อมูลเรียบร้อย!", "success");
-					}, 2000);
+					text: "บันทึกข้อมูลสำเร็จ",
+					type: "success",
+					showConfirmButton: false
 				});
+				
 				$.ajax({
 					url: '/addproj',
 					data: JSON.stringify({
@@ -346,7 +351,8 @@
 						console.log(error);
 					}
 				});
-				location.reload();
+
+				return false;			
 			}				
 		});
 	</script>
