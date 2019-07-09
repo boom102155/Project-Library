@@ -10,8 +10,8 @@
  	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename="bootstrap/css/bootstrap.css")}}">
   	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename="bootstrap/css/hover.css")}}">
 	<link href="https://fonts.googleapis.com/css?family=Athiti" rel="stylesheet">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js"></script>
+	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js"></script> -->
 
 
 	<style type="text/css">
@@ -131,7 +131,7 @@
 					</div>
 			    	<label class="control-label col-sm-2" for="sIdF">รหัสนักศึกษา:</label>
 			    	<div class="col-sm-3">
-						<input type="text" class="form-control" id="sIdF" placeholder="ตัวอย่าง 0256304910000" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" autocomplete="off">
+						<input type="text" class="form-control" id="sIdF" placeholder="ตัวอย่าง 0256304910000" maxlength="13" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" autocomplete="off">
 						<div id="error3" style="display: none; color: red;">กรุณากรอกข้อมูล</div>
 						<script type="text/javascript">
 							$("#sIdF").blur(function(){
@@ -152,7 +152,7 @@
 			    	</div>
 			    	<label class="control-label col-sm-2" for="sIdS">รหัสนักศึกษา:</label>
 			    	<div class="col-sm-3">
-			     		<input type="text" class="form-control" id="sIdS" placeholder="ตัวอย่าง 0256304910000" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" autocomplete="off">
+			     		<input type="text" class="form-control" id="sIdS" placeholder="ตัวอย่าง 0256304910000" maxlength="13" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" autocomplete="off">
 			    	</div>
 			  	</div>
 				
@@ -287,11 +287,11 @@
   		</div><!-- footer -->
 	</div>
 	<script type="text/javascript">
-		var form = document.getElementById("projFrom");
-		var button = document.getElementById("btnSave");
-			projFrom.onsubmit = function() {
-				return false;
-			}
+		// var form = document.getElementById("projFrom");
+		// var button = document.getElementById("btnSave");
+		// 	projFrom.onsubmit = function() {
+		// 		return false;
+		// 	}
 		$('#btnSave').click(function(){	
 	  		var pName = document.getElementById("pName").value;
 			var pYear = document.getElementById("pYear").value;
@@ -308,23 +308,25 @@
 
 			if (pName == "" || sNameF == "" || sIdF == "" || profPrimary == "" || keyword == "" || 
 				document.getElementById("myfile").files.length == 0) {
-					swal({title: "",
-						text: "กรุณากรอกข้อมูลให้ครบถ้วน",
-						type: "warning"
-					});
+					// swal({title: "",
+					// 	text: "กรุณากรอกข้อมูลให้ครบถ้วน",
+					// 	type: "warning"
+					// });
+					alert("กรุณากรอกข้อมูลให้ครบถ้วน");
 				return false;
 			}
 			else{	
-				setTimeout(function() {
-					form.submit();
-				}, 2000);
+				alert("บันทึกข้อมูลสำเร็จ");
+				// setTimeout(function() {
+				// 	form.submit();
+				// }, 2000);
 
-				swal({
-					title: "",
-					text: "บันทึกข้อมูลสำเร็จ",
-					type: "success",
-					showConfirmButton: false
-				});
+				// swal({
+				// 	title: "",
+				// 	text: "บันทึกข้อมูลสำเร็จ",
+				// 	type: "success",
+				// 	showConfirmButton: false
+				// });
 				
 				$.ajax({
 					url: '/addproj',
@@ -352,7 +354,7 @@
 					}
 				});
 
-				return false;			
+				// return false;			
 			}				
 		});
 	</script>
