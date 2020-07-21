@@ -63,6 +63,14 @@ def projlist(projtypeid):
     rows = query.fetchall()
     return render_template("projList.html", rows=rows)
 
+# ===================================================================
+@app.route('/projprogress', methods = ['GET', 'POST'])
+def projprogress():
+    
+    return render_template("projProgress.html")
+
+
+# ===================================================================
 
 @app.route('/projcontent/<projid>' , methods = ['GET','POST'])
 def projcontent(projid):
