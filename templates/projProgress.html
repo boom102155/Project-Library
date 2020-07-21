@@ -8,12 +8,47 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% endblock %}
+
+
+
+<!--    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename="bootstrap/css/datepicker/bootstrap-datepicker3.min.css")}}">-->
+<!--	<script type="text/javascript" src="{{ url_for('static',filename="bootstrap/js/bootstrap-datepicker.min.js")}}"></script>-->
+<!--	<script type="text/javascript" src="{{ url_for('static',filename="bootstrap/js/locales/bootstrap-datepicker.th.min.js")}}"></script>-->
+
+
+
 </head>
 
 <body>
 {% block body %}
-
-
+    <div class="container">
+        <div class="content">
+            <h3><b>รายงานความคืบหน้าโครงงาน</b></h3>
+            <form>
+                 <div class="form-group">
+                    <label for="exampleInputEmail1">ชื่อโครงงาน</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="txtMeetDetail">รายละเอียดการเข้าพบ</label>
+                    <textarea  class="form-control" id="txtMeetDetail" aria-describedby="txtMeetDetailHelp"></textarea>
+                    <small id="txtMeetDetailHelp" class="form-text text-muted">ระบุรายละเอียดการเข้าพบอาจารย์ที่ปรึกษา</small>
+                </div>
+                 <div class="form-group">
+                    <label for="txtMeetDetail">ปัญหาที่พบ</label>
+                    <textarea  class="form-control" id="txtMeetIssue" aria-describedby="txtMeetIssueHelp"></textarea>
+                    <small id="txtMeetIssueHelp" class="form-text text-muted">ระบุปัญหาที่พบ</small>
+                </div>
+                <div class="form-group">
+                    <label>การเข้าพบครั้งถัดไป</label>
+                    <input class="form-control today">
+<!--                    <textarea  class="form-control" id="txtNextMeet" aria-describedby="txtMeetHelp"></textarea>-->
+<!--                    <small id="txtMeetHelp" class="form-text text-muted">ระบุรายละเอียดการเข้าพบครั้งถัดไป</small>-->
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
 
 {% endblock %}
 </body>
