@@ -70,7 +70,25 @@ def projprogress():
     return render_template("projProgress.html")
 
 
+@app.route('/projfirsttimeupload', methods=['GET', 'POST'])
+def projfirsttimeupload():
+    conn = db_connect.connect()
+    query = conn.execute("SELECT PERSON_ID, (NAME || ' ' || SURNAME) as perfessorname "
+                         "FROM PERSON "
+                         "WHERE PERSON_ID BETWEEN 1001 and 1999")
+
+    query2 = conn.execute("SELECT PJTYPE_ID "
+                          "FROM PROJECT_TYPE")
+
+    rows = query.fetchall()
+    rows2 = query2.fetchall()
+    return render_template("projFirstTimeUpload.html", rows=rows, rows2=rows2)
+
+
 # ===================================================================
+
+
+
 
 @app.route('/projcontent/<projid>' , methods = ['GET','POST'])
 def projcontent(projid):
@@ -96,7 +114,7 @@ def projupload():
 
     rows = query.fetchall()
     rows2 = query2.fetchall()
-    return  render_template("projUpload.html" , rows=rows , rows2=rows2)
+    return render_template("projUpload.html", rows=rows, rows2=rows2)
 
 @app.route('/uploader', methods = ['GET', 'POST'])
 def upload():
@@ -164,6 +182,35 @@ def addproj():
     finally:
         conn.close()
     return json.dumps(data)
+
+# ===============================================================================
+@app.route('/addfirstproj' , methods = ['GET' , 'POST'])
+def addfirstproj():
+    try:
+        data = request.get_json()
+        conn = db_connect.connect()
+        conn.execute("INSERT INTO PROJECT "
+                     "(PJ_ID, "
+                     "PJ_NAME, "
+                     "PJ_YEAR, "
+                     "PJTYPE_ID, "
+                     "S_NAME1, "
+                     "S_ID1, "
+                     "S_NAME2, "
+                     "S_ID2, "
+                     "PERSON_ID1, "
+                     "PERSON_ID2) "
+                    
+                     "VALUES (PROJECT_SEQ.NEXTVAL, :2, :3, :4, :5, :6, NVL(:7, 'ไม่มี'), NVL(:8, 'ไม่มี'), :9, NVL(:10, 0))",
+                     (data["pName"], data["pYear"], data["pType"], data["sNameF"], data["sIdF"], data["sNameS"], data["sIdS"], data["profPrimary"], data["profSub"]))
+
+        conn.commit()
+        print(conn)
+    except:
+        conn.rollback()
+    finally:
+        return json.dumps(data)
+        conn.close()
 
 @app.route('/newsupdate' , methods = ['GET' , 'POST'])
 def newsupdate():

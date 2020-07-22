@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Upload โครงงานครั้งแรก</title>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<script type="text/javascript" src="{{ url_for('static',filename="bootstrap/js/jquery-3.3.1.min.js")}}"></script>
+  	<script type="text/javascript" src="{{ url_for('static',filename="bootstrap/js/bootstrap.min.js")}}"></script>
+ 	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename="bootstrap/css/bootstrap.css")}}">
+  	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename="bootstrap/css/hover.css")}}">
+	<link href="https://fonts.googleapis.com/css?family=Athiti" rel="stylesheet">
+	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js"></script> -->
+
+
+	<style type="text/css">
+		 body{
+	        /*padding-top: 5rem;*/
+	        background-color: #DCDCDC;
+	        font-family: 'Athiti', sans-serif;
+	        font-size: 17px;
+	    }
+
+	    .container{
+	        background-color: #ffffff;
+	        padding: 0;
+	    }
+
+	    .content{
+	        padding: 40px;
+	    }
+
+	    .footer {
+	        /*position: fixed;*/
+	       	padding: 30px;
+	        left: 0;
+	        bottom: 0;
+	        width: 100%;
+	        background-color: #23A4DB;
+	        color: white;
+	     }
+	</style>
+</head>
+<body>
+	<div class="container">
+		 <div class="row">
+			<div class="col-md-12">
+				<img src="{{ url_for('static',filename="images/header-logo.jpg")}}" style="max-width: 100%; height: auto;">
+			</div>
+		</div>
+		<div class="content">
+			<h3><b>อัพโหลดโครงงาน</b></h3>
+			<!-- Form -->
+			<form class="form-horizontal" style="padding-top: 3rem;">
+			  	<div class="form-group">
+			    	<label class="control-label col-sm-2" for="pName">ชื่อโครงงาน:</label>
+			    	<div class="col-sm-5">
+						<input type="text" class="form-control" id="pName" placeholder="โครงงาน..." autocomplete="off">
+
+						<div id="error1" style="display: none; color: red;">กรุณากรอกข้อมูล</div>
+						<script type="text/javascript">
+							$("#pName").blur(function(){
+								if (this.value == '') {
+									$("#error1").fadeIn("show");
+								}
+								if (this.value != '') {
+									$("#error1").fadeOut();
+								}
+							})
+						</script>
+					</div>
+			  	</div>
+			  	<div class="form-group">
+			    	<label class="control-label col-sm-2" for="pYear">ปีการศึกษา:</label>
+			    	<div class="col-sm-5">
+			      		<select class="form-control" id="pYear"></select>
+			      		<script type="text/javascript">
+			      			var getyear = new Date().getFullYear();
+			      			var convyear = getyear + 543;
+			      			for (i = convyear; i > 2500; i--){
+								$('#pYear').append($('<option />').val(i).html(i));
+							}
+			      		</script>
+					</div>
+			  	</div>
+
+			  	<div class="form-group">
+			    	<label class="control-label col-sm-2" for="pType">ประเภทโครงงาน:</label>
+			    	<div class="col-sm-5">
+			      		<select class="form-control" id="pType">
+			      			{% for row in rows2 %}
+	        					<option value="{{ row[0] }}">{{ row[0] }}</option>
+	        				{% endfor %}
+			      		</select>
+			    	</div>
+			  	</div>
+				<hr>
+				<label class="radio-inline"><input type="radio" id="radiostu1" name="sturadio" checked>ผู้จัดทำ 1 คน</label>
+				<label class="radio-inline"><input type="radio" id="radiostu2" name="sturadio">ผู้จัดทำ 2 คน</label>
+				<script type="text/javascript">
+					$(document).ready(function() {
+						$("#sNameS").prop('disabled', true);
+						$("#sIdS").prop('disabled', true);
+						$("#radiostu1").on( "click", function() {
+							$("#sNameS").prop('disabled', true);
+							$("#sIdS").prop('disabled', true);
+						});
+						$("#radiostu2").on( "click", function() {
+							$("#sNameS").prop('disabled', false);
+							$("#sIdS").prop('disabled', false);
+						});
+					});
+				</script>
+				<br><br>
+	  			<div class="form-group">
+			    	<label class="control-label col-sm-2" for="sNameF">ชื่อผู้จัดทำคนที่หนึ่ง:</label>
+			    	<div class="col-sm-3">
+						<input type="text" class="form-control" id="sNameF" placeholder="ชื่อ-นามสกุล" autocomplete="off">
+						<div id="error2" style="display: none; color: red;">กรุณากรอกข้อมูล</div>
+						<script type="text/javascript">
+							$("#sNameF").blur(function(){
+								if (this.value == '') {
+									$("#error2").fadeIn("show");
+								}
+								if (this.value != '') {
+									$("#error2").fadeOut();
+								}
+							})
+						</script>
+					</div>
+			    	<label class="control-label col-sm-2" for="sIdF">รหัสนักศึกษา:</label>
+			    	<div class="col-sm-3">
+						<input type="text" class="form-control" id="sIdF" placeholder="ตัวอย่าง 0256304910000" maxlength="13" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" autocomplete="off">
+						<div id="error3" style="display: none; color: red;">กรุณากรอกข้อมูล</div>
+						<script type="text/javascript">
+							$("#sIdF").blur(function(){
+								if (this.value == '') {
+									$("#error3").fadeIn("show");
+								}
+								if (this.value != '') {
+									$("#error3").fadeOut();
+								}
+							})
+						</script>
+					</div>
+			  	</div>
+			  	<div class="form-group">
+			    	<label class="control-label col-sm-2" for="sNameS">ชื่อผู้จัดทำคนที่สอง:</label>
+			    	<div class="col-sm-3">
+			     		<input type="text" class="form-control" id="sNameS" placeholder="ชื่อ-นามสกุล" autocomplete="off">
+			    	</div>
+			    	<label class="control-label col-sm-2" for="sIdS">รหัสนักศึกษา:</label>
+			    	<div class="col-sm-3">
+			     		<input type="text" class="form-control" id="sIdS" placeholder="ตัวอย่าง 0256304910000" maxlength="13" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" autocomplete="off">
+			    	</div>
+			  	</div>
+
+				<label class="radio-inline"><input type="radio" id="radioprof1" name="profradio" checked>อาจารย์ที่ปรึกษา 1 คน</label>
+				<label class="radio-inline"><input type="radio" id="radioprof2" name="profradio">อาจารย์ที่ปรึกษา 2 คน</label>
+				<script type="text/javascript">
+					$(document).ready(function() {
+						$("#profSub").prop('disabled', true);
+						$("#radioprof1").on( "click", function() {
+							$("#profSub").prop('disabled', true);
+						});
+						$("#radioprof2").on( "click", function() {
+							$("#profSub").prop('disabled', false);
+						});
+					});
+				</script>
+				<br><br>
+				<div class="form-group">
+			    	<label class="control-label col-sm-2" for="profPrimary">อาจารย์ที่ปรึกษาหลัก:</label>
+			    	<div class="col-sm-3">
+			     		<select class="form-control" id="profPrimary">
+			     				<option value="">---อาจารย์ที่ปรึกษาหลัก---</option>
+			     			{% for row in rows %}
+	        					<option value="{{ row[0] }}">{{ row[1] }}</option>
+	        				{% endfor %}
+						</select>
+						<div id="error4" style="display: none; color: red;">กรุณาระบุอาจารย์ที่ปรึกษา</div>
+						<script type="text/javascript">
+							$("#profPrimary").blur(function(){
+								if (this.value == '') {
+									$("#error4").fadeIn("show");
+								}
+								if (this.value != '') {
+									$("#error4").fadeOut();
+								}
+							})
+						</script>
+			    	</div>
+			  	</div>
+			  	<div class="form-group">
+			    	<label class="control-label col-sm-2" for="proSub">อาจารย์ที่ปรึกษารอง:</label>
+			    	<div class="col-sm-3">
+			     		<select class="form-control" id="profSub">
+			     				<option value="">---อาจารย์ที่ปรึกษารอง---</option>
+			     			{% for row in rows %}
+	        					<option value="{{ row[0] }}">{{ row[1] }}</option>
+	        				{% endfor %}
+						</select>
+			    	</div>
+				</div>
+
+		  		<hr>
+<!--			  	<div class="form-group">-->
+<!--			    	<label class="control-label col-sm-2" for="keyword">Keyword:</label>-->
+<!--			    	<div class="col-sm-3">-->
+<!--						<input type="text" class="form-control" id="keyword" placeholder="keyword..." autocomplete="off">-->
+<!--						<div id="error5" style="display: none; color: red;">กรุณาระบุ Keyword</div>-->
+<!--						<script type="text/javascript">-->
+<!--							$("#keyword").blur(function(){-->
+<!--								if (this.value == '') {-->
+<!--									$("#error5").fadeIn("show");-->
+<!--								}-->
+<!--								if (this.value != '') {-->
+<!--									$("#error5").fadeOut();-->
+<!--								}-->
+<!--							})-->
+<!--						</script>-->
+<!--			    	</div>-->
+<!--			  	</div>-->
+<!--			  	-->
+<!--			  	<div class="form-group">-->
+<!--			    	<label class="control-label col-sm-2" for="keyword">บทคัดย่อ:</label>-->
+<!--			    	<div class="col-sm-3">-->
+<!--			     		<input type="file" id="myfile" name="file" accept="application/pdf">-->
+<!--			    	</div>-->
+<!--			    	<div id="error6" style="display: none; color: red;">กรุณาเลือกไฟล์</div>-->
+<!--		            <script type="text/javascript">-->
+<!--		            	$("#myfile").blur(function(){-->
+<!--		            		if (this.value == '') {-->
+<!--		            			$("#error6").fadeIn("show");-->
+<!--		            		}-->
+<!--		            		if (this.value != '') {-->
+<!--		            			$("#error6").fadeOut();-->
+<!--		            		}-->
+<!--		               	})-->
+<!--		            </script>-->
+<!--		            <input type="text" id="getfilename" style="display: none;">-->
+<!--		            <script type="text/javascript">-->
+<!--						$(function() {-->
+<!--					     	$("input:file").change(function (){-->
+<!--					       		// var fileName = $(this).val();-->
+<!--					       		// var gtn = document.getElementById("gettimename").value;-->
+<!--					       		var fileName = $('input[type=file]').val().split('\\').pop();-->
+<!--					       		// $(".getfilename").html(fileName);-->
+<!--					       		var filetype = fileName.split(".")[1];	-->
+<!--					       		// var conStr = gtn + filetype;-->
+<!--					       		document.getElementById("getfilename").value = filetype;-->
+<!--					     	});-->
+<!--					  	});-->
+<!--					</script>-->
+<!--			  	</div>-->
+
+			  	<div class="form-group">
+			    	<div class="col-sm-offset-2 col-sm-10">
+			      		<button type="submit" class="btn btn-primary" id="btnSave">อัปโหลด</button>
+			    	</div>
+			  	</div>
+			</form>
+			<!-- End Form -->
+		</div>
+
+		<!-- footer -->
+  		<div class="footer">
+  			<div class="row">
+  				<div class="col-md-6">
+  					<h3>About</h3>
+  					<p>This is a Web for Faculty of Computer Technology Engineering to included the projects of
+  					student in Bachelor's Degree.</p>
+  				</div>
+  				<div class="col-md-6">
+  					<h3>Follow Us:</h3>
+  					<a href="https://www.facebook.com/cten.cpc/" target="blank">
+  						<img src="{{ url_for('static',filename="images/icons/facebook.png")}}">
+  					</a>
+  				</div>
+  			</div>
+  		</div>
+  		<div class="footer" style="text-align: center; padding: 15px; background-color: #1587B7;">
+  			<div>
+  				© 2018 Copyright: Thakdanai Saman - Rajamangala University of Technology Tawan-Ok : Chakrabongse Bhuvanarth Campus
+  			</div>
+  		</div><!-- footer -->
+	</div>
+	<script type="text/javascript">
+		// var form = document.getElementById("projFrom");
+		// var button = document.getElementById("btnSave");
+		// 	projFrom.onsubmit = function() {
+		// 		return false;
+		// 	}
+		$('#btnSave').click(function(){
+	  		var pName = document.getElementById("pName").value;
+			var pYear = document.getElementById("pYear").value;
+			var pType = document.getElementById("pType").value;
+			var sNameF = document.getElementById("sNameF").value;
+			var sIdF = document.getElementById("sIdF").value;
+			var sNameS = document.getElementById("sNameS").value;
+			var sIdS = document.getElementById("sIdS").value;
+			var profPrimary = document.getElementById("profPrimary").value;
+			var profSub = document.getElementById("profSub").value;
+
+			if (pName == "" || sNameF == "" || sIdF == "" || profPrimary == "") {
+					// swal({title: "",
+					// 	text: "กรุณากรอกข้อมูลให้ครบถ้วน",
+					// 	type: "warning"
+					// });
+					alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+				return false;
+			}
+			else{
+				alert("บันทึกข้อมูลสำเร็จ");
+				// setTimeout(function() {
+				// 	form.submit();
+				// }, 2000);
+
+				// swal({
+				// 	title: "",
+				// 	text: "บันทึกข้อมูลสำเร็จ",
+				// 	type: "success",
+				// 	showConfirmButton: false
+				// });
+
+				$.ajax({
+					url: '/addfirstproj',
+					data: JSON.stringify({
+						"pName" : pName ,
+						"pYear" : pYear ,
+						"pType" : pType ,
+						"sNameF" : sNameF,
+						"sIdF" : sIdF,
+						"sNameS" : sNameS,
+						"sIdS" : sIdS,
+						"profPrimary" : profPrimary,
+						"profSub" : profSub,
+
+					}),
+					type: 'POST',
+					processData: false,
+					contentType: 'application/json; charset=utf-8',
+					success: function(response){
+						console.log(response);
+					},
+					error: function(error){
+						console.log(error);
+					}
+				});
+
+				// return false;
+			}
+		});
+	</script>
+</body>
+</html>
