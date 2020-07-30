@@ -70,6 +70,12 @@ def projprogress():
     return render_template("projProgress.html")
 
 
+@app.route('/projform', methods=['GET', 'POST'])
+def projform():
+
+     return render_template("projForm.html")
+
+
 @app.route('/projfirsttimeupload', methods=['GET', 'POST'])
 def projfirsttimeupload():
     conn = db_connect.connect()

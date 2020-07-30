@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Form</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<script type="text/javascript" src="{{ url_for('static',filename="bootstrap/js/jquery-3.3.1.min.js")}}"></script>
+  	<script type="text/javascript" src="{{ url_for('static',filename="bootstrap/js/bootstrap.min.js")}}"></script>
+ 	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename="bootstrap/css/bootstrap.css")}}">
+
+	<link rel="stylesheet" href="{{ url_for('static',filename="bootstrap/fonts/thsarabunnew.css")}}">
+
+    <style type="text/css">
+		body{
+			margin-top: 3rem;
+			margin-bottom: 5rem;
+			font-family: 'THSarabunNew', sans-serif;
+		}
+		img{
+			display: block;
+			margin-left: auto;
+    		margin-right: auto;
+			width: 100%;
+			max-width: 300px;
+		}
+		.center{
+			display: block;
+			margin-left: auto;
+    		margin-right: auto;
+		}
+
+		/*A4 CSS*/
+		page[size="A4"] {
+		  	background: white;
+		 	width: 21cm;
+		  	height: 29.7cm;
+		  	display: block;
+		  	margin: 0 auto;
+		  	margin-bottom: 0.5cm;
+		  	box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+		  	border: 1cm solid #fff;
+		}
+		@media print {
+		  	body, page[size="A4"] {
+				margin: 0;
+				box-shadow: 0;
+		  	}
+		}
+
+		/*.dotted-gradient {
+		  	background-image: linear-gradient(to right, #333 40%, rgba(255, 255, 255, 0) 20%);
+		  	background-position: bottom;
+		  	background-size: 3px 1px;
+		  	background-repeat: repeat-x;
+		}*/
+
+		.dotted-gradient{
+			border-bottom: 1px #333 dotted;
+		}
+
+		img{
+			width: 70px;
+		}
+
+	</style>
+</head>
+<body>
+<div style="text-align: center;">
+    <button type="button" id="btnPrint" class="btn btn-primary" onClick="printContent('doc')">พิมพ์เอกสาร</button>
+</div>
+    <br>
+			<div id="doc">
+				<page size="A4">
+					<img src="{{ url_for('static',filename="images/cpc_logo.png")}}" alt="cpc_logo">
+					<h4 style="text-align: center; padding-bottom: 10px; padding-top: 10px;"><b>แบบฟอร์มการเข้าพบอาจารย์ที่ปรึกษาโครงงาน</b></h4>
+					<h5 style="text-align: center;"><b>รายวิชา 0406460 โครงงานเทคโนโลยีสารสนเทศ (Information Technology Project)</b></h5>
+					<h5 style="text-align: center;"><b>คณะบริหารธุรกิจและเทคโนสโลยีสารสนเทศ สาขาวิชาเทคโนโลยีสารสนเทศ</b></h5>
+					<h5 style="text-align: center;"><b>มหาวิทยาลัยเทคโนโลยีราชมงคลตะวันออก วิทยาเขตจักรพงษภูวนารถ</b></h5>
+					<hr style="border: 1px solid black;">
+					<div style="padding-left: 40px; padding-right: 40px;">
+						<table>
+							<tr>
+								<td style="padding-bottom: 10px; width: 200px;"><u><b>ส่วนที่ 1 : ข้อมูลเบื้องต้น</b></u></td>
+							</tr>
+							<tr>
+								<td style="padding-bottom: 10px;"><b>ปีการศึกษา</b></td>
+								<td style="padding-bottom: 10px; width: 250px;"><b>...</b></td>
+							</tr>
+							<tr>
+								<td style="padding-bottom: 5px;"><b>ชื่อโครงงาน <i>(ภาษาไทย)</i></b></td>
+								<td style="padding-bottom: 5px;"><b>...</b></td>
+							</tr>
+							<tr>
+								<td><b>ชื่อโครงงาน <i>(ภาษาอังกฤษ)</i></b></td>
+								<td><b>...</b></td>
+							</tr>
+
+							<tr>
+								<td style="padding-top: 20px;"><b>รายชื่อนักศึกษา</b></td>
+								<td style="padding-top: 20px; width: 200px;"><b>...</b></td>
+								<td style="padding-top: 20px; padding-left: 20px; padding-right: 20px;"><b>รหัสนักศึกษา</b></td>
+								<td style="padding-top: 20px;"><b>...</b></td>
+							</tr>
+
+							<tr>
+								<td style="padding-top: 10px;"></td>
+								<td style="padding-top: 10px; width: 200px;">...</td>
+								<td style="padding-top: 10px; padding-left: 20px; padding-right: 20px;"><b>รหัสนักศึกษา</b></td>
+								<td style="padding-top: 10px;"><b>...</b></td>
+							</tr>
+
+							<tr>
+								<td style="padding-top: 20px;"><b>ชิื่ออาจารย์ที่ปรึกษาโครงงาน</b></td>
+								<td style="padding-top: 20px; width: 200px;"><b>...</b></td>
+							</tr>
+						</table>
+
+						<br>
+
+						<table>
+							<tr>
+								<td><b><u>ส่วนที่ 2 : รายละเอียดการเข้าพบอาจารย์ที่ปรึกษาโครงงาน</u></b></td>
+							</tr>
+						</table>
+						<br>
+
+						<table border="1" width="100%">
+							<tr>
+								<td style="width: 20px; height: 60px; text-align: center; background-color: lightgray;"><b>ครั้งที่</b></td>
+								<td style="width: 60px; height: 60px; text-align: center; background-color: lightgray;"><b>วัน-เดือน-ปี</b></td>
+								<td style="width: 150px; height: 60px; text-align: center; background-color: lightgray;"><b>รายละเอียดการเข้าพบ</b></td>
+								<td style="width: 50px; height: 60px; text-align: center; background-color: lightgray;"><b>ลงชื่อ <br> อ.ที่ปรึกษา</b></td>
+							</tr>
+							<tr>
+								<td style="height: 350px;">&nbsp;</td>
+								<td>&nbsp;</td>
+								<td>&nbsp;</td>
+								<td>&nbsp;</td>
+							</tr>
+						</table>
+					</div>
+				</page>
+			</div> <!-- doc -->
+</body>
+</html>
