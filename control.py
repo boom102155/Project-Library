@@ -205,10 +205,11 @@ def addfirstproj():
                      "S_NAME2, "
                      "S_ID2, "
                      "PERSON_ID1, "
-                     "PERSON_ID2) "
+                     "PERSON_ID2,"
+                     "PJ_NAME_ENG) "
                     
-                     "VALUES (PROJECT_SEQ.NEXTVAL, :2, :3, :4, :5, :6, NVL(:7, 'ไม่มี'), NVL(:8, 'ไม่มี'), :9, NVL(:10, 0))",
-                     (data["pName"], data["pYear"], data["pType"], data["sNameF"], data["sIdF"], data["sNameS"], data["sIdS"], data["profPrimary"], data["profSub"]))
+                     "VALUES (PROJECT_SEQ.NEXTVAL, :2, :3, :4, :5, :6, NVL(:7, 'ไม่มี'), NVL(:8, 'ไม่มี'), :9, NVL(:10, 0), :11)",
+                     (data["pName"], data["pYear"], data["pType"], data["sNameF"], data["sIdF"], data["sNameS"], data["sIdS"], data["profPrimary"], data["profSub"], data["pNameEng"]))
 
         conn.commit()
         print(conn)

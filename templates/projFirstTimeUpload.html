@@ -50,11 +50,11 @@
 			</div>
 		</div>
 		<div class="content">
-			<h3><b>อัปโหลดโครงงาน</b></h3>
+			<h3><b>ความคืบหน้าโครงงาน</b></h3>
 			<!-- Form -->
 			<form class="form-horizontal" style="padding-top: 3rem;">
 			  	<div class="form-group">
-			    	<label class="control-label col-sm-2" for="pName">ชื่อโครงงาน:</label>
+			    	<label class="control-label col-sm-2" for="pName">ชื่อโครงงาน (ภาษาไทย):</label>
 			    	<div class="col-sm-5">
 						<input type="text" class="form-control" id="pName" placeholder="โครงงาน..." autocomplete="off">
 
@@ -66,6 +66,24 @@
 								}
 								if (this.value != '') {
 									$("#error1").fadeOut();
+								}
+							})
+						</script>
+					</div>
+			  	</div>
+				<div class="form-group">
+			    	<label class="control-label col-sm-2" for="pNameEng">ชื่อโครงงาน (ภาษาอังกฤษ):</label>
+			    	<div class="col-sm-5">
+						<input type="text" class="form-control" id="pNameEng" placeholder="Project..." autocomplete="off">
+
+						<div id="error5" style="display: none; color: red;">กรุณากรอกข้อมูล</div>
+						<script type="text/javascript">
+							$("#pNameEng").blur(function(){
+								if (this.value == '') {
+									$("#error5").fadeIn("show");
+								}
+								if (this.value != '') {
+									$("#error5").fadeOut();
 								}
 							})
 						</script>
@@ -193,7 +211,7 @@
 			    	</div>
 			  	</div>
 			  	<div class="form-group">
-			    	<label class="control-label col-sm-2" for="proSub">อาจารย์ที่ปรึกษารอง:</label>
+			    	<label class="control-label col-sm-2" for="profSub">อาจารย์ที่ปรึกษารอง:</label>
 			    	<div class="col-sm-3">
 			     		<select class="form-control" id="profSub">
 			     				<option value="">---อาจารย์ที่ปรึกษารอง---</option>
@@ -257,7 +275,9 @@
 
 			  	<div class="form-group">
 			    	<div class="col-sm-offset-2 col-sm-10">
-			      		<button type="submit" class="btn btn-primary" id="btnSave">อัปโหลด</button>
+			      		<input type="button" class="btn btn-primary" id="btnOk" value="ตกลง">
+						<buttton type="submit" class="btn btn-warning" id="btnEdit">แก้ไข</buttton>
+						<buttton type="submit" class="btn btn-success" id="btnSave">บันทึก</buttton>
 			    	</div>
 			  	</div>
 			</form>
@@ -294,6 +314,7 @@
 		// 	}
 		$('#btnSave').click(function(){
 	  		var pName = document.getElementById("pName").value;
+	  		var pNameEng = document.getElementById("pNameEng").value;
 			var pYear = document.getElementById("pYear").value;
 			var pType = document.getElementById("pType").value;
 			var sNameF = document.getElementById("sNameF").value;
@@ -303,7 +324,7 @@
 			var profPrimary = document.getElementById("profPrimary").value;
 			var profSub = document.getElementById("profSub").value;
 
-			if (pName == "" || sNameF == "" || sIdF == "" || profPrimary == "") {
+			if (pName == "" || pNameEng == "" || sNameF == "" || sIdF == "" || profPrimary == "") {
 					// swal({title: "",
 					// 	text: "กรุณากรอกข้อมูลให้ครบถ้วน",
 					// 	type: "warning"
@@ -327,9 +348,10 @@
 				$.ajax({
 					url: '/addfirstproj',
 					data: JSON.stringify({
-						"pName" : pName ,
-						"pYear" : pYear ,
-						"pType" : pType ,
+						"pName" : pName,
+						"pNameEng" : pNameEng,
+						"pYear" : pYear,
+						"pType" : pType,
 						"sNameF" : sNameF,
 						"sIdF" : sIdF,
 						"sNameS" : sNameS,
@@ -353,5 +375,43 @@
 			}
 		});
 	</script>
+	<script>
+		$(document).ready(function() {
+			$("#btnEdit").hide();
+			$("#btnSave").hide();
+		});
+		$("#btnOk").click(function(){
+			$("#btnOk").hide();
+		  	$("#btnEdit").show();
+		  	$("#btnSave").show();
+		  	$('#pName').prop('readonly', true);
+		  	$('#pNameEng').prop('readonly', true);
+		  	$('#pYear').prop('disabled', true);
+		  	$('#pType').prop('disabled', true);
+		  	$('#sNameF').prop('readonly', true);
+		  	$('#sIdF').prop('readonly', true);
+		  	$('#sNameS').prop('readonly', true);
+		  	$('#sIdS').prop('readonly', true);
+		  	$('#profPrimary').prop('disabled', true);
+		  	$('#profSub').prop('disabled', true);
+		});
+
+		$("#btnEdit").click(function(){
+		  	$("#btnOk").show();
+		  	$("#btnEdit").hide();
+		  	$("#btnSave").hide();
+		  	$('#pName').prop('readonly', false);
+		  	$('#pNameEng').prop('readonly', false);
+		  	$('#pYear').prop('disabled', false);
+		  	$('#pType').prop('disabled', false);
+		  	$('#sNameF').prop('readonly', false);
+		  	$('#sIdF').prop('readonly', false);
+		  	$('#sNameS').prop('readonly', false);
+		  	$('#sIdS').prop('readonly', false);
+		  	$('#profPrimary').prop('disabled', false);
+		  	$('#profSub').prop('disabled', false);
+		});
+	</script>
+
 </body>
 </html>
