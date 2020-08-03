@@ -1,5 +1,5 @@
 from time import strftime, gmtime
-from flask import Flask, jsonify, render_template, request, json, redirect, url_for, session
+from flask import Flask, jsonify, render_template, request, json, redirect, url_for, session, flash
 from sqlalchemy import create_engine
 import os
 
@@ -66,15 +66,42 @@ def projlist(projtypeid):
 # ===================================================================
 @app.route('/projprogress', methods = ['GET', 'POST'])
 def projprogress():
-    
     return render_template("projProgress.html")
 
 
 @app.route('/projform', methods=['GET', 'POST'])
 def projform():
+    pName = ""
+    if request.method == "POST":
+        data = request.get_json()
+        # pName = data["pName"]
+        # pYear = data["pYear"]
+        # pType = data["pType"]
+        # sNameF = data["sNameF"]
+        # sIdF = data["sIdF"]
+        # sNameS = data["sNameS"]
+        # sIdS = data["sIdS"]
+        # profPrimary = data["profPrimary"]
+        # # profSub = data["profSub"]
+        # pNameEng = data["pNameEng"]
 
-     return render_template("projForm.html")
 
+        print(data)
+        jdata = json.dumps(data)
+        jload = json.loads(jdata)
+        print("Parse = ", jload["pName"])
+        print("Parse = ", jload["pNameEng"])
+
+        pName = jload["pName"]
+    # return render_template("projForm.html", pName=pName, pYear=pYear, pType=pType, sNameF=sNameF, sIdF=sIdF,
+    #                        sNameS=sNameS, sIdS=sIdS, profPrimary=profPrimary, pNameEng=pNameEng)
+
+    return redirect("/projprogress")
+
+
+# @app.route('/getdatatoform', methods=['GET', 'POST'])
+# def getdatatoform():
+#     return redirect("/projform")
 
 @app.route('/projfirsttimeupload', methods=['GET', 'POST'])
 def projfirsttimeupload():
@@ -92,9 +119,6 @@ def projfirsttimeupload():
 
 
 # ===================================================================
-
-
-
 
 @app.route('/projcontent/<projid>' , methods = ['GET','POST'])
 def projcontent(projid):
@@ -190,6 +214,7 @@ def addproj():
     return json.dumps(data)
 
 # ===============================================================================
+
 @app.route('/addfirstproj' , methods = ['GET' , 'POST'])
 def addfirstproj():
     try:
@@ -210,14 +235,38 @@ def addfirstproj():
                     
                      "VALUES (PROJECT_SEQ.NEXTVAL, :2, :3, :4, :5, :6, NVL(:7, 'ไม่มี'), NVL(:8, 'ไม่มี'), :9, NVL(:10, 0), :11)",
                      (data["pName"], data["pYear"], data["pType"], data["sNameF"], data["sIdF"], data["sNameS"], data["sIdS"], data["profPrimary"], data["profSub"], data["pNameEng"]))
-
         conn.commit()
-        print(conn)
     except:
         conn.rollback()
     finally:
-        return json.dumps(data)
         conn.close()
+        return redirect("/projprogress")
+
+
+@app.route('/addprojmeetdetail', methods=['GET', 'POST'])
+def addprojmeetdetail():
+    if request.method == "POST":
+        try:
+            data = request.form
+            conn = db_connect.connect()
+            conn.execute("INSERT INTO PROGRESS_REPORT "                 
+                         "(PJ_ID, "
+                         "DETAIL, "
+                         "ISSUE, "
+                         "NEXT_DATE) "
+                         "VALUES (:1, :2, :3, TO_DATE(:4, 'yyyy-mm-dd'))",
+                         (data["pID"], data["pMeetDetail"], data["pIssue"], data["pNextMeet"]))
+
+            conn.commit()
+        except:
+            conn.rollback()
+        finally:
+            flash("บันทึกข้อมูลสำเร็จแล้ว")
+            return redirect(url_for('projfirsttimeupload'))
+            conn.close()
+
+# ==============================================================================================
+
 
 @app.route('/newsupdate' , methods = ['GET' , 'POST'])
 def newsupdate():
@@ -390,4 +439,4 @@ def showdataforsearch():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',debug=True)
+    app.run(host='127.0.0.1',debug=True)

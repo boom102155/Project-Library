@@ -3,12 +3,12 @@ $(document).ready(function() {
 
 	
 	$('.today').datepicker({
-		format: 'dd/mm/yyyy',
+		format: 'yyyy-mm-dd',
 	    autoclose: true
 	}).datepicker("setDate", "0");
 
 	$('.fromdate').datepicker({
-	    format: 'dd/mm/yyyy',
+	    format: 'yyyy-mm-dd',
 	    autoclose: true
 	}).on('changeDate', function (selected) {
     var minDate = new Date(selected.date.valueOf());
@@ -16,7 +16,7 @@ $(document).ready(function() {
 	});
 
 	$('.todate').datepicker({
-	    format: 'dd/mm/yyyy',
+	    format: 'yyyy-mm-dd',
 	    autoclose: true
 	}).on('changeDate', function (selected) {
         var minDate = new Date(selected.date.valueOf());

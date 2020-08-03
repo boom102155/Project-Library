@@ -8,11 +8,7 @@
 	<script type="text/javascript" src="{{ url_for('static',filename="bootstrap/js/jquery-3.3.1.min.js")}}"></script>
   	<script type="text/javascript" src="{{ url_for('static',filename="bootstrap/js/bootstrap.min.js")}}"></script>
  	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename="bootstrap/css/bootstrap.css")}}">
-  	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename="bootstrap/css/hover.css")}}">
 	<link href="https://fonts.googleapis.com/css?family=Athiti" rel="stylesheet">
-	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js"></script> -->
-
 
 	<style type="text/css">
 		 body{
@@ -50,9 +46,19 @@
 			</div>
 		</div>
 		<div class="content">
+			{% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+					<div class="alert alert-success">
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
+						{{ message }}
+					</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
 			<h3><b>ความคืบหน้าโครงงาน</b></h3>
 			<!-- Form -->
-			<form class="form-horizontal" style="padding-top: 3rem;">
+			<form class="form-horizontal" method="POST" style="padding-top: 3rem;">
 			  	<div class="form-group">
 			    	<label class="control-label col-sm-2" for="pName">ชื่อโครงงาน (ภาษาไทย):</label>
 			    	<div class="col-sm-5">
@@ -277,7 +283,7 @@
 			    	<div class="col-sm-offset-2 col-sm-10">
 			      		<input type="button" class="btn btn-primary" id="btnOk" value="ตกลง">
 						<buttton type="submit" class="btn btn-warning" id="btnEdit">แก้ไข</buttton>
-						<buttton type="submit" class="btn btn-success" id="btnSave">บันทึก</buttton>
+						<buttton type="submit" class="btn btn-success" id="btnSave">ทำแบบฟอร์ม</buttton>
 			    	</div>
 			  	</div>
 			</form>
@@ -307,11 +313,6 @@
   		</div><!-- footer -->
 	</div>
 	<script type="text/javascript">
-		// var form = document.getElementById("projFrom");
-		// var button = document.getElementById("btnSave");
-		// 	projFrom.onsubmit = function() {
-		// 		return false;
-		// 	}
 		$('#btnSave').click(function(){
 	  		var pName = document.getElementById("pName").value;
 	  		var pNameEng = document.getElementById("pNameEng").value;
@@ -325,26 +326,11 @@
 			var profSub = document.getElementById("profSub").value;
 
 			if (pName == "" || pNameEng == "" || sNameF == "" || sIdF == "" || profPrimary == "") {
-					// swal({title: "",
-					// 	text: "กรุณากรอกข้อมูลให้ครบถ้วน",
-					// 	type: "warning"
-					// });
 					alert("กรุณากรอกข้อมูลให้ครบถ้วน");
 				return false;
 			}
 			else{
-				alert("บันทึกข้อมูลสำเร็จ");
-				// setTimeout(function() {
-				// 	form.submit();
-				// }, 2000);
-
-				// swal({
-				// 	title: "",
-				// 	text: "บันทึกข้อมูลสำเร็จ",
-				// 	type: "success",
-				// 	showConfirmButton: false
-				// });
-
+<!--				alert("บันทึกข้อมูลสำเร็จ");-->
 				$.ajax({
 					url: '/addfirstproj',
 					data: JSON.stringify({
@@ -357,8 +343,7 @@
 						"sNameS" : sNameS,
 						"sIdS" : sIdS,
 						"profPrimary" : profPrimary,
-						"profSub" : profSub,
-
+						"profSub" : profSub
 					}),
 					type: 'POST',
 					processData: false,
@@ -370,8 +355,7 @@
 						console.log(error);
 					}
 				});
-
-				// return false;
+				window.location = "/projprogress"
 			}
 		});
 	</script>
