@@ -9,16 +9,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% endblock %}
 
-<!--    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename="bootstrap/css/datepicker/bootstrap-datepicker3.min.css")}}">-->
-<!--	<script type="text/javascript" src="{{ url_for('static',filename="bootstrap/js/bootstrap-datepicker.min.js")}}"></script>-->
-<!--	<script type="text/javascript" src="{{ url_for('static',filename="bootstrap/js/locales/bootstrap-datepicker.th.min.js")}}"></script>-->
-
 </head>
 
 <body>
 {% block body %}
     <div class="container">
         <div class="content">
+
             <h3><b>รายงานความคืบหน้าโครงงาน</b></h3><br>
             <div style="padding-left: 15px; padding-right: 15px;">
             <form class="form-horizontal" action="/addprojmeetdetail" method="POST">

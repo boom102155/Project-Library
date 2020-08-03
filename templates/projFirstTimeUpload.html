@@ -8,6 +8,7 @@
 	<script type="text/javascript" src="{{ url_for('static',filename="bootstrap/js/jquery-3.3.1.min.js")}}"></script>
   	<script type="text/javascript" src="{{ url_for('static',filename="bootstrap/js/bootstrap.min.js")}}"></script>
  	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename="bootstrap/css/bootstrap.css")}}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename="bootstrap/css/toast.css")}}">
 	<link href="https://fonts.googleapis.com/css?family=Athiti" rel="stylesheet">
 
 	<style type="text/css">
@@ -46,13 +47,23 @@
 			</div>
 		</div>
 		<div class="content">
+			<script>
+				$(document).ready(function() {
+				   var x = document.getElementById("snackbar");
+				   x.className = "show";
+				   setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
+				});
+			</script>
+
 			{% with messages = get_flashed_messages() %}
                 {% if messages %}
                     {% for message in messages %}
-					<div class="alert alert-success">
-						<button type="button" class="close" data-dismiss="alert">&times;</button>
+<!--					<div class="alert alert-success">-->
+<!--						<button type="button" class="close" data-dismiss="alert">&times;</button>-->
+						<div id="snackbar">
 						{{ message }}
-					</div>
+						</div>
+<!--					</div>-->
                     {% endfor %}
                 {% endif %}
             {% endwith %}
