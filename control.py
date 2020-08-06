@@ -1,7 +1,7 @@
 from time import strftime, gmtime
-from flask import Flask, jsonify, render_template, request, json, redirect, url_for, session, flash
+from flask import Flask, jsonify, render_template, request, json, redirect, url_for, session, flash, make_response
 from sqlalchemy import create_engine
-import os
+import os, pdfkit
 
 os.environ["NLS_LANG"] = ".UTF8"
 db_connect = create_engine('oracle://ADBOOM:boom125478@127.0.0.1:1521/xe')
@@ -64,6 +64,58 @@ def projlist(projtypeid):
     return render_template("projList.html", rows=rows)
 
 # ===================================================================
+@app.route('/projsearch', methods = ['GET', 'POST'])
+def projsearch():
+    return render_template("projSearch.html")
+
+@app.route('/projgetsearch', methods = ['GET', 'POST'])
+def projgetsearch():
+    if request.method == "POST":
+
+        data = request.form
+        conn = db_connect.connect()
+        query1 = conn.execute("SELECT "
+                     "pj.pj_year, "
+                     "pj.pj_name, "
+                     "pj.pj_name_eng, "
+                     "pj.s_name1, "
+                     "pj.s_id1, "
+                     "pj.s_name2, "
+                     "pj.s_id2, "
+                     "ps.name, "
+                     "pr.progress_num, "
+                     "pr.import_date, "
+                     "pr.detail, "
+                     "pr.issue, "
+                     "pr.next_date "
+                     "FROM project pj, person ps, progress_report pr "
+                     "WHERE "
+                     "pj.s_id1 = " + (data["SID"]) +
+                     " AND pj.pj_id = pr.pj_id "
+                     "AND pj.person_id1 = ps.person_id")
+
+        query2 = conn.execute("SELECT "
+                              "pj.pj_id "
+                              "FROM project pj "
+                              "WHERE "
+                              "pj.s_id1 = " + (data["SID"]))
+
+        rows1 = query1.fetchall()
+        rows2 = query2.fetchall()
+        # for row in rows:
+        #     list1 = ["PJ_YEAR", "PJ_NAME", "PJ_NAME_ENG", "S_NAME1", "S_ID1", "S_NAME2",
+        #              "S_ID2", "NAME", "PROGRESS_NUM", "IMPORT_DATE", "DETAIL", "ISSUE", "NEXT_DATE"]
+        #     list2 = [row["name"], row["surname"], row["type"], row["faculty"], row["class"]]
+        #     data = zip(list1, list2)
+        #     d = dict(data)
+        #     print(d)
+        if query1.rowcount == 0:
+            flash("ไม่พบข้อมูลโครงงานในระบบ กรุณากรอกข้อมูลโครงงาน")
+            return redirect(url_for('projfirsttimeupload'))
+        else:
+            return render_template("projProgress.html", rows1=rows1, rows2=rows2)
+
+
 @app.route('/projprogress', methods = ['GET', 'POST'])
 def projprogress():
     return render_template("projProgress.html")
@@ -71,32 +123,14 @@ def projprogress():
 
 @app.route('/projform', methods=['GET', 'POST'])
 def projform():
-    pName = ""
-    if request.method == "POST":
-        data = request.get_json()
-        # pName = data["pName"]
-        # pYear = data["pYear"]
-        # pType = data["pType"]
-        # sNameF = data["sNameF"]
-        # sIdF = data["sIdF"]
-        # sNameS = data["sNameS"]
-        # sIdS = data["sIdS"]
-        # profPrimary = data["profPrimary"]
-        # # profSub = data["profSub"]
-        # pNameEng = data["pNameEng"]
+    rendered = render_template('projform.html')
+    pdf = pdfkit.from_string(rendered, False)
 
+    response = make_response(pdf)
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] = 'attachment; filename=output.pdf'
 
-        print(data)
-        jdata = json.dumps(data)
-        jload = json.loads(jdata)
-        print("Parse = ", jload["pName"])
-        print("Parse = ", jload["pNameEng"])
-
-        pName = jload["pName"]
-    # return render_template("projForm.html", pName=pName, pYear=pYear, pType=pType, sNameF=sNameF, sIdF=sIdF,
-    #                        sNameS=sNameS, sIdS=sIdS, profPrimary=profPrimary, pNameEng=pNameEng)
-
-    return redirect("/projprogress")
+    return response
 
 
 # @app.route('/getdatatoform', methods=['GET', 'POST'])
@@ -115,6 +149,7 @@ def projfirsttimeupload():
 
     rows = query.fetchall()
     rows2 = query2.fetchall()
+
     return render_template("projFirstTimeUpload.html", rows=rows, rows2=rows2)
 
 
@@ -258,6 +293,10 @@ def addprojmeetdetail():
                          (data["pID"], data["pMeetDetail"], data["pIssue"], data["pNextMeet"]))
 
             conn.commit()
+            pdfform = render_template("pdfForm.html")
+            path_wkhtmltopdf = 'C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe'
+            config = pdfkit.configuration(wkhtmltopdf=path_wkhtmltopdf)
+            pdfkit.from_string(pdfform, "out.pdf", configuration=config)
         except:
             conn.rollback()
         finally:
@@ -439,4 +478,4 @@ def showdataforsearch():
 
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1',debug=True)
+    app.run(host='0.0.0.0',debug=True)

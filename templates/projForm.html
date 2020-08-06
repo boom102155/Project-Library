@@ -83,19 +83,22 @@
 							<tr>
 								<td style="padding-bottom: 10px; width: 200px;"><u><b>ส่วนที่ 1 : ข้อมูลเบื้องต้น</b></u></td>
 							</tr>
+						</table>
+						<table>
 							<tr>
-								<td style="padding-bottom: 10px;"><b>ปีการศึกษา</b></td>
-								<td style="padding-bottom: 10px; width: 250px;"><b>{{ pYear }}</b></td>
+								<td style="padding-bottom: 20px;"><b>ปีการศึกษา</b></td>
+								<td style="padding-bottom: 30px; width: 250px;"><b>{{ pYear }}</b></td>
 							</tr>
 							<tr>
-								<td style="padding-bottom: 5px;"><b>ชื่อโครงงาน <i>(ภาษาไทย)</i></b></td>
-								<td style="padding-bottom: 5px;"><b>{{ pName }}</b></td>
+								<td style="padding-bottom: 10px;"><b>ชื่อโครงงาน <i>(ภาษาไทย)</i></b></td>
+								<td style="padding-left: 30px; padding-bottom: 10px;"><b>{{ pName }}</b></td>
 							</tr>
 							<tr>
-								<td style="padding-bottom: 5px;"><b>ชื่อโครงงาน <i>(ภาษาอังกฤษ)</i></b></td>
-								<td style="padding-bottom: 5px;"><b>{{ pNameEng }}</b></td>
+								<td style="padding-bottom: 10px;"><b>ชื่อโครงงาน <i>(ภาษาอังกฤษ)</i></b></td>
+								<td style="padding-left: 30px; padding-bottom: 10px;"><b>{{ pNameEng }}</b></td>
 							</tr>
-
+						</table>
+						<table>
 							<tr>
 								<td style="padding-top: 20px;"><b>รายชื่อนักศึกษา</b></td>
 								<td style="padding-top: 20px; width: 200px;"><b>{{ sNameF }}</b></td>
@@ -111,7 +114,7 @@
 							</tr>
 
 							<tr>
-								<td style="padding-top: 20px;"><b>ชิื่ออาจารย์ที่ปรึกษาโครงงาน</b></td>
+								<td style="padding-top: 20px;"><b>ชื่ออาจารย์ที่ปรึกษาโครงงาน</b></td>
 								<td style="padding-top: 20px; width: 200px;"><b>{{ profPrimary }}</b></td>
 							</tr>
 						</table>
@@ -126,17 +129,31 @@
 						<br>
 
 						<table border="1" width="100%">
-							<tr>
-								<td style="width: 20px; height: 60px; text-align: center; background-color: lightgray;"><b>ครั้งที่</b></td>
-								<td style="width: 60px; height: 60px; text-align: center; background-color: lightgray;"><b>วัน-เดือน-ปี</b></td>
-								<td style="width: 150px; height: 60px; text-align: center; background-color: lightgray;"><b>รายละเอียดการเข้าพบ</b></td>
-								<td style="width: 50px; height: 60px; text-align: center; background-color: lightgray;"><b>ลงชื่อ <br> อ.ที่ปรึกษา</b></td>
+							<col width="50" />
+							<col width="90" />
+							<col width="290" />
+							<col width="120" />
+							<tr class="Heading">
+								<td style="height: 60px; text-align: center; background-color: lightgray;"><b>ครั้งที่</b></td>
+								<td style="height: 60px; text-align: center; background-color: lightgray;"><b>วัน-เดือน-ปี</b></td>
+								<td style="height: 60px; text-align: center; background-color: lightgray;"><b>รายละเอียดการเข้าพบ</b></td>
+								<td style="height: 60px; text-align: center; background-color: lightgray;"><b>ลงชื่อ <br> อ.ที่ปรึกษา</b></td>
 							</tr>
 							<tr>
-								<td style="height: 350px;">&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
+								<td rowspan="2" style="text-align: center;">&nbsp;</td>
+								<td rowspan="2" style="text-align: center;">
+									<div></div>
+
+								</td>
+								<td style="padding-bottom: 10px; height: 250px; vertical-align: top;"><u>หัวข้อการเข้าพบ</u>
+									<div></div>
+								</td>
+								<td rowspan="2">&nbsp;</td>
+							</tr>
+							<tr>
+								<td style="padding-bottom: 10px; height: 100px; vertical-align: top;"><u>กำหนดการเข้าพบครั้งต่อไป</u>
+									<div></div>
+								</td>
 							</tr>
 						</table>
 					</div>

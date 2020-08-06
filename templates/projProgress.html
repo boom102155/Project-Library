@@ -20,12 +20,14 @@
             <div style="padding-left: 15px; padding-right: 15px;">
             <form class="form-horizontal" action="/addprojmeetdetail" method="POST">
                  <div class="form-group">
-                    <label for="pID">ชื่อโครงงาน</label>
-                    <input type="email" class="form-control" id="pID" name="pID" value="181" readonly>
+                    <label for="pID">รหัสโครงงาน</label>
+                     {% for row in rows2 %}
+                        <input type="text" class="form-control" id="pID" name="pID" value="{{row[0]}}" readonly>
+                     {% endfor %}
                 </div>
                 <div class="form-group">
                     <label for="pMeetDetail">รายละเอียดการเข้าพบ</label>
-                    <textarea  class="form-control" id="pMeetDetail" name="pMeetDetail" aria-describedby="txtMeetDetailHelp"></textarea>
+                    <textarea  class="form-control" id="pMeetDetail" name="pMeetDetail" cols="40" wrap="hard" style="width: 100%;" aria-describedby="txtMeetDetailHelp"></textarea>
                     <small id="txtMeetDetailHelp" class="form-text text-muted">ระบุรายละเอียดการเข้าพบอาจารย์ที่ปรึกษา</small>
                 </div>
                  <div class="form-group">
@@ -41,6 +43,40 @@
             </form>
             </div>
         </div>
+        <table class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+            <thead>
+                <th>ปีการศึกษา</th>
+                <th>ชื่อโปรเจคภาษาไทย</th>
+                <th>ชื่อโปรเจคภาษาอังกฤษ</th>
+                <th>ชื่อนักศึกษาคนที่1</th>
+                <th>รหัสนักศึกษาคนที่1</th>
+                <th>ชื่อนักศึกษาคนที่2</th>
+                <th>รหัสนักศึกษาคนที่2</th>
+                <th>ชื่ออาจารย์</th>
+                <th>ครั้งที่เข้ารายงาน</th>
+                <th>วันที่เข้ารายงาน</th>
+                <th>รายละเอียด</th>
+                <th>ปัญหาที่พบ</th>
+                <th>วันที่จะเข้าพบครั้งถัดไป</th>
+            </thead>
+            {% for row in rows1 %}
+            <tr>
+                <td>{{row[0]}}</td>
+                <td>{{row[1]}}</td>
+                <td>{{row[2]}}</td>
+                <td>{{row[3]}}</td>
+                <td>{{row[4]}}</td>
+                <td>{{row[5]}}</td>
+                <td>{{row[6]}}</td>
+                <td>{{row[7]}}</td>
+                <td>{{row[8]}}</td>
+                <td>{{row[9]}}</td>
+                <td>{{row[10]}}</td>
+                <td>{{row[11]}}</td>
+                <td>{{row[12]}}</td>
+            </tr>
+            {% endfor %}
+        </table>
     </div>
 {% endblock %}
 </body>

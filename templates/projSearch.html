@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block title %}
+    <meta charset="UTF-8">
+    <title>ครายงานความคืบหน้า</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% endblock %}
+
+</head>
+
+<body>
+{% block body %}
+    <div class="container">
+        <div class="content">
+            <h3><b>รายงานความคืบหน้าโครงงาน</b></h3><br>
+            <div class="row">
+                <div class="col-sm-3">
+                </div>
+                <div class="col-sm-3">
+                    <h4><b>ยังไม่เคยอัปโหลดโครงงาน</b></h4>
+                    <input type="button" class="btn btn-success" onclick="window.location.href='/projfirsttimeupload';" value="คลิกเพื่ออัปโหลด"/>
+                </div>
+            </div>
+            <hr>
+            <form class="form-horizontal" action="/projgetsearch" method="post">
+                <div class="form-group">
+                    <label for="SID" class="control-label col-sm-3">รหัสนักศึกษา</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="SID" name="SID" maxlength="13" autocomplete="off" placeholder="ตัวอย่าง 0123456789101" aria-describedby="txtHelp">
+                        <small id="txtHelp" class="form-text text-muted">หมายเหตุ ไม่ต้องใส่ขีด "-" </small>
+                    </div>
+                    <input type="submit" class="btn btn-primary" id="btnSubmit" value="submit">
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+</body>
+</html>
