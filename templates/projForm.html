@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Form</title>
+    <title>Progress_Form</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<script type="text/javascript" src="{{ url_for('static',filename="bootstrap/js/jquery-3.3.1.min.js")}}"></script>
   	<script type="text/javascript" src="{{ url_for('static',filename="bootstrap/js/bootstrap.min.js")}}"></script>
  	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename="bootstrap/css/bootstrap.css")}}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename="bootstrap/css/toast.css")}}">
 
 	<link rel="stylesheet" href="{{ url_for('static',filename="bootstrap/fonts/thsarabunnew.css")}}">
 
@@ -63,101 +64,147 @@
 			width: 70px;
 		}
 
+		@media print {
+			tr.Heading {
+				background-color:lightgray !important;
+				-webkit-print-color-adjust: exact;
+			}
+		}
+
+		@media print {
+			.Heading th {
+				color: white !important;
+			}
+		}
+
 	</style>
 </head>
 <body>
-<div style="text-align: center;">
-    <button type="button" id="btnPrint" class="btn btn-primary" onClick="printContent('doc')">พิมพ์เอกสาร</button>
-</div>
-    <br>
-			<div id="doc">
-				<page size="A4">
-					<img src="{{ url_for('static',filename="images/cpc_logo.png")}}" alt="cpc_logo">
-					<h4 style="text-align: center; padding-bottom: 10px; padding-top: 10px;"><b>แบบฟอร์มการเข้าพบอาจารย์ที่ปรึกษาโครงงาน</b></h4>
-					<h5 style="text-align: center;"><b>รายวิชา 0406460 โครงงานเทคโนโลยีสารสนเทศ (Information Technology Project)</b></h5>
-					<h5 style="text-align: center;"><b>คณะบริหารธุรกิจและเทคโนสโลยีสารสนเทศ สาขาวิชาเทคโนโลยีสารสนเทศ</b></h5>
-					<h5 style="text-align: center;"><b>มหาวิทยาลัยเทคโนโลยีราชมงคลตะวันออก วิทยาเขตจักรพงษภูวนารถ</b></h5>
-					<hr style="border: 1px solid black;">
-					<div style="padding-left: 40px; padding-right: 40px;">
-						<table>
-							<tr>
-								<td style="padding-bottom: 10px; width: 200px;"><u><b>ส่วนที่ 1 : ข้อมูลเบื้องต้น</b></u></td>
-							</tr>
-						</table>
-						<table>
-							<tr>
-								<td style="padding-bottom: 20px;"><b>ปีการศึกษา</b></td>
-								<td style="padding-bottom: 30px; width: 250px;"><b>{{ pYear }}</b></td>
-							</tr>
-							<tr>
-								<td style="padding-bottom: 10px;"><b>ชื่อโครงงาน <i>(ภาษาไทย)</i></b></td>
-								<td style="padding-left: 30px; padding-bottom: 10px;"><b>{{ pName }}</b></td>
-							</tr>
-							<tr>
-								<td style="padding-bottom: 10px;"><b>ชื่อโครงงาน <i>(ภาษาอังกฤษ)</i></b></td>
-								<td style="padding-left: 30px; padding-bottom: 10px;"><b>{{ pNameEng }}</b></td>
-							</tr>
-						</table>
-						<table>
-							<tr>
-								<td style="padding-top: 20px;"><b>รายชื่อนักศึกษา</b></td>
-								<td style="padding-top: 20px; width: 200px;"><b>{{ sNameF }}</b></td>
-								<td style="padding-top: 20px; padding-left: 20px; padding-right: 20px;"><b>รหัสนักศึกษา</b></td>
-								<td style="padding-top: 20px;"><b>{{ sIdF }}</b></td>
-							</tr>
+	{% with messages = get_flashed_messages() %}
+		{% if messages %}
+			{% for message in messages %}
+				<div id="snackbar">
+				{{ message }}
+				</div>
+			{% endfor %}
+		{% endif %}
+	{% endwith %}
+	<div style="text-align: center;">
+		<button type="button" id="btnPrint" class="btn btn-primary" onClick="printContent('doc')">พิมพ์เอกสาร</button>
+	</div>
+	<br>
+	{% for row in rows %}
+	<div id="doc">
+		<page size="A4">
+			<img src="{{ url_for('static',filename="images/cpc_logo.png")}}" alt="cpc_logo">
+			<h4 style="text-align: center; padding-bottom: 10px; padding-top: 10px;"><b>แบบฟอร์มการเข้าพบอาจารย์ที่ปรึกษาโครงงาน</b></h4>
+			<h5 style="text-align: center;"><b>รายวิชา 0406460 โครงงานเทคโนโลยีสารสนเทศ (Information Technology Project)</b></h5>
+			<h5 style="text-align: center;"><b>คณะบริหารธุรกิจและเทคโนสโลยีสารสนเทศ สาขาวิชาเทคโนโลยีสารสนเทศ</b></h5>
+			<h5 style="text-align: center;"><b>มหาวิทยาลัยเทคโนโลยีราชมงคลตะวันออก วิทยาเขตจักรพงษภูวนารถ</b></h5>
+			<hr style="border: 1px solid black;">
+			<div style="padding-left: 40px; padding-right: 40px;">
+				<table>
+					<tr>
+						<td style="padding-bottom: 10px; width: 200px;"><u><b>ส่วนที่ 1 : ข้อมูลเบื้องต้น</b></u></td>
+					</tr>
+				</table>
+				<table>
+					<tr>
+						<td style="padding-bottom: 20px;"><b>ปีการศึกษา</b></td>
+						<td style="padding-bottom: 30px; width: 250px;"><b>{{ row[0] }}</b></td>
+					</tr>
+					<tr>
+						<td style="padding-bottom: 10px;"><b>ชื่อโครงงาน <i>(ภาษาไทย)</i></b></td>
+						<td style="padding-left: 30px; padding-bottom: 10px;"><b>{{ row[1] }}</b></td>
+					</tr>
+					<tr>
+						<td style="padding-bottom: 10px;"><b>ชื่อโครงงาน <i>(ภาษาอังกฤษ)</i></b></td>
+						<td style="padding-left: 30px; padding-bottom: 10px;"><b>{{ row[2] }}</b></td>
+					</tr>
+				</table>
+				<table>
+					<tr>
+						<td style="padding-top: 20px;"><b>รายชื่อนักศึกษา</b></td>
+						<td style="padding-top: 20px; width: 200px;"><b>{{ row[3] }}</b></td>
+						<td style="padding-top: 20px; padding-left: 20px; padding-right: 20px;"><b>รหัสนักศึกษา</b></td>
+						<td style="padding-top: 20px;"><b>{{ row[4] }}</b></td>
+					</tr>
 
-							<tr>
-								<td style="padding-top: 10px;"></td>
-								<td style="padding-top: 10px; width: 200px;">{{ sNameS }}</td>
-								<td style="padding-top: 10px; padding-left: 20px; padding-right: 20px;"><b>รหัสนักศึกษา</b></td>
-								<td style="padding-top: 10px;"><b>{{ sIdS }}</b></td>
-							</tr>
+					<tr>
+						<td style="padding-top: 10px;"></td>
+						<td style="padding-top: 10px; width: 200px;">{{ row[5] }}</td>
+						<td style="padding-top: 10px; padding-left: 20px; padding-right: 20px;"><b>รหัสนักศึกษา</b></td>
+						<td style="padding-top: 10px;"><b>{{ row[6] }}</b></td>
+					</tr>
 
-							<tr>
-								<td style="padding-top: 20px;"><b>ชื่ออาจารย์ที่ปรึกษาโครงงาน</b></td>
-								<td style="padding-top: 20px; width: 200px;"><b>{{ profPrimary }}</b></td>
-							</tr>
-						</table>
+					<tr>
+						<td style="padding-top: 20px;"><b>ชื่ออาจารย์ที่ปรึกษาโครงงาน</b></td>
+						<td style="padding-top: 20px; width: 200px;"><b>{{ row[7] }}</b></td>
+					</tr>
+				</table>
 
-						<br>
+				<br>
 
-						<table>
-							<tr>
-								<td><b><u>ส่วนที่ 2 : รายละเอียดการเข้าพบอาจารย์ที่ปรึกษาโครงงาน</u></b></td>
-							</tr>
-						</table>
-						<br>
+				<table>
+					<tr>
+						<td><b><u>ส่วนที่ 2 : รายละเอียดการเข้าพบอาจารย์ที่ปรึกษาโครงงาน</u></b></td>
+					</tr>
+				</table>
+				<br>
 
-						<table border="1" width="100%">
-							<col width="50" />
-							<col width="90" />
-							<col width="290" />
-							<col width="120" />
-							<tr class="Heading">
-								<td style="height: 60px; text-align: center; background-color: lightgray;"><b>ครั้งที่</b></td>
-								<td style="height: 60px; text-align: center; background-color: lightgray;"><b>วัน-เดือน-ปี</b></td>
-								<td style="height: 60px; text-align: center; background-color: lightgray;"><b>รายละเอียดการเข้าพบ</b></td>
-								<td style="height: 60px; text-align: center; background-color: lightgray;"><b>ลงชื่อ <br> อ.ที่ปรึกษา</b></td>
-							</tr>
-							<tr>
-								<td rowspan="2" style="text-align: center;">&nbsp;</td>
-								<td rowspan="2" style="text-align: center;">
-									<div></div>
+				<table border="1" width="100%">
+					<col width="50" />
+					<col width="90" />
+					<col width="290" />
+					<col width="120" />
+					<tr class="Heading">
+						<td style="height: 60px; text-align: center; background-color: lightgray;"><b>ครั้งที่</b></td>
+						<td style="height: 60px; text-align: center; background-color: lightgray;"><b>วัน-เดือน-ปี</b></td>
+						<td style="height: 60px; text-align: center; background-color: lightgray;"><b>รายละเอียดการเข้าพบ</b></td>
+						<td style="height: 60px; text-align: center; background-color: lightgray;"><b>ลงชื่อ <br> อ.ที่ปรึกษา</b></td>
+					</tr>
+					<tr>
+						<td rowspan="2" style="text-align: center;">{{ row[8] }}</td>
+						<td rowspan="2" style="text-align: center;">
+							<div>{{ row[9] }}</div>
+						</td>
+						<td style="padding-bottom: 10px; height: 250px; vertical-align: top;"><u>หัวข้อการเข้าพบ</u>
+							<div>{{ row[10] }}</div>
+						</td>
+						<td rowspan="2">&nbsp;</td>
+					</tr>
+					<tr>
+						<td style="padding-bottom: 10px; height: 100px; vertical-align: top;"><u>กำหนดการเข้าพบครั้งต่อไป</u>
+							<div>{{ row[11] }}</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</page>
+	</div> <!-- doc -->
+	{% endfor %}
 
-								</td>
-								<td style="padding-bottom: 10px; height: 250px; vertical-align: top;"><u>หัวข้อการเข้าพบ</u>
-									<div></div>
-								</td>
-								<td rowspan="2">&nbsp;</td>
-							</tr>
-							<tr>
-								<td style="padding-bottom: 10px; height: 100px; vertical-align: top;"><u>กำหนดการเข้าพบครั้งต่อไป</u>
-									<div></div>
-								</td>
-							</tr>
-						</table>
-					</div>
-				</page>
-			</div> <!-- doc -->
+	<script type="application/javascript">
+		function printContent(el){
+			var r = confirm("กรุณาตรวจสอบเอกสารของท่านก่อนทำการปริ้น\nหากต้องการปริ้นกด 'ตกลง'");
+			if (r == true) {
+				var restorepage = document.body.innerHTML;
+				var printcontent = document.getElementById(el).innerHTML;
+				document.body.innerHTML = printcontent;
+				window.print();
+				document.body.innerHTML = restorepage;
+				window.location = "/projsearch"
+			}else{
+
+			}
+		}
+	</script>
+	<script>
+		$(document).ready(function() {
+		   var x = document.getElementById("snackbar");
+		   x.className = "show";
+		   setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
+		});
+	</script>
 </body>
 </html>

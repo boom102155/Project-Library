@@ -90,9 +90,9 @@ def projgetsearch():
                      "pr.next_date "
                      "FROM project pj, person ps, progress_report pr "
                      "WHERE "
-                     "pj.s_id1 = " + (data["SID"]) +
-                     " AND pj.pj_id = pr.pj_id "
-                     "AND pj.person_id1 = ps.person_id")
+                     "pj.pj_id = pr.pj_id "
+                     "AND pj.person_id1 = ps.person_id "
+                     "AND pj.pj_id in (SELECT PJ_ID FROM sumproject WHERE SID = " + (data["SID"]) + ")")
 
         query2 = conn.execute("SELECT "
                               "pj.pj_id "
@@ -120,22 +120,9 @@ def projgetsearch():
 def projprogress():
     return render_template("projProgress.html")
 
-
 @app.route('/projform', methods=['GET', 'POST'])
 def projform():
-    rendered = render_template('projform.html')
-    pdf = pdfkit.from_string(rendered, False)
-
-    response = make_response(pdf)
-    response.headers['Content-Type'] = 'application/pdf'
-    response.headers['Content-Disposition'] = 'attachment; filename=output.pdf'
-
-    return response
-
-
-# @app.route('/getdatatoform', methods=['GET', 'POST'])
-# def getdatatoform():
-#     return redirect("/projform")
+    return render_template("projForm.html")
 
 @app.route('/projfirsttimeupload', methods=['GET', 'POST'])
 def projfirsttimeupload():
@@ -291,17 +278,31 @@ def addprojmeetdetail():
                          "NEXT_DATE) "
                          "VALUES (:1, :2, :3, TO_DATE(:4, 'yyyy-mm-dd'))",
                          (data["pID"], data["pMeetDetail"], data["pIssue"], data["pNextMeet"]))
-
             conn.commit()
-            pdfform = render_template("pdfForm.html")
-            path_wkhtmltopdf = 'C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe'
-            config = pdfkit.configuration(wkhtmltopdf=path_wkhtmltopdf)
-            pdfkit.from_string(pdfform, "out.pdf", configuration=config)
+
+
+            # pdfform = render_template("projForm.html", rows=rows)
+            # path_wkhtmltopdf = 'C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe'
+            # config = pdfkit.configuration(wkhtmltopdf=path_wkhtmltopdf)
+            # pdfkit.from_string(pdfform, "project_progress.pdf", configuration=config)
+
         except:
             conn.rollback()
         finally:
+            query = conn.execute("SELECT pj.PJ_YEAR, pj.PJ_NAME, pj.PJ_NAME_ENG, pj.S_NAME1, pj.S_ID1, "
+                                 "pj.S_NAME2, pj.S_ID2, ps.NAME, lp.PROGRESS_NUM, lp.IMPORT_DATE, lp.DETAIL, lp.NEXT_DATE "
+                                 "FROM "
+                                 "lastprogress lp, "
+                                 "project pj, "
+                                 "person ps "
+                                 "WHERE "
+                                 "lp.pj_id = " + (data["pID"]) +
+                                 " AND   pj.pj_id = lp.pj_id "
+                                 "AND pj.PERSON_ID1 = ps.PERSON_ID")
+            rows = query.fetchall()
             flash("บันทึกข้อมูลสำเร็จแล้ว")
-            return redirect(url_for('projfirsttimeupload'))
+            # return redirect(url_for('projfirsttimeupload'))
+            return render_template("projForm.html", rows=rows)
             conn.close()
 
 # ==============================================================================================
