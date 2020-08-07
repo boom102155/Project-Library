@@ -96,9 +96,9 @@ def projgetsearch():
 
         query2 = conn.execute("SELECT "
                               "pj.pj_id "
-                              "FROM project pj "
+                              "FROM sumproject pj "
                               "WHERE "
-                              "pj.s_id1 = " + (data["SID"]))
+                              "SID = '"+ (data["SID"])+"' ")
 
         rows1 = query1.fetchall()
         rows2 = query2.fetchall()
