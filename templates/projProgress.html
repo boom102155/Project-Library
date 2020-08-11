@@ -19,12 +19,17 @@
             <h3><b>รายงานความคืบหน้าโครงงาน</b></h3><br>
             <div style="padding-left: 15px; padding-right: 15px;">
             <form class="form-horizontal" action="/addprojmeetdetail" method="POST">
+                {% for row in rows2 %}
                  <div class="form-group">
-                    <label for="pID">รหัสโครงงาน</label>
-                     {% for row in rows2 %}
-                        <input type="text" class="form-control" id="pID" name="pID" value="{{row[0]}}" readonly>
-                     {% endfor %}
+                     <label for="pID">รหัสโครงงาน</label>
+                     <input type="text" class="form-control" id="pID" name="pID" value="{{row[0]}}" readonly>
                 </div>
+                <div class="form-group">
+                     <label for="pName">ชื่อโครงงาน (ไทย/อังกฤษ)</label>
+                     <input type="text" class="form-control" id="pName" name="pName" value="{{row[1]}}" readonly><br>
+                    <input type="text" class="form-control" id="pNameEng" name="pNameEng" value="{{row[2]}}" readonly>
+                </div>
+                {% endfor %}
                 <div class="form-group">
                     <label for="pMeetDetail">รายละเอียดการเข้าพบ</label>
                     <textarea  class="form-control" id="pMeetDetail" name="pMeetDetail" cols="40" wrap="hard" style="width: 100%;" aria-describedby="txtMeetDetailHelp"></textarea>
