@@ -71,7 +71,6 @@ def projsearch():
 @app.route('/projgetsearch', methods = ['GET', 'POST'])
 def projgetsearch():
     if request.method == "POST":
-
         data = request.form
         conn = db_connect.connect()
         query1 = conn.execute("SELECT "
@@ -104,13 +103,6 @@ def projgetsearch():
 
         rows1 = query1.fetchall()
         rows2 = query2.fetchall()
-        # for row in rows:
-        #     list1 = ["PJ_YEAR", "PJ_NAME", "PJ_NAME_ENG", "S_NAME1", "S_ID1", "S_NAME2",
-        #              "S_ID2", "NAME", "PROGRESS_NUM", "IMPORT_DATE", "DETAIL", "ISSUE", "NEXT_DATE"]
-        #     list2 = [row["name"], row["surname"], row["type"], row["faculty"], row["class"]]
-        #     data = zip(list1, list2)
-        #     d = dict(data)
-        #     print(d)
         if query1.rowcount == 0:
             flash("ไม่พบข้อมูลโครงงานในระบบ กรุณากรอกข้อมูลโครงงาน")
             return redirect(url_for('projfirsttimeupload'))
@@ -241,30 +233,42 @@ def addproj():
 
 @app.route('/addfirstproj' , methods = ['GET' , 'POST'])
 def addfirstproj():
-    try:
-        data = request.get_json()
+    if request.method == "POST":
+        # data = request.get_json()
+        data = request.form
         conn = db_connect.connect()
-        conn.execute("INSERT INTO PROJECT "
-                     "(PJ_ID, "
-                     "PJ_NAME, "
-                     "PJ_YEAR, "
-                     "PJTYPE_ID, "
-                     "S_NAME1, "
-                     "S_ID1, "
-                     "S_NAME2, "
-                     "S_ID2, "
-                     "PERSON_ID1, "
-                     "PERSON_ID2,"
-                     "PJ_NAME_ENG) "
-                    
-                     "VALUES (PROJECT_SEQ.NEXTVAL, :2, :3, :4, :5, :6, NVL(:7, 'ไม่มี'), NVL(:8, 'ไม่มี'), :9, NVL(:10, 0), :11)",
-                     (data["pName"], data["pYear"], data["pType"], data["sNameF"], data["sIdF"], data["sNameS"], data["sIdS"], data["profPrimary"], data["profSub"], data["pNameEng"]))
-        conn.commit()
-    except:
-        conn.rollback()
-    finally:
-        conn.close()
-        return redirect("/projprogress")
+        query = conn.execute("SELECT COUNT(*) as checknum FROM sumproject WHERE SID in ('" + data["sIdF"] + "', '" + data["sIdS"] + "')")
+        rows = query.fetchall()
+        for row in rows:
+            a = row['checknum']
+        if a != 0:
+            flash("มีข้อมูลโครงงานนี้ในระบบแล้ว")
+            return redirect(url_for('projsearch'))
+        else:
+            try:
+                conn.execute("INSERT INTO PROJECT "
+                             "(PJ_ID, "
+                             "PJ_NAME, "
+                             "PJ_YEAR, "
+                             "PJTYPE_ID, "
+                             "S_NAME1, "
+                             "S_ID1, "
+                             "S_NAME2, "
+                             "S_ID2, "
+                             "PERSON_ID1, "
+                             "PERSON_ID2,"
+                             "PJ_NAME_ENG) "
+                            
+                             "VALUES (PROJECT_SEQ.NEXTVAL, :2, :3, :4, :5, :6, NVL(:7, 'ไม่มี'), NVL(:8, 'ไม่มี'), :9, NVL(:10, 0), :11)",
+                             (data["pName"], data["txtpYear"], data["txtpType"], data["sNameF"], data["sIdF"], data["sNameS"],
+                              data["sIdS"], data["txtprofPrimary"], data["txtprofSub"], data["pNameEng"]))
+                conn.commit()
+            except:
+                conn.rollback()
+            finally:
+                conn.close()
+                flash("บันทึกข้อมูลโครงงานสำเร็จ")
+                return redirect("/projsearch")
 
 
 @app.route('/addprojmeetdetail', methods=['GET', 'POST'])
@@ -460,7 +464,6 @@ def projlistfiltersearch():
 def showdataforsearch():
     try:
         conn = db_connect.connect()
-
         query = conn.execute("SELECT pr.PJ_ID , pr.PJ_NAME , pr.PJ_YEAR , pr.PJTYPE_ID , pr.KEYWORD "
                                 "FROM PROJECT pr, PERSON pe "
                                 "WHERE pr.PERSON_ID1 = pe.PERSON_ID "

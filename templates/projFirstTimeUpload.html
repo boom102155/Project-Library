@@ -69,12 +69,11 @@
             {% endwith %}
 			<h3><b>กรอกรายละเอียดข้อมูลโครงงาน</b></h3>
 			<!-- Form -->
-			<form class="form-horizontal" method="POST" style="padding-top: 3rem;">
+			<form class="form-horizontal" action="/addfirstproj" method="POST" id="myForm" style="padding-top: 3rem;">
 			  	<div class="form-group">
 			    	<label class="control-label col-sm-2" for="pName">ชื่อโครงงาน (ภาษาไทย):</label>
 			    	<div class="col-sm-5">
-						<input type="text" class="form-control" id="pName" placeholder="โครงงาน..." autocomplete="off">
-
+						<input type="text" class="form-control" id="pName" name="pName" placeholder="โครงงาน..." autocomplete="off" required>
 						<div id="error1" style="display: none; color: red;">กรุณากรอกข้อมูล</div>
 						<script type="text/javascript">
 							$("#pName").blur(function(){
@@ -91,8 +90,7 @@
 				<div class="form-group">
 			    	<label class="control-label col-sm-2" for="pNameEng">ชื่อโครงงาน (ภาษาอังกฤษ):</label>
 			    	<div class="col-sm-5">
-						<input type="text" class="form-control" id="pNameEng" placeholder="Project..." autocomplete="off">
-
+						<input type="text" class="form-control" id="pNameEng" name="pNameEng" placeholder="Project..." autocomplete="off" required>
 						<div id="error5" style="display: none; color: red;">กรุณากรอกข้อมูล</div>
 						<script type="text/javascript">
 							$("#pNameEng").blur(function(){
@@ -109,7 +107,7 @@
 			  	<div class="form-group">
 			    	<label class="control-label col-sm-2" for="pYear">ปีการศึกษา:</label>
 			    	<div class="col-sm-5">
-			      		<select class="form-control" id="pYear"></select>
+			      		<select class="form-control" id="pYear" name="pYear"></select>
 			      		<script type="text/javascript">
 			      			var getyear = new Date().getFullYear();
 			      			var convyear = getyear + 543;
@@ -123,7 +121,7 @@
 			  	<div class="form-group">
 			    	<label class="control-label col-sm-2" for="pType">ประเภทโครงงาน:</label>
 			    	<div class="col-sm-5">
-			      		<select class="form-control" id="pType">
+			      		<select class="form-control" id="pType" name="pType">
 			      			{% for row in rows2 %}
 	        					<option value="{{ row[0] }}">{{ row[0] }}</option>
 	        				{% endfor %}
@@ -131,8 +129,8 @@
 			    	</div>
 			  	</div>
 				<hr>
-				<label class="radio-inline"><input type="radio" id="radiostu1" name="sturadio" checked>ผู้จัดทำ 1 คน</label>
-				<label class="radio-inline"><input type="radio" id="radiostu2" name="sturadio">ผู้จัดทำ 2 คน</label>
+				<label class="radio-inline"><input type="radio" id="radiostu1" name="stuaudio" checked>ผู้จัดทำ 1 คน</label>
+				<label class="radio-inline"><input type="radio" id="radiostu2" name="stuaudio">ผู้จัดทำ 2 คน</label>
 				<script type="text/javascript">
 					$(document).ready(function() {
 						$("#sNameS").prop('disabled', true);
@@ -151,7 +149,7 @@
 	  			<div class="form-group">
 			    	<label class="control-label col-sm-2" for="sNameF">ชื่อผู้จัดทำคนที่หนึ่ง:</label>
 			    	<div class="col-sm-3">
-						<input type="text" class="form-control" id="sNameF" placeholder="ชื่อ-นามสกุล" autocomplete="off">
+						<input type="text" class="form-control" id="sNameF" name="sNameF" placeholder="ชื่อ-นามสกุล" autocomplete="off" required>
 						<div id="error2" style="display: none; color: red;">กรุณากรอกข้อมูล</div>
 						<script type="text/javascript">
 							$("#sNameF").blur(function(){
@@ -166,7 +164,7 @@
 					</div>
 			    	<label class="control-label col-sm-2" for="sIdF">รหัสนักศึกษา:</label>
 			    	<div class="col-sm-3">
-						<input type="text" class="form-control" id="sIdF" placeholder="ตัวอย่าง 0256304910000" maxlength="13" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" autocomplete="off">
+						<input type="text" class="form-control" id="sIdF" name="sIdF" placeholder="ตัวอย่าง 0256304910000" maxlength="13" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" autocomplete="off" required>
 						<div id="error3" style="display: none; color: red;">กรุณากรอกข้อมูล</div>
 						<script type="text/javascript">
 							$("#sIdF").blur(function(){
@@ -183,11 +181,11 @@
 			  	<div class="form-group">
 			    	<label class="control-label col-sm-2" for="sNameS">ชื่อผู้จัดทำคนที่สอง:</label>
 			    	<div class="col-sm-3">
-			     		<input type="text" class="form-control" id="sNameS" placeholder="ชื่อ-นามสกุล" autocomplete="off">
+			     		<input type="text" class="form-control" id="sNameS" name="sNameS" placeholder="ชื่อ-นามสกุล" autocomplete="off">
 			    	</div>
 			    	<label class="control-label col-sm-2" for="sIdS">รหัสนักศึกษา:</label>
 			    	<div class="col-sm-3">
-			     		<input type="text" class="form-control" id="sIdS" placeholder="ตัวอย่าง 0256304910000" maxlength="13" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" autocomplete="off">
+			     		<input type="text" class="form-control" id="sIdS" name="sIdS" placeholder="ตัวอย่าง 0256304910000" maxlength="13" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" autocomplete="off">
 			    	</div>
 			  	</div>
 
@@ -208,7 +206,7 @@
 				<div class="form-group">
 			    	<label class="control-label col-sm-2" for="profPrimary">อาจารย์ที่ปรึกษาหลัก:</label>
 			    	<div class="col-sm-3">
-			     		<select class="form-control" id="profPrimary">
+			     		<select class="form-control" id="profPrimary" name="profPrimary">
 			     				<option value="">---อาจารย์ที่ปรึกษาหลัก---</option>
 			     			{% for row in rows %}
 	        					<option value="{{ row[0] }}">{{ row[1] }}</option>
@@ -230,7 +228,7 @@
 			  	<div class="form-group">
 			    	<label class="control-label col-sm-2" for="profSub">อาจารย์ที่ปรึกษารอง:</label>
 			    	<div class="col-sm-3">
-			     		<select class="form-control" id="profSub">
+			     		<select class="form-control" id="profSub" name="profSub">
 			     				<option value="">---อาจารย์ที่ปรึกษารอง---</option>
 			     			{% for row in rows %}
 	        					<option value="{{ row[0] }}">{{ row[1] }}</option>
@@ -238,65 +236,18 @@
 						</select>
 			    	</div>
 				</div>
-
 		  		<hr>
-<!--			  	<div class="form-group">-->
-<!--			    	<label class="control-label col-sm-2" for="keyword">Keyword:</label>-->
-<!--			    	<div class="col-sm-3">-->
-<!--						<input type="text" class="form-control" id="keyword" placeholder="keyword..." autocomplete="off">-->
-<!--						<div id="error5" style="display: none; color: red;">กรุณาระบุ Keyword</div>-->
-<!--						<script type="text/javascript">-->
-<!--							$("#keyword").blur(function(){-->
-<!--								if (this.value == '') {-->
-<!--									$("#error5").fadeIn("show");-->
-<!--								}-->
-<!--								if (this.value != '') {-->
-<!--									$("#error5").fadeOut();-->
-<!--								}-->
-<!--							})-->
-<!--						</script>-->
-<!--			    	</div>-->
-<!--			  	</div>-->
-<!--			  	-->
-<!--			  	<div class="form-group">-->
-<!--			    	<label class="control-label col-sm-2" for="keyword">บทคัดย่อ:</label>-->
-<!--			    	<div class="col-sm-3">-->
-<!--			     		<input type="file" id="myfile" name="file" accept="application/pdf">-->
-<!--			    	</div>-->
-<!--			    	<div id="error6" style="display: none; color: red;">กรุณาเลือกไฟล์</div>-->
-<!--		            <script type="text/javascript">-->
-<!--		            	$("#myfile").blur(function(){-->
-<!--		            		if (this.value == '') {-->
-<!--		            			$("#error6").fadeIn("show");-->
-<!--		            		}-->
-<!--		            		if (this.value != '') {-->
-<!--		            			$("#error6").fadeOut();-->
-<!--		            		}-->
-<!--		               	})-->
-<!--		            </script>-->
-<!--		            <input type="text" id="getfilename" style="display: none;">-->
-<!--		            <script type="text/javascript">-->
-<!--						$(function() {-->
-<!--					     	$("input:file").change(function (){-->
-<!--					       		// var fileName = $(this).val();-->
-<!--					       		// var gtn = document.getElementById("gettimename").value;-->
-<!--					       		var fileName = $('input[type=file]').val().split('\\').pop();-->
-<!--					       		// $(".getfilename").html(fileName);-->
-<!--					       		var filetype = fileName.split(".")[1];	-->
-<!--					       		// var conStr = gtn + filetype;-->
-<!--					       		document.getElementById("getfilename").value = filetype;-->
-<!--					     	});-->
-<!--					  	});-->
-<!--					</script>-->
-<!--			  	</div>-->
-
 			  	<div class="form-group">
 			    	<div class="col-sm-offset-2 col-sm-10">
 			      		<input type="button" class="btn btn-primary" id="btnOk" value="ตกลง">
-						<buttton type="submit" class="btn btn-warning" id="btnEdit">แก้ไข</buttton>
-						<buttton type="submit" class="btn btn-success" id="btnSave">ทำแบบฟอร์ม</buttton>
+						<input type="button" class="btn btn-warning" id="btnEdit" value="แก้ไข">
+						<input type="submit" class="btn btn-success" id="btnSave" value="บันทึก">
 			    	</div>
 			  	</div>
+				<input type="text" id="txtpYear" name="txtpYear" style="display: none;">
+				<input type="text" id="txtpType" name="txtpType" style="display: none;">
+				<input type="text" id="txtprofPrimary" name="txtprofPrimary" style="display: none;">
+				<input type="text" id="txtprofSub" name="txtprofSub" style="display: none;">
 			</form>
 			<!-- End Form -->
 		</div>
@@ -324,49 +275,18 @@
   		</div><!-- footer -->
 	</div>
 	<script type="text/javascript">
-		$('#btnSave').click(function(){
-	  		var pName = document.getElementById("pName").value;
-	  		var pNameEng = document.getElementById("pNameEng").value;
-			var pYear = document.getElementById("pYear").value;
-			var pType = document.getElementById("pType").value;
-			var sNameF = document.getElementById("sNameF").value;
-			var sIdF = document.getElementById("sIdF").value;
-			var sNameS = document.getElementById("sNameS").value;
-			var sIdS = document.getElementById("sIdS").value;
-			var profPrimary = document.getElementById("profPrimary").value;
-			var profSub = document.getElementById("profSub").value;
+		$("#myForm").submit(function(event) {
+			var pName = $('#pName').val();
+			var pNameEng = $('#pNameEng').val();
+			var sNameF = $('#sNameF').val();
+			var sIdF = $('#sIdF').val();
+			var profPrimary = $('#profPrimary').val();
 
-			if (pName == "" || pNameEng == "" || sNameF == "" || sIdF == "" || profPrimary == "") {
-					alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+		  	if (pName == "" || pNameEng == "" || sNameF == "" || sIdF == "" || profPrimary == "") {
+				alert("กรุณากรอกข้อมูลให้ครบถ้วน");
 				return false;
 			}
 			else{
-<!--				alert("บันทึกข้อมูลสำเร็จ");-->
-				$.ajax({
-					url: '/addfirstproj',
-					data: JSON.stringify({
-						"pName" : pName,
-						"pNameEng" : pNameEng,
-						"pYear" : pYear,
-						"pType" : pType,
-						"sNameF" : sNameF,
-						"sIdF" : sIdF,
-						"sNameS" : sNameS,
-						"sIdS" : sIdS,
-						"profPrimary" : profPrimary,
-						"profSub" : profSub
-					}),
-					type: 'POST',
-					processData: false,
-					contentType: 'application/json; charset=utf-8',
-					success: function(response){
-						console.log(response);
-					},
-					error: function(error){
-						console.log(error);
-					}
-				});
-				window.location = "/projsearch"
 			}
 		});
 	</script>
@@ -406,6 +326,48 @@
 		  	$('#profPrimary').prop('disabled', false);
 		  	$('#profSub').prop('disabled', false);
 		});
+	</script>
+
+	<script>
+		$(document).ready(function() {
+
+			$("#pYear").change(function() {
+				var str = "";
+				$("#pYear option:selected").each(function() {
+					str += $(this).val();
+				});
+					$("#txtpYear").val(str);
+			  })
+			  .trigger("change");
+
+			$("#pType").change(function() {
+				var str = "";
+				$("#pType option:selected").each(function() {
+					str += $(this).val();
+				});
+					$("#txtpType").val(str);
+			  })
+			  .trigger("change");
+
+			$("#profPrimary").change(function() {
+				var str = "";
+				$("#profPrimary option:selected").each(function() {
+					str += $(this).val();
+				});
+					$("#txtprofPrimary").val(str);
+			  })
+			  .trigger("change");
+
+			$("#profSub").change(function() {
+				var str = "";
+				$("#profSub option:selected").each(function() {
+					str += $(this).val();
+				});
+					$("#txtprofSub").val(str);
+			  })
+			  .trigger("change");
+
+		})
 	</script>
 
 </body>

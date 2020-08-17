@@ -7,6 +7,7 @@
     <title>ครายงานความคืบหน้า</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename="bootstrap/css/toast.css")}}">
     {% endblock %}
 
 </head>
@@ -15,6 +16,26 @@
 {% block body %}
     <div class="container">
         <div class="content">
+            <script>
+				$(document).ready(function() {
+				   var x = document.getElementById("snackbar");
+				   x.className = "show";
+				   setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
+				});
+			</script>
+
+			{% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+<!--					<div class="alert alert-success">-->
+<!--						<button type="button" class="close" data-dismiss="alert">&times;</button>-->
+						<div id="snackbar">
+						{{ message }}
+						</div>
+<!--					</div>-->
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
             <h3><b>รายงานความคืบหน้าโครงงาน</b></h3><br>
             <div class="row">
                 <div class="col-sm-3">
@@ -27,11 +48,19 @@
             <hr>
             <form class="form-horizontal" action="/projgetsearch" method="post">
                 <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-3">
+                        </div>
+                        <div class="col-sm-3" style="padding-left:25px;">
+                            <h4><b>อัปโหลดโครงงานแล้ว</b></h4>
+                        </div>
+                    </div>
                     <label for="SID" class="control-label col-sm-3">รหัสนักศึกษา</label>
                     <div class="col-sm-3">
                         <input type="text" class="form-control" id="SID" name="SID" maxlength="13" autocomplete="off" placeholder="ตัวอย่าง 0123456789101" aria-describedby="txtHelp">
                         <small id="txtHelp" class="form-text text-muted">หมายเหตุ ไม่ต้องใส่ขีด "-" </small>
                     </div>
+
                     <input type="submit" class="btn btn-primary" id="btnSubmit" value="submit">
                 </div>
             </form>
