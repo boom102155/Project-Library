@@ -58,14 +58,31 @@
                     <label for="SID" class="control-label col-sm-3">รหัสนักศึกษา</label>
                     <div class="col-sm-3">
                         <input type="text" class="form-control" id="SID" name="SID" maxlength="13" autocomplete="off" placeholder="ตัวอย่าง 0123456789101" aria-describedby="txtHelp">
-                        <small id="txtHelp" class="form-text text-muted">หมายเหตุ ไม่ต้องใส่ขีด "-" </small>
+                        <small id="txtHelp" class="form-text text-muted" style="color: red">หมายเหตุ ไม่ต้องใส่ขีด "-" </small>
                     </div>
-
-                    <input type="submit" class="btn btn-primary" id="btnSubmit" value="submit">
+                    <input type="submit" class="btn btn-primary" id="btnSubmit" value="ค้นหา">
+                </div>
+            </form>
+            <form class="form-horizontal" action="/projupload" method="post">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-3">
+                        </div>
+                        <div class="col-sm-3" style="padding-left:25px;">
+                            <h4><b><i>**อัปโหลดไฟล์โครงงาน</i></b></h4>
+                        </div>
+                    </div>
+                    <label for="SID" class="control-label col-sm-3">รหัสนักศึกษา</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="SID2" name="SID2" maxlength="13" autocomplete="off" placeholder="ตัวอย่าง 0123456789101" aria-describedby="txtHelp">
+                        <small id="txtHelp2" class="form-text text-muted" style="color: red">หมายเหตุ ไม่ต้องใส่ขีด "-" </small>
+                    </div>
+                    <input type="submit" class="btn btn-warning" id="btnSubmit2" value="ค้นหา">
                 </div>
             </form>
         </div>
     </div>
+
 {% endblock %}
 </body>
 </html>

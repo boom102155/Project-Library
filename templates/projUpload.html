@@ -50,14 +50,14 @@
 			</div>	
 		</div>
 		<div class="content">
-			<h3><b>อัปโหลดโครงงาน</b></h3>
+			<h3><b>อัปโหลดไฟล์โครงงาน</b></h3>
 			<!-- Form -->
+			{% for row in rows3 %}
 			<form id="projFrom" class="form-horizontal" method="POST" action="http://127.0.0.1:5000/uploader" enctype="multipart/form-data" style="padding-top: 3rem;">
 			  	<div class="form-group">
-			    	<label class="control-label col-sm-2" for="pName">ชื่อโครงงาน:</label>
+			    	<label class="control-label col-sm-2" for="pName">ชื่อโครงงาน (ภาษาไทย):</label>
 			    	<div class="col-sm-5">
-						<input type="text" class="form-control" id="pName" placeholder="โครงงาน..." autocomplete="off">
-						
+						<input type="text" class="form-control" id="pName" placeholder="โครงงาน..." autocomplete="off" value="{{ row[1] }}" readonly>
 						<div id="error1" style="display: none; color: red;">กรุณากรอกข้อมูล</div>
 						<script type="text/javascript">
 							$("#pName").blur(function(){
@@ -71,33 +71,52 @@
 						</script>
 					</div>
 			  	</div>
+				<div class="form-group">
+			    	<label class="control-label col-sm-2" for="pNameEng">ชื่อโครงงาน (ภาษาอังกฤษ):</label>
+			    	<div class="col-sm-5">
+						<input type="text" class="form-control" id="pNameEng" name="pNameEng" placeholder="Project..." autocomplete="off" value="{{ row[2] }}" readonly>
+						<div id="error7" style="display: none; color: red;">กรุณากรอกข้อมูล</div>
+						<script type="text/javascript">
+							$("#pNameEng").blur(function(){
+								if (this.value == '') {
+									$("#error7").fadeIn("show");
+								}
+								if (this.value != '') {
+									$("#error7").fadeOut();
+								}
+							})
+						</script>
+					</div>
+			  	</div>
 			  	<div class="form-group">
 			    	<label class="control-label col-sm-2" for="pYear">ปีการศึกษา:</label>
 			    	<div class="col-sm-5"> 
-			      		<select class="form-control" id="pYear"></select>
-			      		<script type="text/javascript">
-			      			var getyear = new Date().getFullYear();
-			      			var convyear = getyear + 543;
-			      			for (i = convyear; i > 2500; i--){
-								$('#pYear').append($('<option />').val(i).html(i));
-							}
-			      		</script>
+<!--			      		<select class="form-control" id="pYear"></select>-->
+<!--			      		<script type="text/javascript">-->
+<!--			      			var getyear = new Date().getFullYear();-->
+<!--			      			var convyear = getyear + 543;-->
+<!--			      			for (i = convyear; i > 2500; i&#45;&#45;){-->
+<!--								$('#pYear').append($('<option />').val(i).html(i));-->
+<!--							}-->
+<!--			      		</script>-->
+						<input type="text" class="form-control" id="pYear" value="{{ row[0] }}" readonly>
 					</div>
 			  	</div>
 
 			  	<div class="form-group">
 			    	<label class="control-label col-sm-2" for="pType">ประเภทโครงงาน:</label>
 			    	<div class="col-sm-5"> 
-			      		<select class="form-control" id="pType">
-			      			{% for row in rows2 %}
-	        					<option value="{{ row[0] }}">{{ row[0] }}</option>
-	        				{% endfor %}
-			      		</select>
+<!--			      		<select class="form-control" id="pType">-->
+<!--			      			{% for row in rows2 %}-->
+<!--	        					<option value="{{ row[0] }}">{{ row[0] }}</option>-->
+<!--	        				{% endfor %}-->
+<!--			      		</select>-->
+						<input type="text" class="form-control" id="pType" value="{{ row[3] }}" readonly>
 			    	</div>
 			  	</div>
 				<hr>
-				<label class="radio-inline"><input type="radio" id="radiostu1" name="sturadio" checked>ผู้จัดทำ 1 คน</label>
-				<label class="radio-inline"><input type="radio" id="radiostu2" name="sturadio">ผู้จัดทำ 2 คน</label>
+				<label class="radio-inline"><input type="radio" id="radiostu1" name="sturadio" disabled>ผู้จัดทำ 1 คน</label>
+				<label class="radio-inline"><input type="radio" id="radiostu2" name="sturadio" checked disabled>ผู้จัดทำ 2 คน</label>
 				<script type="text/javascript">
 					$(document).ready(function() {
 						$("#sNameS").prop('disabled', true);
@@ -116,48 +135,48 @@
 	  			<div class="form-group">
 			    	<label class="control-label col-sm-2" for="sNameF">ชื่อผู้จัดทำคนที่หนึ่ง:</label>
 			    	<div class="col-sm-3">
-						<input type="text" class="form-control" id="sNameF" placeholder="ชื่อ-นามสกุล" autocomplete="off">
-						<div id="error2" style="display: none; color: red;">กรุณากรอกข้อมูล</div>
-						<script type="text/javascript">
-							$("#sNameF").blur(function(){
-								if (this.value == '') {
-									$("#error2").fadeIn("show");
-								}
-								if (this.value != '') {
-									$("#error2").fadeOut();
-								}
-							})
-						</script>
+						<input type="text" class="form-control" id="sNameF" placeholder="ชื่อ-นามสกุล" autocomplete="off" value="{{ row[4] }}" readonly>
+<!--						<div id="error2" style="display: none; color: red;">กรุณากรอกข้อมูล</div>-->
+<!--						<script type="text/javascript">-->
+<!--							$("#sNameF").blur(function(){-->
+<!--								if (this.value == '') {-->
+<!--									$("#error2").fadeIn("show");-->
+<!--								}-->
+<!--								if (this.value != '') {-->
+<!--									$("#error2").fadeOut();-->
+<!--								}-->
+<!--							})-->
+<!--						</script>-->
 					</div>
 			    	<label class="control-label col-sm-2" for="sIdF">รหัสนักศึกษา:</label>
 			    	<div class="col-sm-3">
-						<input type="text" class="form-control" id="sIdF" placeholder="ตัวอย่าง 0256304910000" maxlength="13" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" autocomplete="off">
-						<div id="error3" style="display: none; color: red;">กรุณากรอกข้อมูล</div>
-						<script type="text/javascript">
-							$("#sIdF").blur(function(){
-								if (this.value == '') {
-									$("#error3").fadeIn("show");
-								}
-								if (this.value != '') {
-									$("#error3").fadeOut();
-								}
-							})
-						</script> 
+						<input type="text" class="form-control" id="sIdF" placeholder="ตัวอย่าง 0256304910000" maxlength="13" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" autocomplete="off" value="{{ row[5] }}" readonly>
+<!--						<div id="error3" style="display: none; color: red;">กรุณากรอกข้อมูล</div>-->
+<!--						<script type="text/javascript">-->
+<!--							$("#sIdF").blur(function(){-->
+<!--								if (this.value == '') {-->
+<!--									$("#error3").fadeIn("show");-->
+<!--								}-->
+<!--								if (this.value != '') {-->
+<!--									$("#error3").fadeOut();-->
+<!--								}-->
+<!--							})-->
+<!--						</script> -->
 					</div>
 			  	</div>
 			  	<div class="form-group">
 			    	<label class="control-label col-sm-2" for="sNameS">ชื่อผู้จัดทำคนที่สอง:</label>
 			    	<div class="col-sm-3">
-			     		<input type="text" class="form-control" id="sNameS" placeholder="ชื่อ-นามสกุล" autocomplete="off">
+			     		<input type="text" class="form-control" id="sNameS" placeholder="ชื่อ-นามสกุล" autocomplete="off" value="{{ row[6] }}">
 			    	</div>
 			    	<label class="control-label col-sm-2" for="sIdS">รหัสนักศึกษา:</label>
 			    	<div class="col-sm-3">
-			     		<input type="text" class="form-control" id="sIdS" placeholder="ตัวอย่าง 0256304910000" maxlength="13" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" autocomplete="off">
+			     		<input type="text" class="form-control" id="sIdS" placeholder="ตัวอย่าง 0256304910000" maxlength="13" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" autocomplete="off" value="{{ row[7] }}">
 			    	</div>
 			  	</div>
 				
-				<label class="radio-inline"><input type="radio" id="radioprof1" name="profradio" checked>อาจารย์ที่ปรึกษา 1 คน</label>
-				<label class="radio-inline"><input type="radio" id="radioprof2" name="profradio">อาจารย์ที่ปรึกษา 2 คน</label>
+				<label class="radio-inline"><input type="radio" id="radioprof1" name="profradio" disabled checked>อาจารย์ที่ปรึกษา 1 คน</label>
+				<label class="radio-inline"><input type="radio" id="radioprof2" name="profradio" disabled>อาจารย์ที่ปรึกษา 2 คน</label>
 				<script type="text/javascript">
 					$(document).ready(function() {
 						$("#profSub").prop('disabled', true);
@@ -173,27 +192,28 @@
 				<div class="form-group">
 			    	<label class="control-label col-sm-2" for="profPrimary">อาจารย์ที่ปรึกษาหลัก:</label>
 			    	<div class="col-sm-3">
-			     		<select class="form-control" id="profPrimary">
-			     				<option value="">---อาจารย์ที่ปรึกษาหลัก---</option>
-			     			{% for row in rows %}
-	        					<option value="{{ row[0] }}">{{ row[1] }}</option>
-	        				{% endfor %}
-						</select>
-						<div id="error4" style="display: none; color: red;">กรุณาระบุอาจารย์ที่ปรึกษา</div>
-						<script type="text/javascript">
-							$("#profPrimary").blur(function(){
-								if (this.value == '') {
-									$("#error4").fadeIn("show");
-								}
-								if (this.value != '') {
-									$("#error4").fadeOut();
-								}
-							})
-						</script>
+<!--			     		<select class="form-control" id="profPrimary">-->
+<!--			     				<option value="">-&#45;&#45;อาจารย์ที่ปรึกษาหลัก-&#45;&#45;</option>-->
+<!--			     			{% for row in rows %}-->
+<!--	        					<option value="{{ row[0] }}">{{ row[1] }}</option>-->
+<!--	        				{% endfor %}-->
+<!--						</select>-->
+<!--						<div id="error4" style="display: none; color: red;">กรุณาระบุอาจารย์ที่ปรึกษา</div>-->
+<!--						<script type="text/javascript">-->
+<!--							$("#profPrimary").blur(function(){-->
+<!--								if (this.value == '') {-->
+<!--									$("#error4").fadeIn("show");-->
+<!--								}-->
+<!--								if (this.value != '') {-->
+<!--									$("#error4").fadeOut();-->
+<!--								}-->
+<!--							})-->
+<!--						</script>-->
+						<input type="text" class="form-control" id="profPrimary" value="{{ row[8] }}" readonly>
 			    	</div>
 			  	</div>
 			  	<div class="form-group">
-			    	<label class="control-label col-sm-2" for="proSub">อาจารย์ที่ปรึกษารอง:</label>
+			    	<label class="control-label col-sm-2" for="profSub">อาจารย์ที่ปรึกษารอง:</label>
 			    	<div class="col-sm-3">
 			     		<select class="form-control" id="profSub">
 			     				<option value="">---อาจารย์ที่ปรึกษารอง---</option>
@@ -203,7 +223,7 @@
 						</select>
 			    	</div>
 				</div>
-				
+				{% endfor %}
 		  		<hr>
 			  	<div class="form-group">
 			    	<label class="control-label col-sm-2" for="keyword">Keyword:</label>
@@ -287,11 +307,6 @@
   		</div><!-- footer -->
 	</div>
 	<script type="text/javascript">
-		// var form = document.getElementById("projFrom");
-		// var button = document.getElementById("btnSave");
-		// 	projFrom.onsubmit = function() {
-		// 		return false;
-		// 	}
 		$('#btnSave').click(function(){	
 	  		var pName = document.getElementById("pName").value;
 			var pYear = document.getElementById("pYear").value;
@@ -317,16 +332,6 @@
 			}
 			else{	
 				alert("บันทึกข้อมูลสำเร็จ");
-				// setTimeout(function() {
-				// 	form.submit();
-				// }, 2000);
-
-				// swal({
-				// 	title: "",
-				// 	text: "บันทึกข้อมูลสำเร็จ",
-				// 	type: "success",
-				// 	showConfirmButton: false
-				// });
 				
 				$.ajax({
 					url: '/addproj',

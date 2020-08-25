@@ -150,17 +150,43 @@ def projcontent(projid):
 
 @app.route('/projupload' , methods = ['GET' , 'POST'])
 def projupload():
-    conn = db_connect.connect()
-    query = conn.execute("SELECT PERSON_ID, (NAME || ' ' || SURNAME) as perfessorname "
-                          "FROM PERSON "
-                          "WHERE PERSON_ID BETWEEN 1001 and 1999")
+    if request.method == "POST":
+        data = request.form
+        conn = db_connect.connect()
 
-    query2 = conn.execute("SELECT PJTYPE_ID "
-                          "FROM PROJECT_TYPE")
+        query = conn.execute("SELECT "
+                              "pj.pj_year, "
+                              "pj.pj_name, "
+                              "pj.pj_name_eng, "
+                              "pj.PJTYPE_ID, "
+                              "pj.s_name1, "
+                              "pj.s_id1, "
+                              "pj.s_name2, "
+                              "pj.s_id2, "
+                              "ps.name || ' ' || ps.surname AS profName, "
+                              "pr.progress_num, "
+                              "pr.import_date, "
+                              "pr.detail, "
+                              "pr.issue, "
+                              "pr.next_date "
+                              "FROM "
+                              "project pj inner join person ps on pj.person_id1 = ps.person_id "
+                              "LEFT JOIN progress_report pr ON pj.pj_id = pr.pj_id "
+                              "WHERE "
+                              "pj.pj_id in (SELECT PJ_ID FROM sumproject WHERE SID = " + (data["SID"]) + ")")
 
-    rows = query.fetchall()
-    rows2 = query2.fetchall()
-    return render_template("projUpload.html", rows=rows, rows2=rows2)
+        query1 = conn.execute("SELECT PERSON_ID, (NAME || ' ' || SURNAME) as perfessorname "
+                              "FROM PERSON "
+                              "WHERE PERSON_ID BETWEEN 1001 and 1999")
+
+        rows = query1.fetchall()
+        rows3 = query.fetchall()
+
+        if query.rowcount == 0:
+            flash("ไม่พบข้อมูลโครงงานในระบบ กรุณากรอกข้อมูลโครงงาน")
+            return redirect(url_for('projfirsttimeupload'))
+        else:
+            return render_template("projUpload.html", rows=rows, rows3=rows3)
 
 @app.route('/uploader', methods = ['GET', 'POST'])
 def upload():
@@ -202,6 +228,8 @@ def addproj():
 
     try:
         constrname = st + '_' + t1 + t2 + t3 + '.' + (data['pathpic'])
+
+        # -----------เปลี่ยน insert เป็น update--------------
         conn.execute("INSERT INTO PROJECT "
                      "(PJ_ID, "
                      "PJ_NAME, "
