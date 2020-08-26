@@ -53,7 +53,8 @@
 			<h3><b>อัปโหลดไฟล์โครงงาน</b></h3>
 			<!-- Form -->
 			{% for row in rows3 %}
-			<form id="projFrom" class="form-horizontal" method="POST" action="http://127.0.0.1:5000/uploader" enctype="multipart/form-data" style="padding-top: 3rem;">
+			<form class="form-horizontal" method="POST" action="/uploader" enctype="multipart/form-data" style="padding-top: 3rem;">
+				<input type="text" id="PID" name="PID" value="{{ row[9] }}" style="display: none;">
 			  	<div class="form-group">
 			    	<label class="control-label col-sm-2" for="pName">ชื่อโครงงาน (ภาษาไทย):</label>
 			    	<div class="col-sm-5">
@@ -228,7 +229,7 @@
 			  	<div class="form-group">
 			    	<label class="control-label col-sm-2" for="keyword">Keyword:</label>
 			    	<div class="col-sm-3">
-						<input type="text" class="form-control" id="keyword" placeholder="keyword..." autocomplete="off">
+						<input type="text" class="form-control" id="keyword" name="keyword" placeholder="keyword..." autocomplete="off">
 						<div id="error5" style="display: none; color: red;">กรุณาระบุ Keyword</div>
 						<script type="text/javascript">
 							$("#keyword").blur(function(){
@@ -244,7 +245,7 @@
 			  	</div>
 			  	
 			  	<div class="form-group">
-			    	<label class="control-label col-sm-2" for="keyword">บทคัดย่อ:</label>
+			    	<label class="control-label col-sm-2" for="myfile">บทคัดย่อ:</label>
 			    	<div class="col-sm-3">
 			     		<input type="file" id="myfile" name="file" accept="application/pdf">
 			    	</div>
@@ -259,7 +260,7 @@
 		            		}
 		               	})
 		            </script>
-		            <input type="text" id="getfilename" style="display: none;">
+		            <input type="text" id="getfilename" name="getfilename" style="display: none;">
 		            <script type="text/javascript">
 						$(function() {
 					     	$("input:file").change(function (){
@@ -306,62 +307,62 @@
   			</div>
   		</div><!-- footer -->
 	</div>
-	<script type="text/javascript">
-		$('#btnSave').click(function(){	
-	  		var pName = document.getElementById("pName").value;
-			var pYear = document.getElementById("pYear").value;
-			var pType = document.getElementById("pType").value;
-			var sNameF = document.getElementById("sNameF").value;
-			var sIdF = document.getElementById("sIdF").value;
-			var sNameS = document.getElementById("sNameS").value;
-			var sIdS = document.getElementById("sIdS").value;
-			var profPrimary = document.getElementById("profPrimary").value;
-			var profSub = document.getElementById("profSub").value;
-			var keyword = document.getElementById("keyword").value;
+<!--	<script type="text/javascript">-->
+<!--		$('#btnSave').click(function(){	-->
+<!--	  		var pName = document.getElementById("pName").value;-->
+<!--			var pYear = document.getElementById("pYear").value;-->
+<!--			var pType = document.getElementById("pType").value;-->
+<!--			var sNameF = document.getElementById("sNameF").value;-->
+<!--			var sIdF = document.getElementById("sIdF").value;-->
+<!--			var sNameS = document.getElementById("sNameS").value;-->
+<!--			var sIdS = document.getElementById("sIdS").value;-->
+<!--			var profPrimary = document.getElementById("profPrimary").value;-->
+<!--			var profSub = document.getElementById("profSub").value;-->
+<!--			var keyword = document.getElementById("keyword").value;-->
 
-			var pathpic = document.getElementById("getfilename").value;
+<!--			var pathpic = document.getElementById("getfilename").value;-->
 
-			if (pName == "" || sNameF == "" || sIdF == "" || profPrimary == "" || keyword == "" || 
-				document.getElementById("myfile").files.length == 0) {
-					// swal({title: "",
-					// 	text: "กรุณากรอกข้อมูลให้ครบถ้วน",
-					// 	type: "warning"
-					// });
-					alert("กรุณากรอกข้อมูลให้ครบถ้วน");
-				return false;
-			}
-			else{	
-				alert("บันทึกข้อมูลสำเร็จ");
-				
-				$.ajax({
-					url: '/addproj',
-					data: JSON.stringify({
-						"pName" : pName , 
-						"pYear" : pYear , 
-						"pType" : pType , 
-						"sNameF" : sNameF,
-						"sIdF" : sIdF,
-						"sNameS" : sNameS,
-						"sIdS" : sIdS,
-						"profPrimary" : profPrimary,
-						"profSub" : profSub,
-						"keyword" : keyword,
-						"pathpic" : pathpic
-					}),
-					type: 'POST',
-					processData: false,
-					contentType: 'application/json; charset=utf-8',
-					success: function(response){
-						console.log(response);
-					},
-					error: function(error){
-						console.log(error);
-					}
-				});
+<!--			if (pName == "" || sNameF == "" || sIdF == "" || profPrimary == "" || keyword == "" || -->
+<!--				document.getElementById("myfile").files.length == 0) {-->
+<!--					// swal({title: "",-->
+<!--					// 	text: "กรุณากรอกข้อมูลให้ครบถ้วน",-->
+<!--					// 	type: "warning"-->
+<!--					// });-->
+<!--					alert("กรุณากรอกข้อมูลให้ครบถ้วน");-->
+<!--				return false;-->
+<!--			}-->
+<!--			else{	-->
+<!--				alert("บันทึกข้อมูลสำเร็จ");-->
+<!--				-->
+<!--				$.ajax({-->
+<!--					url: '/addproj',-->
+<!--					data: JSON.stringify({-->
+<!--						"pName" : pName , -->
+<!--						"pYear" : pYear , -->
+<!--						"pType" : pType , -->
+<!--						"sNameF" : sNameF,-->
+<!--						"sIdF" : sIdF,-->
+<!--						"sNameS" : sNameS,-->
+<!--						"sIdS" : sIdS,-->
+<!--						"profPrimary" : profPrimary,-->
+<!--						"profSub" : profSub,-->
+<!--						"keyword" : keyword,-->
+<!--						"pathpic" : pathpic-->
+<!--					}),-->
+<!--					type: 'POST',-->
+<!--					processData: false,-->
+<!--					contentType: 'application/json; charset=utf-8',-->
+<!--					success: function(response){-->
+<!--						console.log(response);-->
+<!--					},-->
+<!--					error: function(error){-->
+<!--						console.log(error);-->
+<!--					}-->
+<!--				});-->
 
-				// return false;			
-			}				
-		});
-	</script>
+<!--				// return false;			-->
+<!--			}				-->
+<!--		});-->
+<!--	</script>-->
 </body>
 </html>

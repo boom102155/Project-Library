@@ -153,7 +153,6 @@ def projupload():
     if request.method == "POST":
         data = request.form
         conn = db_connect.connect()
-
         query = conn.execute("SELECT "
                               "pj.pj_year, "
                               "pj.pj_name, "
@@ -164,6 +163,7 @@ def projupload():
                               "pj.s_name2, "
                               "pj.s_id2, "
                               "ps.name || ' ' || ps.surname AS profName, "
+                              "pj.PJ_ID, "
                               "pr.progress_num, "
                               "pr.import_date, "
                               "pr.detail, "
@@ -173,7 +173,7 @@ def projupload():
                               "project pj inner join person ps on pj.person_id1 = ps.person_id "
                               "LEFT JOIN progress_report pr ON pj.pj_id = pr.pj_id "
                               "WHERE "
-                              "pj.pj_id in (SELECT PJ_ID FROM sumproject WHERE SID = " + (data["SID"]) + ")")
+                              "pj.pj_id in (SELECT PJ_ID FROM sumproject WHERE SID = '" + (data["SID2"]) + "')")
 
         query1 = conn.execute("SELECT PERSON_ID, (NAME || ' ' || SURNAME) as perfessorname "
                               "FROM PERSON "
@@ -182,80 +182,89 @@ def projupload():
         rows = query1.fetchall()
         rows3 = query.fetchall()
 
-        if query.rowcount == 0:
-            flash("ไม่พบข้อมูลโครงงานในระบบ กรุณากรอกข้อมูลโครงงาน")
-            return redirect(url_for('projfirsttimeupload'))
-        else:
-            return render_template("projUpload.html", rows=rows, rows3=rows3)
+        # if query.rowcount == 0:
+        #     flash("ไม่พบข้อมูลโครงงานในระบบ กรุณากรอกข้อมูลโครงงาน")
+        #     return redirect(url_for('projfirsttimeupload'))
+        # else:
+        return render_template("projUpload.html", rows=rows, rows3=rows3)
 
 @app.route('/uploader', methods = ['GET', 'POST'])
-def upload():
-   if request.method == 'POST':
-      # f = request.files['file']
-      # f.save(secure_filename(f.filename))
-      # return 'file uploaded successfully'
-      target = os.path.join(APP_ROOT, 'static/UPLOAD')
-      print(target)
-      file = request.files['file']
-      if file.filename == '':
-          return 'no file selected'
+def uploader():
+    if request.method == 'POST':
+        # target = os.path.join(APP_ROOT, 'static/UPLOAD')
+        # print(target)
+        # file = request.files['file']
+        # if file.filename == '':
+        #     return 'no file selected'
+        #
+        # if not os.path.isdir(target):
+        #     os.mkdir(target)
+        #
+        # st = strftime("%d%m%Y", gmtime())
+        # t1 = strftime("%H", gmtime())
+        # t2 = strftime("%M", gmtime())
+        # t3 = strftime("%S", gmtime())
+        #
+        # for file in request.files.getlist("file"):
+        #     print(file)
+        #     filename = file.filename
+        #     destination = "/".join([target, st + '_' + t1 + t2 + t3 + '.' + filename.split('.')[1]])
+        #     print("Accept incoming file:", filename.split('.')[1])
+        #     print(destination)
+        #     file.save(destination)
 
-      if not os.path.isdir(target):
-          os.mkdir(target)
+        try:
+            conn = db_connect.connect()
+            data = request.form
+            # constrname = st + '_' + t1 + t2 + t3 + '.' + (data['getfilename'])
 
-      st = strftime("%d%m%Y", gmtime())
-      t1 = strftime("%H", gmtime())
-      t2 = strftime("%M", gmtime())
-      t3 = strftime("%S", gmtime())
+            # conn.execute("INSERT INTO PROJECT_FILE "
+            #              "(PATH, "
+            #              "NAME, "
+            #              "PJ_ID) "
+            #              "VALUES (:1, :2, :3)",
+            #              (constrname, constrname, data["PID"]))
 
-      for file in request.files.getlist("file"):
-          print(file)
-          filename = file.filename
-          destination = "/".join([target, st + '_' + t1 + t2 + t3 + '.'+ filename.split('.')[1]])
-          print("Accept incoming file:", filename.split('.')[1])
-          print(destination)
-          file.save(destination)
-      return redirect("/projupload")
+            conn.execute("UPDATE PROJECT "
+                         "SET KEYWORD = '" + (data["keyword"]) + "' "
+                         "WHERE PJ_ID = '" + (data["PID"]) + "'")
 
-@app.route('/addproj' , methods = ['GET' , 'POST'])
-def addproj():
-    conn = db_connect.connect()
-    data = request.get_json()
-    st = strftime("%d%m%Y", gmtime())
-    t1 = strftime("%H", gmtime())
-    t2 = strftime("%M", gmtime())
-    t3 = strftime("%S", gmtime())
+            conn.commit()
+        except:
+            conn.rollback()
+        finally:
+            conn.close()
+            return redirect(url_for('projsearch'))
 
-    try:
-        constrname = st + '_' + t1 + t2 + t3 + '.' + (data['pathpic'])
-
-        # -----------เปลี่ยน insert เป็น update--------------
-        conn.execute("INSERT INTO PROJECT "
-                     "(PJ_ID, "
-                     "PJ_NAME, "
-                     "PJ_YEAR, "
-                     "PJTYPE_ID, "
-                     "S_NAME1, "
-                     "S_ID1, "
-                     "S_NAME2, "
-                     "S_ID2, "
-                     "PERSON_ID1, "
-                     "PERSON_ID2, "
-                     "KEYWORD) "
-                     "VALUES (PROJECT_SEQ.NEXTVAL, :2, :3, :4, :5, :6, NVL(:7, 'ไม่มี'), NVL(:8, 'ไม่มี'), :9, NVL(:10, 0), :11)",
-                     (data["pName"], data["pYear"], data["pType"], data["sNameF"], data["sIdF"], data["sNameS"], data["sIdS"], data["profPrimary"], data["profSub"], data["keyword"]))
-
-        conn.execute("INSERT INTO PROJECT_FILE "
-                     "(PATH, "
-                     "NAME, "
-                     "PJ_ID) "
-                     "(SELECT '"+ constrname +"', '"+ constrname +"', MAX(PJ_ID) FROM PROJECT)")
-        conn.commit()
-    except:
-        conn.rollback()
-    finally:
-        conn.close()
-    return json.dumps(data)
+# @app.route('/addproj' , methods = ['GET' , 'POST'])
+# def addproj():
+#     conn = db_connect.connect()
+#     # data = request.get_json()
+#     data = request.form
+#     st = strftime("%d%m%Y", gmtime())
+#     t1 = strftime("%H", gmtime())
+#     t2 = strftime("%M", gmtime())
+#     t3 = strftime("%S", gmtime())
+#
+#     try:
+#         constrname = st + '_' + t1 + t2 + t3 + '.' + (data['pathpic'])
+#
+         # -----------เปลี่ยน insert เป็น update--------------
+#         conn.execute("UPDATE PROJECT "
+#                      "SET kEYWORD = '" + (data["KEYWORD"]) + "' "
+#                      "WHERE PJ_ID = '" + (data["PID"]) + "'")
+#
+#         conn.execute("INSERT INTO PROJECT_FILE "
+#                      "(PATH, "
+#                      "NAME, "
+#                      "PJ_ID) "
+#                      "(SELECT '"+ constrname +"', '"+ constrname +"', MAX(PJ_ID) FROM PROJECT)")
+#         conn.commit()
+#     except:
+#         conn.rollback()
+#     finally:
+#         conn.close()
+#         return redirect(url_for('uploader'))
 
 # ===============================================================================
 
