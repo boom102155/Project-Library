@@ -182,48 +182,48 @@ def projupload():
         rows = query1.fetchall()
         rows3 = query.fetchall()
 
-        # if query.rowcount == 0:
-        #     flash("ไม่พบข้อมูลโครงงานในระบบ กรุณากรอกข้อมูลโครงงาน")
-        #     return redirect(url_for('projfirsttimeupload'))
-        # else:
-        return render_template("projUpload.html", rows=rows, rows3=rows3)
+        if query.rowcount == 0:
+            flash("ไม่พบข้อมูลโครงงานในระบบ กรุณากรอกข้อมูลโครงงาน")
+            return redirect(url_for('projfirsttimeupload'))
+        else:
+            return render_template("projUpload.html", rows=rows, rows3=rows3)
 
 @app.route('/uploader', methods = ['GET', 'POST'])
 def uploader():
     if request.method == 'POST':
-        # target = os.path.join(APP_ROOT, 'static/UPLOAD')
-        # print(target)
-        # file = request.files['file']
-        # if file.filename == '':
-        #     return 'no file selected'
-        #
-        # if not os.path.isdir(target):
-        #     os.mkdir(target)
-        #
-        # st = strftime("%d%m%Y", gmtime())
-        # t1 = strftime("%H", gmtime())
-        # t2 = strftime("%M", gmtime())
-        # t3 = strftime("%S", gmtime())
-        #
-        # for file in request.files.getlist("file"):
-        #     print(file)
-        #     filename = file.filename
-        #     destination = "/".join([target, st + '_' + t1 + t2 + t3 + '.' + filename.split('.')[1]])
-        #     print("Accept incoming file:", filename.split('.')[1])
-        #     print(destination)
-        #     file.save(destination)
+        target = os.path.join(APP_ROOT, 'static/UPLOAD')
+        print(target)
+        file = request.files['file']
+        if file.filename == '':
+            return 'no file selected'
+
+        if not os.path.isdir(target):
+            os.mkdir(target)
+
+        st = strftime("%d%m%Y", gmtime())
+        t1 = strftime("%H", gmtime())
+        t2 = strftime("%M", gmtime())
+        t3 = strftime("%S", gmtime())
+
+        for file in request.files.getlist("file"):
+            print(file)
+            filename = file.filename
+            destination = "/".join([target, st + '_' + t1 + t2 + t3 + '.' + filename.split('.')[1]])
+            print("Accept incoming file:", filename.split('.')[1])
+            print(destination)
+            file.save(destination)
 
         try:
             conn = db_connect.connect()
             data = request.form
-            # constrname = st + '_' + t1 + t2 + t3 + '.' + (data['getfilename'])
+            constrname = st + '_' + t1 + t2 + t3 + '.' + (data['getfilename'])
 
-            # conn.execute("INSERT INTO PROJECT_FILE "
-            #              "(PATH, "
-            #              "NAME, "
-            #              "PJ_ID) "
-            #              "VALUES (:1, :2, :3)",
-            #              (constrname, constrname, data["PID"]))
+            conn.execute("INSERT INTO PROJECT_FILE "
+                         "(PATH, "
+                         "NAME, "
+                         "PJ_ID) "
+                         "VALUES (:1, :2, :3)",
+                         (constrname, constrname, data["PID"]))
 
             conn.execute("UPDATE PROJECT "
                          "SET KEYWORD = '" + (data["keyword"]) + "' "
@@ -234,6 +234,7 @@ def uploader():
             conn.rollback()
         finally:
             conn.close()
+            flash("อัปโหลดไฟล์โครงงานสำเร็จ")
             return redirect(url_for('projsearch'))
 
 # @app.route('/addproj' , methods = ['GET' , 'POST'])
