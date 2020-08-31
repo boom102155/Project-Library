@@ -91,7 +91,7 @@ def projgetsearch():
                               "project pj inner join person ps on pj.person_id1 = ps.person_id "
                               "LEFT JOIN progress_report pr ON pj.pj_id = pr.pj_id "
                               "WHERE "
-                              "pj.pj_id in (SELECT PJ_ID FROM sumproject WHERE SID = " + (data["SID"]) + ")")
+                              "pj.pj_id in (SELECT PJ_ID FROM sumproject WHERE SID = '" + (data["SID"]) + "')")
 
         query2 = conn.execute("SELECT "
                               "pj.pj_id, "
@@ -99,7 +99,7 @@ def projgetsearch():
                               "pj.pj_name_eng "
                               "FROM sumproject pj "
                               "WHERE "
-                              "SID = '"+ (data["SID"])+"' ")
+                              "SID = '" + (data["SID"]) + "' ")
 
         rows1 = query1.fetchall()
         rows2 = query2.fetchall()
@@ -324,12 +324,6 @@ def addprojmeetdetail():
                          (data["pID"], data["pMeetDetail"], data["pIssue"], data["pNextMeet"]))
             conn.commit()
 
-
-            # pdfform = render_template("projForm.html", rows=rows)
-            # path_wkhtmltopdf = 'C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe'
-            # config = pdfkit.configuration(wkhtmltopdf=path_wkhtmltopdf)
-            # pdfkit.from_string(pdfform, "project_progress.pdf", configuration=config)
-
         except:
             conn.rollback()
         finally:
@@ -350,7 +344,6 @@ def addprojmeetdetail():
             conn.close()
 
 # ==============================================================================================
-
 
 @app.route('/newsupdate' , methods = ['GET' , 'POST'])
 def newsupdate():
